@@ -4,6 +4,7 @@
 * Arduino riadi na základe navolenej hysterézy a cieľovej teploty výstup - relé.
 * Pre meranie teploty Arduino využíva senzor Dallas DS18B20 na OneWire zbernici v parazitnom / normálnom zapojení
 * **Arduino na UART vypíše pridelenú (respektíve statickú) IP adresu**
+* **Pri Ethernet module W5500 je nutné pripojiť vývod D2 Arduina na INT vývod Ethernet modulu** 
 
 | Názov súboru        | Shield           | IPv4           |
 | ------------- |:-------------:| ------------- |
