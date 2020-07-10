@@ -14,3 +14,8 @@
 # Dôležité informácie
 * Serial monitor: 115200 baud/s
 * Údaje o hysteréze a referenčnej teplote uložené v EEPROM pamäti
+
+**HTML stránky bežiace na Arduine:**
+* / - root stránka obsahujúca formulár, aktuálny výpis logického výstupu pre relé, teplotu
+* /action.html - spracúvava hodnoty z formulára, zapisuje ich do EEPROM pamäte, presmeruje používateľa späť na root stránku
+* /get_data/ - distribuuje dáta o aktuálnej teplote, referenčnej teplote a hysteréza tretej strane (počítač, mikrokontróler, iný klient...) 
