@@ -3,6 +3,7 @@
 * Arduino funguje v režime HTTP webservera
 * Arduino riadi na základe navolenej hysterézy a cieľovej teploty výstup - relé.
 * Pre meranie teploty Arduino využíva senzor Dallas DS18B20 na OneWire zbernici v parazitnom / normálnom zapojení
+* **Arduino na UART vypíše pridelenú (respektíve statickú) IP adresu**
 
 | Názov súboru        | Shield           | IPv4           |
 | ------------- |:-------------:| ------------- |
