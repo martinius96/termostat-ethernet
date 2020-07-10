@@ -42,3 +42,9 @@
 
 **Rozšírené informácie k projektu v článku:**
 * http://deadawp.blog.sector.sk/blogclanok/13223/izbovy-termostat-arduino-ethernet.htm
+
+# Screenshoty webaplikácie + výstup Serial monitoru
+![Termostat v prevádzke - webserver - Arduino](https://i.imgur.com/9EOOqlW.png)
+![Termostat vypnutý - webserver - Arduino](https://i.imgur.com/NZrCgGH.png)
+![Termostat- presmerovanie používateľa po odoslaní dát do formulára](https://i.imgur.com/k9J9DFG.png)
+![UART - RS232 výstup termostatu](https://i.imgur.com/qQ74dpi.png)
