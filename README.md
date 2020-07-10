@@ -1,7 +1,8 @@
 # Termostat - Arduino + Ethernet W5100
 * Termostat postavený na platforme Arduino s Ethernetom
-* Arduino funguje v režime webservera
+* Arduino funguje v režime HTTP webservera
 * Arduino riadi na základe navolenej hysterézy a cieľovej teploty výstup - relé.
+* Pre meranie teploty Arduino využíva senzor Dallas DS18B20 na OneWire zbernici v parazitnom / normálnom zapojení
 
 | Názov súboru        | Shield           | IPv4           |
 | ------------- |:-------------:| ------------- |
