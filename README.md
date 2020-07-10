@@ -8,10 +8,10 @@
 | static_W5500_1_254.hex | W5500      | 192.168.1.254 |
 | static_W5500_4_1.hex | W5500      | 192.168.4.1 |
 
-# Nahratie programu do Arduina cez avrdude
+# Nahratie programu do Arduina cez avrdude (vzorovo pre COM21 a program sketch.ino.hex):
 * avrdude -CC: avrdude.conf -v -patmega328p -carduino -PCOM21 -b115200 -D -Uflash:w:sketch.ino.hex:i
 
-# Dôležité informácie
+# Dôležité informácie:
 * Serial monitor: 115200 baud/s
 * Údaje o hysteréze a referenčnej teplote uložené v EEPROM pamäti
 
@@ -19,3 +19,12 @@
 * / - root stránka obsahujúca formulár, aktuálny výpis logického výstupu pre relé, teplotu
 * /action.html - spracúvava hodnoty z formulára, zapisuje ich do EEPROM pamäte, presmeruje používateľa späť na root stránku
 * /get_data/ - distribuuje dáta o aktuálnej teplote, referenčnej teplote a hysteréza tretej strane (počítač, mikrokontróler, iný klient...) 
+
+**Rozšírená verzia tohto projektu obsahuje:**
+* Manuálny režim pre relé (neobmedzená doba, natvrdo ZAP/VYP)
+* Watchdog timer
+* Dostupné senzory SHT21, SHT31, DHT22, BME280, BMP280 a iné
+* Režim chladenia
+* Ovládanie a konfigurácia po RS232 / UART nezávisle na Ethernete
+* PID regulácia teploty pre termostat
+* Možnosť využitia platforiem ESP8266, ESP32 pre termostat
