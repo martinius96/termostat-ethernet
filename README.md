@@ -1,4 +1,7 @@
 # Termostat - Arduino + Ethernet W5100
+* Termostat postavený na platforme Arduino s Ethernetom
+* Arduino funguje v režime webservera
+* Arduino riadi na základe navolenej hysterézy a cieľovej teploty výstup - relé.
 | Názov súboru        | Shield           | IPv4           |
 | ------------- |:-------------:| ------------- |
 | dynamic_W5100.hex     | W5100 | priradená cez DHCP |
