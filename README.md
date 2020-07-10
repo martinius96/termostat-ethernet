@@ -11,7 +11,7 @@
 # Nahratie programu do Arduina cez avrdude (vzorovo pre COM21 a program sketch.ino.hex):
 * avrdude -CC: avrdude.conf -v -patmega328p -carduino -PCOM21 -b115200 -D -Uflash:w:sketch.ino.hex:i
 
-# Dôležité informácie:
+**Dôležité informácie:**
 * Serial monitor: 115200 baud/s
 * Údaje o hysteréze a referenčnej teplote uložené v EEPROM pamäti
 
@@ -28,3 +28,9 @@
 * Ovládanie a konfigurácia po RS232 / UART nezávisle na Ethernete
 * PID regulácia teploty pre termostat
 * Možnosť využitia platforiem ESP8266, ESP32 pre termostat
+
+**Pri záujme o kúpu rozšírenej verzie:**
+* martinius96@gmail.com
+
+**Viac projektov na:**
+* https://arduino.php5.sk
