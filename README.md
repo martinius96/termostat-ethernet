@@ -1,1 +1,1 @@
-# termostat-ethernet
+# Termostat - Arduino + Ethernet W5100
