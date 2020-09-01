@@ -112,7 +112,56 @@ Dynamický údaj, ktorý sa predovšetkým mení je aktuálna hodnota výstupu- 
 <li>Ovládanie a konfigurácia po RS232 / UART nezávisle na Ethernete</li>
 <li>PID regulácia teploty pre termostat</b>
 <li>Možnosť využitia platforiem ESP8266, ESP32 pre termostat</li>
-
+<h3><font color="#3498DB">Webserver response - hlavná HTML stránka prehľadu</font></h3>
+<pre style="background-color:#3498DB;">
+	  client.println(F("HTTP/1.1 200 OK"));
+          client.println(F("Content-Type: text/html"));
+          client.println();
+          client.println(F("<!DOCTYPE html>"));
+          client.println(F("<html>"));
+          client.println(F("<head>"));
+          client.println(F("<meta charset='utf-8'>"));
+          client.println(F("<meta name='author' content='Martin Chlebovec'>"));
+          client.println(F("<meta http-equiv='Refresh' content='10'; />"));
+          client.println(F("<meta name='viewport' content='width=device-width, initial-scale=1'>"));
+          client.println(F("<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css'>"));
+          client.println(F("<script type='text/javascript'>"));
+          client.println(F("var timeleft = 10;"));
+          client.println(F("var downloadTimer = setInterval(function(){"));
+          client.println(F("if(timeleft <= 0){"));
+          client.println(F("clearInterval(downloadTimer);"));
+          client.println(F("document.getElementById(\"countdown\").innerHTML = \"Reštart...\";"));
+          client.println(F("} else {"));
+          client.println(F("document.getElementById(\"countdown\").innerHTML = timeleft + \" sekúnd do reštartu\";"));
+          client.println(F("}"));
+          client.println(F("timeleft -= 1;"));
+          client.println(F("}, 1000);"));
+          client.println(F("</script>"));
+          client.println(F("<title>HTTP webserver - Arduino + Ethernet</title>"));
+          client.println(F("</head>"));
+          client.println(F("<body>"));
+          client.println(F("<center><h3>Zadajte dáta pre webserver (budú uložené do EEPROM):</h3>"));
+          client.println(F("<form action='/action.html' method='get'>"));
+          client.println("<b>Referenčná teplota:</b><br><input type='number' id='fname' name='fname' min='5' max='50' step='0.25' value=" + read_String(10) + "><br>");
+          client.println("<b>Hysteréza:</b><br><input type='number' id='fname2' name='fname2' min='0' max='10' step='0.25' value=" + read_String(100) + "><br>");
+          client.println(F("<input type='submit' class='btn btn-success' value='Zapísať'>"));
+          client.println(F("</form><hr>"));
+          if (stav == "ZAP") {
+            client.println(F("<b><font color='green'>Výstup: Zapnutý</font></b>"));
+          }
+          if (stav == "VYP") {
+            client.println(F("<b><font color='red'>Výstup: Vypnutý</font></b>"));
+          }
+          client.println(F("<div id=\"countdown\"></div>"));
+          client.print(F("Aktuálna teplota senzora DS18B20: "));
+          client.print(teplota);
+          client.println(F(" °C"));
+          client.println(F("<h3>Autor: Martin Chlebovec - martinius96@gmail.com - https://arduino.php5.sk</h3>"));
+          client.println(F("<h4>Verzia free-1.0.0 build 10. Jul 2020</h4>"));
+          client.println(F("</center>"));
+          client.println(F("</body>"));
+          client.println(F("</html>"));
+</pre>
 <p>
 Programovú implementáciu pre projekt je možné nájsť na: <a href="https://github.com/martinius96/termostat-ethernet/">https://github.com/martinius96/termostat-ethernet/</a>. 
 Implmentácia obsahuje programy pre statickú / dynamickú IPv4 adresu priradenú k Ethernet shieldu. 
