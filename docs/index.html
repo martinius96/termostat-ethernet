@@ -162,6 +162,29 @@ Dynamický údaj, ktorý sa predovšetkým mení je aktuálna hodnota výstupu- 
           client.println(F("&lt;/body>"));
           client.println(F("&lt;/html>"));
 </pre>
+<h3><font color="#C0392B">Webserver response - JSON output</font></h3>
+<div class="alert alert-danger">
+{
+	"Hysteresis":21.75,
+	"Target_Temperature":0.25,
+	"Actual_Temperature":21.43
+}
+</div>
+<pre style="background-color:#C0392B;">
+ 	  client.println(F("HTTP/1.1 200 OK"));
+          client.println(F("Content-Type: text/html"));
+          client.println();
+          client.println(F("{"));
+          client.print(F("\"Hysteresis\":"));
+          client.print(read_String(10));
+          client.println(F(","));
+          client.print(F("\"Target_Temperature\":"));
+          client.print(read_String(100));
+          client.println(F(","));
+          client.print(F("\"Actual_Temperature\":"));
+          client.println(String(teplota));
+          client.println(F("}"));
+</pre>
 <p>
 Programovú implementáciu pre projekt je možné nájsť na: <a href="https://github.com/martinius96/termostat-ethernet/">https://github.com/martinius96/termostat-ethernet/</a>. 
 Implmentácia obsahuje programy pre statickú / dynamickú IPv4 adresu priradenú k Ethernet shieldu. 
