@@ -36,17 +36,15 @@
 * PID regulácia teploty pre termostat
 * Možnosť využitia platforiem ESP8266, ESP32 pre termostat
 
-**Pri záujme o kúpu rozšírenej verzie:**
+**Pri záujme o kúpu rozšírenej verzie / základnej verzie so zdrojovým kódom .ino:**
 * martinius96@gmail.com
-
-**Viac projektov na:**
-* https://arduino.php5.sk
 
 **Rozšírené informácie k projektu v článku:**
 * http://deadawp.blog.sector.sk/blogclanok/13223/izbovy-termostat-arduino-ethernet.htm
 
 # Screenshoty webaplikácie + výstup Serial monitoru
-![Termostat vypnutý - webserver - Arduino](https://i.imgur.com/9EOOqlW.png)
-![Termostat zapnutý - webserver - Arduino](https://i.imgur.com/NZrCgGH.png)
-![Termostat- presmerovanie používateľa po odoslaní dát do formulára](https://i.imgur.com/k9J9DFG.png)
-![UART - RS232 výstup termostatu](https://i.imgur.com/qQ74dpi.png)
+![Ethernet termostat vypnutý - webserver - Arduino](https://i.imgur.com/9EOOqlW.png)
+![Ethernet termostat zapnutý - webserver - Arduino](https://i.imgur.com/bnm7EAj.png)
+![Ethernet termostat- presmerovanie používateľa po odoslaní dát do formulára](https://i.imgur.com/k9J9DFG.png)
+![UART - RS232 výstup termostatu - Arduino](https://i.imgur.com/qQ74dpi.png)
+![JSON output - Ethernet termostat - Arduino](https://i.imgur.com/mkbDkDx.png)
