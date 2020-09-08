@@ -19,10 +19,6 @@ var getUrlParameter = function getUrlParameter(sParam) {
         }
     }
 };
-var fname = getUrlParameter('fname');
-var fname2 = getUrlParameter('fname2');
-document.getElementById("output").innerHTML = "My new text!";
-document.getElementById("output2").innerHTML = "My new text!";
 	</script>    
 <title>Title of the document</title>
 </head>
@@ -31,5 +27,12 @@ document.getElementById("output2").innerHTML = "My new text!";
 	<li id="output"></li>
 <li id="output2"></li>
 </body>
-
+<script>
+   $(document).ready(function(){
+      var fname = getUrlParameter('fname');
+	var fname2 = getUrlParameter('fname2');
+      $('#output').val(fname);
+$('#output2').val(fname2);
+   });
+</script>
 </html>
