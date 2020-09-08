@@ -31,8 +31,8 @@ var getUrlParameter = function getUrlParameter(sParam) {
    $(document).ready(function(){
       var fname = getUrlParameter('fname');
 	var fname2 = getUrlParameter('fname2');
-      $('#output').val(fname);
-$('#output2').val(fname2);
+$('#output').text(fname + " °C")
+$('#output2').text(fname2 + " °C")
    });
 </script>
 </html>
