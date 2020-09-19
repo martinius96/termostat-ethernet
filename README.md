@@ -23,9 +23,9 @@
 * Údaje o hysteréze a referenčnej teplote uložené v EEPROM pamäti
 
 **HTML stránky bežiace na Arduine:**
-* / - root stránka obsahujúca formulár, aktuálny výpis logického výstupu pre relé, teplotu
-* /action.html - spracúvava hodnoty z formulára, zapisuje ich do EEPROM pamäte, presmeruje používateľa späť na root stránku
-* /get_data/ - distribuuje dáta o aktuálnej teplote, referenčnej teplote a hysteréza tretej strane (počítač, mikrokontróler, iný klient...) 
+* **/** - root stránka obsahujúca formulár, aktuálny výpis logického výstupu pre relé, teplotu
+* **/action.html** - spracúvava hodnoty z formulára, zapisuje ich do EEPROM pamäte, presmeruje používateľa späť na root stránku
+* **/get_data/** - distribuuje dáta o aktuálnej teplote, referenčnej teplote a hysteréze v JSON formáte
 
 **Rozšírená verzia tohto projektu obsahuje:**
 * Manuálny režim pre relé (neobmedzená doba, natvrdo ZAP/VYP)
