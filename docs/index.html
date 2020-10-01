@@ -207,19 +207,22 @@ Dynamický údaj, ktorý sa predovšetkým mení je aktuálna hodnota výstupu- 
 }
 </div>
 <pre style="background-color:#C0392B;">
- 	  client.println(F("HTTP/1.1 200 OK"));
-          client.println(F("Content-Type: text/html"));
+	  client.println(F("HTTP/1.1 200 OK"));
+          client.println(F("Content-Type: application/json"));
           client.println();
           client.println(F("{"));
           client.print(F("\"Hysteresis\":"));
-          client.print(read_String(10));
+          client.print(read_String(100));
           client.println(F(","));
           client.print(F("\"Target_Temperature\":"));
-          client.print(read_String(100));
+          client.print(read_String(10));
           client.println(F(","));
           client.print(F("\"Actual_Temperature\":"));
           client.println(String(teplota));
           client.println(F("}"));
+          delay(1);
+          client.stop();
+          client.flush();
 </pre>
 <p>
 Programovú implementáciu v strojových kódoch pre Ethernet termostat je možné nájsť na: <a href="https://github.com/martinius96/termostat-ethernet/">https://github.com/martinius96/termostat-ethernet/</a>. 
