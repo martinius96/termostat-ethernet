@@ -2,8 +2,7 @@
 <html lang="sk-SK">
 <head>
 	<!-- Primary Meta Tags -->
-	<title>Izbový termostat - Arduino - Ethernet Wiznet W5100</title>
-	<meta name="title" content="Izbový termostat - Arduino - Ethernet Wiznet W5100">
+	<title>Izbový termostat - Arduino - Ethernet Wiznet W5100 - Webserver</title>
 	<meta name="description" content="Izbový termostat navrhnutý na platforme Arduino Uno + Ethernet shield Wiznet W5100 / W5500. Termostat pre vykurovanie / chladenie.">
 
 	<!-- Open Graph / Facebook -->
@@ -67,8 +66,14 @@
 <span class="label label-default">HTML</span>
 <span class="label label-primary">Webserver</span>
 <span class="label label-success">WebSocket</span>
-<div class="alert alert-info">
-	<b>Update: 2. Sep. 2020 - </b>opravený JSON output pre Ethernet termostat, nový build 1.0.1 exportovaný do strojových kódov (.hex)
+<div class="alert alert-danger">
+	<b>Update: 2. Okt. 2020 - </b>
+	<li>Opravený JSON output (prehodené riadiace teploty) k opačným entitám</li>
+	<li>Opravený Content-type pre JSON output z text/html na application/json<li>
+	<li>Všetky statické časti HTML stránok presunuté do ROM pamäte cez F() makro</li>
+	<li>Maximálne ohľadčená RAM pamäť pre bezproblémový beh low-latency webservera.</li>
+	<li>Pre DHCP príklad použitá funkcia Ethernet.maintain() pre renew času DHCP poolu.</li>
+	<li>(predĺženie rovnakej IP adresy / vyžiadanie novej - v závislosti od konfigurácie DHCP služby)</li>
 </div>
 <hr><center><h2>Izbový termostat - Arduino + Ethernet Wiznet W5100 / W5500</h2></center><hr>
 <p>
@@ -81,7 +86,7 @@ Webserver umožňuje beh niekoľkých na sebe nezávislých HTML stránok, ktor�
 <li>Arduino Uno / Mega 2560</li>
 <li>Ethernet shield Wiznet W5100 / Ethernet modul Wiznet W5200-W5500</li>
 <li>Teplotný senzor DS18B20 na OneWire zbernici</li>
-<li>Relé SRD-5VDC-SL-C slúžiace na spínanie kotla</li>
+<li>Relé SRD-5VDC-SL-C slúžiace na spínanie kotla (Active-LOW signál)</li>
 
 <p>
 Elektromagnetické relé SRD-5VDC-SL-C, ktoré je v projekte použité umožňuje spínať až 10A pri 230V - výkon 2300W. 
