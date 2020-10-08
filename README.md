@@ -11,7 +11,7 @@
 | dynamic_W5100.hex     | W5100 | priradená cez DHCP |
 | dynamic_W5500.hex      | W5500      | priradená cez DHCP |
 | dynamic_W5100_maintain.hex     | W5100 | priradená cez DHCP + maintain |
-| dynamic_W5500_maintain.hex      | W5500      | priradená + maintain|
+| dynamic_W5500_maintain.hex      | W5500      | priradená cez DHCP + maintain|
 | static_W5100_1_254.hex | W5100      | 192.168.1.254 |
 | static_W5100_4_1.hex | W5100      | 192.168.4.1 |
 | static_W5500_1_254.hex | W5500      | 192.168.1.254 |
