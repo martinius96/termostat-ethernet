@@ -73,6 +73,7 @@ Projekt Ethernet (izbový) termostat existuje aj vo verzii zdarma, ktorá je dos
 Verzia obsahuje celkom 6 strojových - predkompilovaných programov pre platformu Arduino Uno.
 Strojový kód (.hex) zaručuje, že daný program je kompatibilný a má totožnú funkčnosť na všetky zariadenia, do ktorých sa nahrá a spustí.
 Kód je tak univerzálny a poskytuje možnosť na ukážku poskytnúť autorovi záujemcom o vyskúšanie projektu jeho build bez prístupu ku zdrojovému (.ino) kódu.
+<b>Free verzia je tak dostupná iba vo forme strojového kódu bez prístupu k aplikácii napísanej v .ino formáte.</b>
 </p>	
 <b>Rozdelenie strojových kódov na základe Ethernet shieldu:</b>
 <li>Ethernet Wiznet W5100</li>
@@ -80,7 +81,10 @@ Kód je tak univerzálny a poskytuje možnosť na ukážku poskytnúť autorovi 
 <b>Rozdelenie strojových kódov na základe pridelenia IPv4 LAN adresy:</b>
 <li><b>Statická</b> - pridelená staticky priamo v zdrojovom kóde (192.168.4.1 / 192.168.1.254) 24-bit maska</li>
 <li><b>Dynamická</b> - pridelená dynamicky cez DHCP server v  LAN sieti</li>
-				
+<p>
+Pre nahratie strojového kódu do Arduina je možné využiť nástroj AVRDUDE, ktorý pre nahrávanie skompilovaného programu využíva i prostredie Arduino IDE.
+Nástroj je možné spúšťať priamo z príkazového riadku, ale je nutné správne nastaviť všetky konfigurovateľné údaje.
+</p>				
 				
  </div>
 		</div>
