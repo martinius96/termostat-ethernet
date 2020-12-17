@@ -70,14 +70,18 @@
 <hr><center><h2>Spustenie projektu izbový termostat - Arduino + Ethernet Wiznet W5100 / W5500</h2></center><hr>
 <p>
 Projekt Ethernet (izbový) termostat existuje aj vo verzii zdarma, ktorá je dostupná v repozitári na Githube.
-Verzia obsahuje celkom 6 strojových - predkompilovaných programov pre platformu Arduino, ktoré sú rozlíšené na základe parametrov
+Verzia obsahuje celkom 6 strojových - predkompilovaných programov pre platformu Arduino Uno.
+Strojový kód (.hex) zaručuje, že daný program je kompatibilný a má totožnú funkčnosť na všetky zariadenia, do ktorých sa nahrá a spustí.
+Kód je tak univerzálny a poskytuje možnosť na ukážku poskytnúť autorovi záujemcom o vyskúšanie projektu jeho build bez prístupu ku zdrojovému (.ino) kódu.
 </p>	
 <b>Rozdelenie strojových kódov na základe Ethernet shieldu:</b>
 <li>Ethernet Wiznet W5100</li>
 <li>Ethernet Wiznet W5500 (W5200 - 5500 compatible)</li>
 <b>Rozdelenie strojových kódov na základe pridelenia IPv4 LAN adresy:</b>
-<li><b>Statická</b> - pridelená staticky priamo v zdrojovom kóde</li>
+<li><b>Statická</b> - pridelená staticky priamo v zdrojovom kóde (192.168.4.1 / 192.168.1.254) 24-bit maska</li>
 <li><b>Dynamická</b> - pridelená dynamicky cez DHCP server v  LAN sieti</li>
+				
+				
  </div>
 		</div>
 </div>
