@@ -1,24 +1,33 @@
 <!DOCTYPE html>
 <html lang="sk-SK">
 <head>
-  	<meta property="og:title" content="Spustenie projektu Ethernet termostat - Arduino Uno" />
-  	<meta property="og:locale" content="sk_SK" />    	
-	<meta name="robots" content="index, follow">
+	<!-- Primary Meta Tags -->
+	<title>Spustenie projektu - Izbový termostat - Arduino + Ethernet</title>
+	<meta name="description" content="Návod na inštaláciu a spustenie projektu izbový termostat postavenom na platforme Arduuino Uno a Ethernet shield Wiznet W5100.">
+
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://martinius96.github.io/termostat-ethernet/">
+	<meta property="og:title" content="Spustenie projektu - Izbový termostat - Arduino + Ethernet">
+	<meta property="og:description" content="Návod na inštaláciu a spustenie projektu izbový termostat postavenom na platforme Arduuino Uno a Ethernet shield Wiznet W5100.">
+	<meta property="og:image" content="">
+
+	<!-- Twitter -->
+	<meta property="twitter:card" content="summary_large_image">
+	<meta property="twitter:url" content="https://martinius96.github.io/termostat-ethernet/">
+	<meta property="twitter:title" content="Spustenie projektu - Izbový termostat - Arduino + Ethernet">
+	<meta property="twitter:description" content="Návod na inštaláciu a spustenie projektu izbový termostat postavenom na platforme Arduuino Uno a Ethernet shield Wiznet W5100.">
+	<meta property="twitter:image" content="">
+	
 	<link rel="icon" type="image/png" href="favicon.png">
 	<link rel="sitemap" type="application/xml" title="Sitemap" href="sitemap.xml" />
-    	<meta name='revisit-after' content='2 days'>
-	<link rel="icon" type="image/png" href="favicon.png">
-	<link rel="sitemap" type="application/xml" title="Sitemap" href="sitemap.xml" />
-    	<title>Spustenie projektu Ethernet termostat - Arduino Uno</title>
-    	<meta property='fb:admins' content='100001242570317'>
+	<meta name="google-site-verification" content="UwZZh2EXv3iWUAi_1Z0hLxVCz6ySJ4UdY_BPoLtejwo" />    	
+	<meta property='fb:admins' content='100001242570317'>
     	<meta charset="utf-8">
     	<meta name="viewport" content="width=device-width, initial-scale=1">
-    	<meta name="description" content="Popis inštalácia / spustenia projektu Ethernet termostat na platforme Arduino Uno s Ethernet shieldom Wiznet W5100">
-    	<meta name="keywords" content="teplota, ds18b20, dallas, onewire, termostat, termometer, inštalácia, spustenie, xloader, zdrojový, avrdude, zapnút, vypnúť, kontakt, martin, chlebovec, program, strojový, arduino, ethernet, wiznet, w5100, avr, architetúra">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-	<meta name="google-site-verification" content="UwZZh2EXv3iWUAi_1Z0hLxVCz6ySJ4UdY_BPoLtejwo" />
 	<script type="text/javascript">
     		window.smartlook||(function(d) {
     			var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];
@@ -31,21 +40,21 @@
 <body>
 	<div class="container">
   		<div class="row">
+    			<div class="col-sm-12">
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="index.html">Termostat - Ethernet</a>
     </div>
     <ul class="nav navbar-nav">
-      	<li><a href="index.html">Prehľad</a></li>
+      	<li class=""><a href="index.html">Prehľad</a></li>
 	<li><a href="zapojenie.html">Zapojenie</a></li>      
 	<li><a href="termostat.html">Termostat (HTML vizualizácia)</a></li>
-<li class="active"><a href="spustenie.html">Spustenie Ethernet termostatu</a></li>
-	          	<li class=""><a href="kontakt.html">Kontakt</a></li>
+	<li class="active"><a href="spustenie.html">Spustenie Ethernet termostatu</a></li>
+      	<li><a href="kontakt.html">Kontakt</a></li>
     </ul>
   </div>
-</nav>   			
-<div class="col-sm-12">
+</nav>  
 				<div class="alert alert-success">
 					<strong>Projekt k repozitáru - Github: </strong><a href="https://github.com/martinius96/termostat-ethernet/">Termostat - Ethernet</a>
 				</div>	
@@ -58,21 +67,19 @@
 <span class="label label-default">HTML</span>
 <span class="label label-primary">Webserver</span>
 <span class="label label-success">WebSocket</span>
-<div class="alert alert-danger">
-	<b>Update: 2. Okt. 2020 - </b>
-	<li>Opravený JSON output (prehodené riadiace teploty) k opačným entitám</li>
-	<li>Opravený Content-type pre JSON output z text/html na application/json</li>
-	<li>Všetky statické časti HTML stránok presunuté do ROM pamäte cez F() makro</li>
-	<li>Maximálne ohľadčená RAM pamäť pre bezproblémový beh low-latency webservera.</li>
-	<li>Pre DHCP príklad použitá funkcia Ethernet.maintain() pre renew času DHCP poolu.</li>
-	<li>(predĺženie rovnakej IP adresy / vyžiadanie novej - v závislosti od konfigurácie DHCP služby)</li>
-	<li>Zmena JSON súboru z get_data na get_data.json</li>
+<hr><center><h2>Spustenie projektu izbový termostat - Arduino + Ethernet Wiznet W5100 / W5500</h2></center><hr>
+<p>
+Projekt Ethernet (izbový) termostat existuje aj vo verzii zdarma, ktorá je dostupná v repozitári na Githube.
+Verzia obsahuje celkom 6 strojových - predkompilovaných programov pre platformu Arduino, ktoré sú rozlíšené na základe parametrov
+</p>	
+<b>Rozdelenie strojových kódov na základe Ethernet shieldu:</b>
+<li>Ethernet Wiznet W5100</li>
+<li>Ethernet Wiznet W5500 (W5200 - 5500 compatible)</li>
+<b>Rozdelenie strojových kódov na základe pridelenia IPv4 LAN adresy:</b>
+<li><b>Statická</b> - pridelená staticky priamo v zdrojovom kóde</li>
+<li><b>Dynamická</b> - pridelená dynamicky cez DHCP server v  LAN sieti</li>
+ </div>
+		</div>
 </div>
-        <hr><center><h2>Izbový termostat - Arduino + Ethernet Wiznet W5100 / W5500</h2></center><hr>
-				<li><b>E-mail: </b>martinius96@gmail.com</li>
-        <li><b>Facebook: </b><a href="https://www.facebook.com/martin.s.chlebovec">https://www.facebook.com/martin.s.chlebovec</a></li>
-        <li><b>Discord: </b>Pingent Kompany#0938</li>
-				</div>
-					</div>
 </body>
 </html>
