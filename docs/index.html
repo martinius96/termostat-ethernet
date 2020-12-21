@@ -90,13 +90,16 @@ Webserver umožňuje beh niekoľkých na sebe nezávislých HTML stránok, ktor�
 <li>Ethernet shield Wiznet W5100 / Ethernet modul Wiznet W5200-W5500</li>
 <li>Teplotný senzor DS18B20 na OneWire zbernici</li>
 <li>Relé SRD-5VDC-SL-C slúžiace na spínanie kotla (Active-LOW signál)</li>
-
 <p>
+<b>HTML stránky bežiace na Arduine:</b>
+<li><b>/</b> - root stránka obsahujúca formulár, aktuálny výpis logického výstupu pre relé, teplotu</li>
+<li><b>/action.html</b> - spracúvava hodnoty z formulára, zapisuje ich do EEPROM pamäte, presmeruje používateľa späť na root stránku</li>
+<li><b>/get_data.json</b> - distribuuje dáta o aktuálnej teplote, referenčnej teplote a hysteréza tretej strane (počítač, mikrokontróler, iný klient...) v JSON formáte</li>
+<hr>				
 Elektromagnetické relé SRD-5VDC-SL-C, ktoré je v projekte použité umožňuje spínať až 10A pri 230V - výkon 2300W. 
 V prípade spínania jednosmerného obvodu (záťaže) je možné spínať 300W (10A pri 30V DC). 
 Prípadne je pre schému zapojenia plne kompatibilné aj SSR relé OMRON G3MB-202P, ktoré je vhodné iba pre neindukčnú záťaž a výhradne pre obvod so striedavým napätím. 
-Maximálny spínaný výkon 460W (230V, 2A). Spotreba Arduina s Ethernet shieldom a ostatnými perifériami je na úrovni 100-120mA pri rozopnutom relé. 
-Pri zopnutom stave pod 200mA pri 5V napájaní. Logika systému sa vykonáva každých 10 sekúnd nezávisle na webserveri, nevyžaduje sa keep-alive spojenie pre vykonanie logiky. 
+Maximálny spínaný výkon 460W (230V, 2A). Logika systému sa vykonáva každých 10 sekúnd nezávisle na webserveri, nevyžaduje sa keep-alive spojenie pre vykonanie logiky. 
 </p>
 
 <b>Webové rozhranie pre Ethernet termostat umožňuje:</b>
@@ -118,8 +121,8 @@ Webserver je tak stabilnejší a zvláda aj multi-pripojenie viacerých zariaden
 <hr>
 <p>
 Aby ostali nastavené hodnoty zachované aj po výpadku napájania, sú uložené do EEPROM pamäte Arduina. 
-Referenčná teplota na offset 10, hysteréza na offset 100. Každá z hodnôt zaberá maximálne 5B v EEPROM pamäti. 
-Limit prepisov EEPROM je na úrovni 100-tisíc prepisov. Dáta sa prepisujú iba pri odoslaní HTML formulára. 
+Referenčná teplota na offset 10, hysteréza na offset 100. Každá z hodnôt zaberá maximálne 5B v EEPROM pamäti + ukončovací znak. 
+Limit prepisov EEPROM je na úrovni 100-tisíc prepisov. Dáta sa prepisujú iba pri odoslaní HTML formulára, prevádzka termostatu je tak maximálne šetrná k EEPROM pamäti. 
 V prípade, že zariadenie pri prvom spustení nemá nič uložené na spomenutých EEPROM offsetoch, vykoná sa automatický zápis s predvolenými hodnotami - referencia: 20.25 °C, hysteréza 0.25 °C, tzv. fail-safe riešenie.
 </p>
 
@@ -128,6 +131,7 @@ Prostredníctvom meta tagu Refresh vykonáva webserver obnovu celej stránky ka�
 Do tohto času je potrebné stihnúť zapísať zmenu pre termostat, inak sa input okná resetujú pri obnovení stránky. 
 Nakoľko built-in knižnica Ethernet neobsahuje využitie asynchrónneho webservera (podobne ako u ESP8266 / ESP32), je nutné prepisovať celú stránku. 
 Dynamický údaj, ktorý sa predovšetkým mení je aktuálna hodnota výstupu- Zapnutý / Vypnutý, ktorý informuje prevádzkovateľa o skutočnom stave výstupu spoločne aj s farebným označením.
+Na webovej stránke termostatu nájde používateľ aj informácie o uptime zariadenia (ako dlho beží), t.j. čas v dňoch, hodinách, minútach a sekundách.
 </p>
 
 <b>Hlavná stránka pre modifikáciu cieľovej teploty a hysterézy - ukážka zapnutého a vypnutého výstupu:</b>
@@ -142,12 +146,10 @@ Dynamický údaj, ktorý sa predovšetkým mení je aktuálna hodnota výstupu- 
 <b>Výstup do UART monitoru - logika systému + nastavenie Ethernet adaptéru:</b>
 <center><img src="https://i.imgur.com/r5jNZf5.png" style="display: block; max-width: 100%; height: auto;" alt="Ethernet termostat - UART" title="Ethernet termostat - UART"></center>        		
 
-<b>HTML stránky bežiace na Arduine:</b>
-<li><b>/</b> - root stránka obsahujúca formulár, aktuálny výpis logického výstupu pre relé, teplotu</li>
-<li><b>/action.html</b> - spracúvava hodnoty z formulára, zapisuje ich do EEPROM pamäte, presmeruje používateľa späť na root stránku</li>
-<li><b>/get_data.json</b> - distribuuje dáta o aktuálnej teplote, referenčnej teplote a hysteréza tretej strane (počítač, mikrokontróler, iný klient...) v JSON formáte</li>
-<hr>				
 <b>Rozšírená verzia tohto termostatu obsahuje navyše - <font color="red">NIE JE OBSIAHNUTÁ V GITHUB REPOZITÁRI SO STROJOVÝMI KÓDMI:</font></b>
+div class="alert alert-info">
+	<b>Pri záujme o plnú verziu projektu - </b>martinius96@gmail.com
+</div>
 <li>Manuálny režim pre relé (neobmedzená doba, natvrdo ZAP/VYP)</li>
 <li>Watchdog timer</li>
 <li>Dostupné senzory SHT21, SHT31, DHT22, BME280, BMP280 a iné</li>
@@ -155,7 +157,7 @@ Dynamický údaj, ktorý sa predovšetkým mení je aktuálna hodnota výstupu- 
 <li>Ovládanie a konfigurácia po RS232 / UART nezávisle na Ethernete</li>
 <li>PID regulácia teploty pre termostat</b>
 <li>Možnosť využitia platforiem ESP8266, ESP32 pre termostat</li>
-<h3><font color="#3498DB">Webserver response - hlavná HTML stránka prehľadu</font></h3>
+<h3><font color="#3498DB">Fragment zdrojového kódu pre stránku Hlavného prehľadu</font></h3>
 <pre style="background-color:#3498DB;">
   	  client.println(F("HTTP/1.1 200 OK"));
           client.println(F("Content-Type: text/html"));
@@ -205,7 +207,7 @@ Dynamický údaj, ktorý sa predovšetkým mení je aktuálna hodnota výstupu- 
           client.println(F("&lt;/body>"));
           client.println(F("&lt;/html>"));
 </pre>
-<h3><font color="#C0392B">Webserver response - JSON output</font></h3>
+<h3><font color="#C0392B">Ukážkový výpis - JSON output pre ďalších klientov, spracovanie</font></h3>
 <div class="alert alert-danger">
 {<br>
 	"Hysteresis":0.25,<br>
@@ -213,6 +215,7 @@ Dynamický údaj, ktorý sa predovšetkým mení je aktuálna hodnota výstupu- 
 	"Actual_Temperature":21.43<br>
 }
 </div>
+	<h3><font color="#3498DB">Fragment zdrojového kódu pre JSON output</font></h3>
 <pre style="background-color:#C0392B;">
 	  client.println(F("HTTP/1.1 200 OK"));
           client.println(F("Content-Type: application/json"));
@@ -232,14 +235,11 @@ Dynamický údaj, ktorý sa predovšetkým mení je aktuálna hodnota výstupu- 
           client.flush();
 </pre>
 <p>
-Programovú implementáciu v strojových kódoch pre Ethernet termostat je možné nájsť na: <a href="https://github.com/martinius96/termostat-ethernet/">https://github.com/martinius96/termostat-ethernet/</a>. 
+Programovú implementáciu v strojových kódoch pre izbový (Ethernet) termostat je možné nájsť na: <a href="https://github.com/martinius96/termostat-ethernet/">https://github.com/martinius96/termostat-ethernet/</a>. 
 Implmentácia obsahuje programy pre statickú / dynamickú IPv4 adresu priradenú k Ethernet shieldu. 
-<b>Termostat je určený iba pre interiérové teploty!</b> (nad 0°C), čomu je prispôsobená aj logika systému. 
+<b>Termostat je určený iba pre interiérové teploty!</b> (nad 0°C), čomu je prispôsobená aj logika systému! 
 Termostatom je možné nahradiť už existujúci izbový termostat, možno dočasne nahradiť ohrievač v akváriu / teráriu.
 </p>
-<div class="alert alert-info">
-	<b>Pri záujme o plnú verziu projektu - </b>martinius96@gmail.com
-</div>
  </div>
 		</div>
 </div>
