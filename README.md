@@ -47,4 +47,4 @@
 ![Ethernet termostat zapnutý - webserver - Arduino](https://i.imgur.com/bnm7EAj.png)
 ![Ethernet termostat- presmerovanie používateľa po odoslaní dát do formulára](https://i.imgur.com/k9J9DFG.png)
 ![UART - RS232 výstup termostatu - Arduino](https://i.imgur.com/qQ74dpi.png)
-![JSON output - Ethernet termostat - Arduino](https://i.imgur.com/d7dNIxP.png)
+![JSON output - Ethernet termostat - Arduino](https://chiptron.cz/images/articles/IzbovyTermostat/json.jpg)
