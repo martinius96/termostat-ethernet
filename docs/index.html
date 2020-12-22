@@ -160,7 +160,27 @@ div class="alert alert-info">
 <li>Ovládanie a konfigurácia po RS232 / UART nezávisle na Ethernete</li>
 <li>PID regulácia teploty pre termostat</b>
 <li>Možnosť využitia platforiem ESP8266, ESP32 pre termostat</li>
-<h3><font color="#3498DB">Fragment zdrojového kódu pre stránku Hlavného prehľadu</font></h3>
+<h3><font color="#2ECC71">Fragment zdrojového kódu pre logiku termostatu - Rozhodovací threshold</font></h3>
+<pre style="background-color:#2ECC71;">
+    teplota = sensorsA.getTempCByIndex(0);
+    String referencia = read_String(10);
+    String hystereza = read_String(100);
+    float referencia_teplota = referencia.toFloat();
+    float hystereza_teplota = hystereza.toFloat();
+    float minus_hystereza_teplota = (-1 * hystereza_teplota);
+    float rozdiel = referencia_teplota - teplota;
+    if (rozdiel > hystereza_teplota) {
+      Serial.println("RELE ZAP");
+      stav = "ZAP";
+      digitalWrite(rele, LOW);
+    } else if (rozdiel < minus_hystereza_teplota) {
+      Serial.println("RELE VYP");
+      stav = "VYP";
+      digitalWrite(rele, HIGH);
+    }
+    sensorsA.requestTemperatures();
+</pre>	
+<h3><font color="#3498DB">Fragment zdrojového kódu pre stránku Hlavného prehľadu - bez spracovania údajov z HTML formuláru</font></h3>
 <pre style="background-color:#3498DB;">
   	  client.println(F("HTTP/1.1 200 OK"));
           client.println(F("Content-Type: text/html"));
