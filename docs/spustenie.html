@@ -88,6 +88,47 @@ Kód je tak univerzálny a poskytuje možnosť na ukážku poskytnúť autorovi 
 <b>Rozdelenie strojových kódov na základe pridelenia IPv4 LAN adresy:</b>
 <li><b>Statická</b> - pridelená staticky priamo v zdrojovom kóde (192.168.4.1 / 192.168.1.254) 24-bit maska</li>
 <li><b>Dynamická</b> - pridelená dynamicky cez DHCP server v  LAN sieti (môže byť priradená staticky na cieľovú MAC adresu)</li>
+<table style="width: 100%;" border="1">
+<thead>
+<tr>
+<th>Názov súboru</th>
+<th align="center">Shield</th>
+<th>IPv4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dynamic_W5100.hex</td>
+<td align="center">W5100</td>
+<td>priradená cez DHCP (obsahuje i maintain pre predĺženie lease time / vyžiadanie novej IP)</td>
+</tr>
+<tr>
+<td>dynamic_W5500.hex</td>
+<td align="center">W5500</td>
+<td>priradená cez DHCP (obsahuje i maintain pre predĺženie lease time / vyžiadanie novej IP)</td>
+</tr>
+<tr>
+<td>static_W5100_1_254.hex</td>
+<td align="center">W5100</td>
+<td>192.168.1.254</td>
+</tr>
+<tr>
+<td>static_W5100_4_1.hex</td>
+<td align="center">W5100</td>
+<td>192.168.4.1</td>
+</tr>
+<tr>
+<td>static_W5500_1_254.hex</td>
+<td align="center">W5500</td>
+<td>192.168.1.254</td>
+</tr>
+<tr>
+<td>static_W5500_4_1.hex</td>
+<td align="center">W5500</td>
+<td>192.168.4.1</td>
+</tr>
+</tbody>
+</table>
 <p>
 Pre nahratie strojového kódu do Arduina je možné využiť nástroj AVRDUDE, ktorý pre nahrávanie skompilovaného programu využíva i prostredie Arduino IDE.
 Nástroj je možné spúšťať priamo z príkazového riadku, ale je nutné správne nastaviť všetky konfigurovateľné údaje a tak nie je vhodný pre menej skúsených programátorov, či laikov.
