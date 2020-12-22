@@ -69,6 +69,10 @@
 <div class="alert alert-info">
 	<strong>MAC adresa Ethernet termostatu: </strong>DE:AD:BE:EF:FE:ED - <strong>Pre potreby statického priradenia IP adresy z DHCP služby</strong>
 </div>	
+<div class="alert alert-warning">
+	<strong>Nahratie programu do Arduina cez avrdude (vzorovo pre COM21 a program sketch.ino.hex):</strong><br>
+	avrdude -CC: avrdude.conf -v -patmega328p -carduino -PCOM21 -b115200 -D -Uflash:w:sketch.ino.hex:i
+</div>	
 <hr><center><h2>Spustenie projektu izbový termostat - Arduino + Ethernet Wiznet W5100 / W5500</h2></center><hr>
 <p>
 Projekt Ethernet (izbový) termostat existuje aj vo verzii zdarma, ktorá je dostupná v repozitári na Githube.
