@@ -160,7 +160,11 @@ Na webovej stránke termostatu nájde používateľ aj informácie o uptime zari
 <li>Ovládanie a konfigurácia po RS232 / UART nezávisle na Ethernete</li>
 <li>PID regulácia teploty pre termostat</b>
 <li>Možnosť využitia platforiem ESP8266, ESP32 pre termostat</li>
+<hr>
+<center><h2>Fragmenty zdrojových kódov (bez backendu)</h2></center>
+<hr>		
 <h3><font color="#2ECC71">Fragment zdrojového kódu pre logiku termostatu - Rozhodovací threshold</font></h3>
+<li>Vykonáva sa každých 10 sekúnd bez ohľadu na webserver, či pripojenie klienta</li>
 <pre style="background-color:#2ECC71;">
     teplota = sensorsA.getTempCByIndex(0);
     String referencia = read_String(10);
@@ -230,14 +234,6 @@ Na webovej stránke termostatu nájde používateľ aj informácie o uptime zari
           client.println(F("&lt;/body>"));
           client.println(F("&lt;/html>"));
 </pre>
-<h3><font color="#C0392B">Ukážkový výpis - JSON output pre ďalších klientov, spracovanie</font></h3>
-<div class="alert alert-danger">
-{<br>
-	"Hysteresis":0.25,<br>
-	"Target_Temperature":21.75,<br>
-	"Actual_Temperature":21.43<br>
-}
-</div>
 	<h3><font color="#3498DB">Fragment zdrojového kódu pre JSON output</font></h3>
 <pre style="background-color:#C0392B;">
 	  client.println(F("HTTP/1.1 200 OK"));
@@ -257,11 +253,19 @@ Na webovej stránke termostatu nájde používateľ aj informácie o uptime zari
           client.stop();
           client.flush();
 </pre>
+<h3><font color="#C0392B">Ukážkový výpis - JSON output pre ďalších klientov, spracovanie</font></h3>
+<div class="alert alert-danger">
+{<br>
+	"Hysteresis":0.25,<br>
+	"Target_Temperature":21.75,<br>
+	"Actual_Temperature":21.43<br>
+}
+</div>
 <p>
 Programovú implementáciu v strojových kódoch pre izbový (Ethernet) termostat je možné nájsť na: <a href="https://github.com/martinius96/termostat-ethernet/">https://github.com/martinius96/termostat-ethernet/</a>. 
 Implmentácia obsahuje programy pre statickú / dynamickú IPv4 adresu priradenú k Ethernet shieldu. 
 <b>Termostat je určený iba pre interiérové teploty!</b> (nad 0°C), čomu je prispôsobená aj logika systému! 
-Termostatom je možné nahradiť už existujúci izbový termostat, možno dočasne nahradiť ohrievač v akváriu / teráriu.
+Termostatom je možné nahradiť už existujúci izbový termostat, možno dočasne nahradiť ohrievač v akváriu / teráriu pre udržiavanie stálej teploty.
 </p>
  </div>
 		</div>
