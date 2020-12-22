@@ -225,18 +225,60 @@ Na webovej stránke termostatu nájde používateľ aj informácie o uptime zari
             client.println(F("&lt;b>&lt;font color='red'>Výstup: Vypnutý&lt;/font>&lt;/b>"));
           }
           client.println(F("&lt;div id=\"countdown\">&lt;/div>"));
-          client.print(F("Aktuálna teplota senzora DS18B20: "));
+          client.print(F("&lt;b>Aktuálna teplota senzora DS18B20:&lt;/b> "));
           client.print(teplota);
           client.println(F(" °C"));
-          client.println(F("&lt;h3>Autor: Martin Chlebovec - martinius96@gmail.com - https://arduino.php5.sk&lt;/h3>"));
-          client.println(F("&lt;h4>Verzia free-1.0.0 build 10. Jul 2020&lt;/h4>"));
+          client.print(F("&lt;hr>"));
+          client.print(F("&lt;b>Uptime: &lt;/b>"));
+          client.print(days);
+          client.print(F("d"));
+          client.print(F(" "));
+          client.print(hours);
+          client.print(F("h"));
+          client.print(F(" "));
+          client.print(minutes);
+          client.print(F("m"));
+          client.print(F(" "));
+          client.print(seconds);
+          client.print(F("s"));
+          client.println(F("&lt;h3>Autor: Martin Chlebovec - martinius96@gmail.com - https://martinius96.github.io/termostat-ethernet/&lt;/h3>"));
+          client.println(F("&lt;h4>Verzia free - 1.0.2 build: 01. Oct 2020&lt;/h4>"));
           client.println(F("&lt;/center>"));
           client.println(F("&lt;/body>"));
           client.println(F("&lt;/html>"));
+          delay(1);
+          client.stop();
+          client.flush();
 </pre>
-	<h3><font color="#3498DB">Fragment zdrojového kódu pre JSON output</font></h3>
+<h3><font color="#D35400">Fragment zdrojového kódu s výpisom nastavených riadiacich dát po odoslaní HTML formulára s následným presmerovaním používateľa späť na hlavnú stránku(spracovanie neobsiahnuté)</font></h3>
+<pre style="background-color:#D35400;">
+            client.println(F("HTTP/1.1 200 OK"));
+            client.println(F("Content-Type: text/html"));
+            client.println();
+            client.println(F("&lt;!DOCTYPE html>"));
+            client.println(F("&lt;html>"));
+            client.println(F("&lt;head>"));
+            client.println(F("&lt;meta charset='utf-8'>"));
+            client.println(F("&lt;meta http-equiv='Refresh' content='5; url=/' />"));
+            client.println(F("&lt;title>HTTP webserver - Arduino + Ethernet&lt;/title>"));
+            client.println(F("&lt;/head>"));
+            client.println(F("&lt;body>"));
+            client.println(F("&lt;center>&lt;h3>Server prijal data z formulára:&lt;/h3>"));
+            client.println("&lt;li>&lt;b>Referenčná teplota: &lt;/b>" + String(H_1) + "&lt;/li>");
+            client.println("&lt;li>&lt;b>Hysteréza: &lt;/b>" + String(H_2) + "&lt;/li>");
+            client.println(F("&lt;b>Presmerovanie... Prosim cakajte&lt;/b>&lt;/center>"));
+            client.println(F("&lt;/body>"));
+            client.println(F("&lt;/html>"));
+            delay(1);
+            client.stop();
+            client.flush();
+</pre>
+
+
+
+	<h3><font color="#C0392B">Fragment zdrojového kódu pre JSON output</font></h3>
 <pre style="background-color:#C0392B;">
-	  client.println(F("HTTP/1.1 200 OK"));
+client.println(F("HTTP/1.1 200 OK"));
           client.println(F("Content-Type: application/json"));
           client.println();
           client.println(F("{"));
