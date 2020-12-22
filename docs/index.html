@@ -250,7 +250,8 @@ Na webovej stránke termostatu nájde používateľ aj informácie o uptime zari
           client.stop();
           client.flush();
 </pre>
-<h3><font color="#D35400">Fragment zdrojového kódu s výpisom nastavených riadiacich dát po odoslaní HTML formulára s následným presmerovaním používateľa späť na hlavnú stránku(spracovanie neobsiahnuté)</font></h3>
+<h3><font color="#D35400">Fragment zdrojového kódu s výpisom nastavených riadiacich dát po odoslaní HTML formuláru</font></h3>
+<li>S následným presmerovaním používateľa späť na hlavnú stránku po 5-tich sekundách od spracovania - tzv. lazy loading... (Spracovanie neobsiahnuté vo fragmente)</li>
 <pre style="background-color:#D35400;">
             client.println(F("HTTP/1.1 200 OK"));
             client.println(F("Content-Type: text/html"));
