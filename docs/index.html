@@ -118,8 +118,11 @@ Maximálny spínaný výkon 460W (230V, 2A). Logika systému sa vykonáva každ�
 <li>Modifikovať cieľovú (referenčnú) teplotu v rozsahu 5 až 50°C s 0,25°C krokom</li>
 <li>Modifikovať hysterézu v rozsahu 0 až 10°C s 0,25°C krokom</li>
 
-<b>ZAP/VYP regulácia kotla:</b>  
-<img src="https://www.dixell.cz/wp-content/uploads/GRAF3-1024x509.jpg" style="display: block; max-width: 100%; height: auto;" alt="ZAP/VYP regulácia kotla s hysterézou" title="ZAP/VYP regulácia kotla s hysterézou">        			    
+<b>ZAP/VYP regulácia kotla:</b> 
+<li>Príklad ZAP/VYP regulácie vykurovania - štandardný izbový termostat - <font color="red">Nereprezentuje tento projekt</font></li>	
+<li>Kotol je aktívny po dobu dostiahnutia cieľovej teploty + hysterézy</li>
+<li>Na vizualizácii teplôt vody je patrný tzv. dobeh a následné chladnutie vody</li>		
+<img src="https://imgur.com/IDWLuOr" style="display: block; max-width: 100%; height: auto;" alt="ZAP/VYP regulácia kotla s hysterézou" title="ZAP/VYP regulácia kotla s hysterézou">        			    
 <p>
 Webové rozhranie je navrhnuté pre prispôsobenie sa väčším i menším obrazovkám. Je reponzívne, podporuje širokouhlé obrazovky s vysokým rozlíšením, ale aj mobilné zariadenia. 
 Rozhranie využíva importované CSS štýly Bootstrap frameworku z externého CDN servera, ktorý načíta client-side zariadenie pri otvorení stránky bežiacej na Arduine. 
@@ -170,6 +173,7 @@ Na webovej stránke termostatu nájde používateľ aj informácie o uptime zari
 <hr>
 <center><h2>Fragmenty zdrojových kódov (bez backendu)</h2></center>
 <hr>		
+<li><b><font color="red">ZDROJOVÉ KÓDY SÚ IBA FRAGMENTY A NIE JE ICH MOŽNÉ BEZ ĎALŠÍCH (TU NEDOSTUPNÝCH) ČASTÍ POUŽIŤ. OBSAHUJÚ PREMENNÉ, FUNKCIE, KTORÉ NIE SÚ V ŠTANDARDNEJ KONFIGURÁCII DOSTUPNÉ.</font></b></li>
 <h3><font color="#2ECC71">Fragment zdrojového kódu pre logiku termostatu - Rozhodovací threshold</font></h3>
 <li>Vykonáva sa každých 10 sekúnd bez ohľadu na webserver, či pripojenie klienta</li>
 <pre style="background-color:#2ECC71;">
@@ -281,9 +285,6 @@ Na webovej stránke termostatu nájde používateľ aj informácie o uptime zari
             client.stop();
             client.flush();
 </pre>
-
-
-
 	<h3><font color="#C0392B">Fragment zdrojového kódu pre JSON output</font></h3>
 <pre style="background-color:#C0392B;">
 	  client.println(F("HTTP/1.1 200 OK"));
