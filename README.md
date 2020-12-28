@@ -1,10 +1,15 @@
-# Termostat - Arduino + Ethernet W5100
+# Termostat - Arduino + Ethernet W5100 / W5500
 * Termostat postavený na platforme Arduino s Ethernetom
-* Arduino funguje v režime HTTP webservera
-* Arduino riadi na základe navolenej hysterézy a cieľovej teploty výstup - relé.
-* Pre meranie teploty Arduino využíva senzor Dallas DS18B20 na OneWire zbernici v parazitnom / normálnom zapojení
+* Arduino funguje v režime HTTP webservera, kde ponúka na HTML stránkach komplexný prehľad aktuálne nameraných a platných údajov
+* Umožňuje zmeniť údaje o cieľovej - referenčnej teplote a hysteréze, ktorá sa používa pre riadenie vykurovania
+* Údaje sú zapísané do EEPROM pamäte, ktorá má životnosť až 100-tisíc prepisov
+* Webserver je prístupný z domácej LAN siete
+* Arduino riadi na základe navolenej hysterézy a cieľovej teploty výstup - relé, ktoré spína signál pre kotol
+* Programová logika sa vykonáva nezávisle na webserveri (nevyžaduje sa keep-alive spojenie, alebo pozornosť používateľa)
+* **Projekt nerieši výkonovú reguláciu kotla!**
+* Pre meranie teploty Arduino využíva senzor Dallas DS18B20 na OneWire zbernici v parazitnom / normálnom zapojení (použité v schéme zapojenia)
 * **Arduino na UART vypíše pridelenú (respektíve statickú) IP adresu**
-* **Pri Ethernet module W5500 je nutné pripojiť vývod D2 Arduina na INT vývod Ethernet modulu** 
+* **Pri Ethernet module W5500 je nutné pripojiť aj vývod D2 Arduina na INT vývod Ethernet modulu** 
 
 | Názov súboru        | Shield           | IPv4           |
 | ------------- |:-------------:| ------------- |
