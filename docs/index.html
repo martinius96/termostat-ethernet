@@ -10,14 +10,12 @@
 	<meta property="og:url" content="https://martinius96.github.io/termostat-ethernet/">
 	<meta property="og:title" content="Izbový termostat - Arduino - Ethernet Wiznet W5100">
 	<meta property="og:description" content="Izbový termostat navrhnutý na platforme Arduino Uno + Ethernet shield Wiznet W5100 / W5500. Termostat pre vykurovanie / chladenie.">
-	<meta property="og:image" content="">
 
 	<!-- Twitter -->
 	<meta property="twitter:card" content="summary_large_image">
 	<meta property="twitter:url" content="https://martinius96.github.io/termostat-ethernet/">
 	<meta property="twitter:title" content="Izbový termostat - Arduino - Ethernet Wiznet W5100">
 	<meta property="twitter:description" content="Izbový termostat navrhnutý na platforme Arduino Uno + Ethernet shield Wiznet W5100 / W5500. Termostat pre vykurovanie / chladenie.">
-	<meta property="twitter:image" content="">
 	
 	<link rel="icon" type="image/png" href="favicon.png">
 	<link rel="sitemap" type="application/xml" title="Sitemap" href="sitemap.xml" />
@@ -60,12 +58,15 @@
 	 <li style="float: right; "><a href="https://martinius96.github.io/WiFi-termostat/" class="btn btn-success" role="button" title="Zmeniť projekt na WiFi termostat"><img src="https://www.flaticon.com/premium-icon/icons/svg/3686/3686730.svg" width=16px height=16px> <font color="white">WiFi termostat</font></a></li> </ul>
   </div>
 </nav>  
-				<div class="alert alert-success">
-					<strong>Projekt k repozitáru - Github: </strong><a href="https://github.com/martinius96/termostat-ethernet/">Termostat - Ethernet</a>
-				</div>	
-				<div class="alert alert-info">
-					<strong>Článok k projektu na Chiptron.cz: </strong><a href="https://chiptron.cz/articles.php?article_id=273">Izbový termostat - Arduino + Ethernet</a>
-				</div>	
+<div class="alert alert-success">
+	<strong>Projekt k repozitáru - Github: </strong><a href="https://github.com/martinius96/termostat-ethernet/">Termostat - Ethernet</a>
+</div>	
+<div class="alert alert-info">
+	<strong>Článok k projektu na Chiptron.cz: </strong><a href="https://chiptron.cz/articles.php?article_id=273">Izbový termostat - Arduino + Ethernet</a>
+</div>	
+<div class="alert alert-danger">
+	<strong>Podporte projekt pre pridanie nových funkcionalít do free verzie, sprístupnenie zdrojového kódu (.ino): </strong><a href="https://paypal.me/chlebovec">PayPal</a>
+</div>	
 <span class="label label-default">Arduino</span>
 <span class="label label-primary">Ethernet</span>
 <span class="label label-success">Wiznet W5100 / W5500</span>
@@ -76,7 +77,7 @@
 <span class="label label-primary">Webserver</span>
 <span class="label label-success">WebSocket</span>
 <div class="alert alert-danger">
-	<b>Update: 2. Okt. 2020 - </b>
+	<b>Changelog verzie 1.0.2 Ethernet termostatu:</b>
 	<li>Opravený JSON output (prehodené riadiace teploty) k opačným entitám</li>
 	<li>Opravený Content-type pre JSON output z text/html na application/json</li>
 	<li>Všetky statické časti HTML stránok presunuté do ROM pamäte cez F() makro</li>
@@ -95,13 +96,13 @@ Termostat je prístupný z LAN siete v ktorej sa nachádza, pričom je vybavený
 Webserver umožňuje beh niekoľkých na sebe nezávislých HTML stránok, ktoré môžu mať informatívny, alebo aj funkcionálny charakter. Webserver beží na porte 80 - HTTP. 
 Termostat dokáže automatizovane prostredníctvom výstupu ovládať signalizačné relé pre zapnutie plynového kotla. Dokáže tak nahradiť existujúci izbový termostat. 
 Ako rozhodovací algoritmus sa využíva cieľová teplota s hysterézou, ktorá sa porovnáva s nameranou teplotou z digitálneho senzora teploty Dallas DS18B20.
-<b>Rozlíšenie senzora DS18B20 pri meraní je 12-bitov, čomu rozpovedá rozlíšenie na 0.0625 °C. Dáta po OneWire zbernici môžu prísť do mikrokontroléru za 500 až 1000 ms.</b>
-Rozhodovacia logika systému sa vykonáva každých 10 sekúnd nezávisle na webserveri, nevyžaduje sa keep-alive spojenie pre vykonanie logiky.
+<b>Rozlíšenie senzora DS18B20 pri meraní je 12-bitov, čomu rozpovedá rozlíšenie na 0.0625 °C. Dáta po OneWire zbernici môžu prísť do mikrokontroléru po vyžiadaní za 500 až 1000 ms.</b>
+Rozhodovacia logika systému sa vykonáva každých 10 sekúnd nezávisle na webserveri, nevyžaduje sa keep-alive spojenie pre vykonanie logiky, systém tak funguje autonómne a nevyžaduje pozornosť používateľa.
 </p>
 <b>Po hardvérovej stránke projekt využíva:</b>
 <li>Arduino Uno</li>
 <li>Ethernet shield Wiznet W5100 / Ethernet modul Wiznet W5200-W5500</li>
-<li>Teplotný senzor DS18B20 na OneWire zbernici</li>
+<li>Teplotný senzor DS18B20 na OneWire zbernici v puzdre TO-92, alebo vo vodotesnom vyhotovení v hliníkovej rúrke</li>
 <li>Relé SRD-5VDC-SL-C slúžiace na spínanie kotla (Active-LOW signál)</li>
 <p>
 <b>HTML stránky bežiace na Arduine:</b>
@@ -131,7 +132,7 @@ Rozhranie využíva importované CSS štýly Bootstrap frameworku z externého C
 Nakoľko je Arduino Uno limitované pamäťou, dokáže spustiť iba stránky s veľkosťou pár kB. Importovaním CSS štýlov z externého servera umožní žnížiť výkonové a pamäťové zaťaženie Arduina.  
 Programová implementácia (pri Arduine Uno) využíva cca 70% flash pamäte (32kB - 4kB Bootloader) a 44% RAM pamäte (2kB).
 Statické časti webovej stránky (hlavička a pätička HTML dokumentu, linkovanie Bootstrap CSS, meta tagy, HTTP response hlavička, Content Type, formulár a ďalšie) sú uložené priamo vo flash pamäti Arduina, čo dokáže výrazne redukovať veľkosť používanej RAM pamäte pre obsah generovaný používateľovi. 
-Webserver je tak stabilnejší a zvláda aj multi-pripojenie viacerých zariadení v sieti súčasne.
+Webserver je tak stabilnejší a zvláda aj multi-pripojenie viacerých zariadení v sieti súčasne. Spotreba celého termostatu je na úrovni do 200 mA pri 5V napájaní - pod 1W.
 </p>
 <hr>
 <p>
@@ -146,7 +147,7 @@ Do tohto času je potrebné stihnúť zapísať zmenu pre termostat, inak sa inp
 Nakoľko built-in knižnica Ethernet neobsahuje využitie asynchrónneho webservera (ktorý je možné využiť napríklad u mikrokontrolérov Espressif ESP8266 / ESP32), je nutné prepisovať celú stránku. 
 Dynamický údaj, ktorý sa predovšetkým mení je aktuálna hodnota výstupu - <b><font color="#27AE60">Zapnutý</font></b> / <b><font color="red">Vypnutý</font></b>, ktorý informuje prevádzkovateľa o skutočnom stave výstupu spoločne aj s farebným označením. 
 Nakoľko sa logika systému  vykonáva nezávisle na webserveri, do refreshu môže už byť výstup v inom stave, ako aktuálne vypísanom vo webaplikácii. Zmena výstupu je ihneď vypísaná napríklad na UART monitor.
-Na webovej stránke termostatu nájde používateľ aj informácie o uptime zariadenia (ako dlho beží), t.j. čas v dňoch, hodinách, minútach a sekundách. Dokáže tak určiť aj približný čas výpadku elektrickej energie a napájania v domácnosti, nakoľko je Arduino termostat navrhnutý na 24h / 7 dní nepretržitý beh.
+Na webovej stránke termostatu nájde používateľ aj informácie o uptime zariadenia (ako dlho beží), t.j. čas v dňoch, hodinách, minútach a sekundách.
 </p>
 
 <b>Hlavná stránka pre modifikáciu cieľovej teploty a hysterézy - ukážka zapnutého:</b>
@@ -156,24 +157,20 @@ Na webovej stránke termostatu nájde používateľ aj informácie o uptime zari
 	<li><b>Hysteréza:<b>  0.25 °C</li>
 	<li><b>Namerané dáta:<b>  21.59 °C</li>
 	<li><b>Výstup:<b>  <font color="#27AE60">Zapnutý</font></li>
-		<hr>
-<p>
-Termostat vykuruje od nameranej teploty 22.49 °C a nižšej. 
-V prípade dosiahnutia teploty 23.01 °C sa výstup vypne, signalizačné relé sa rozpojí a kotol prestáva kúriť. 
-Nastáva dobeh vykurovania a chladnutie miestnosti v ktorej sa vykonávajú merania. Termostat sa opäť aktivuje až pri dosiahnutí teploty 22.49 °C, alebo nižšej.
-</p>	
+	<hr>
+	<p>
+		Termostat vykuruje od nameranej teploty 22.49 °C a nižšej. 
+		V prípade dosiahnutia teploty 23.01 °C sa výstup vypne, signalizačné relé sa rozpojí a plynový kotol prestáva kúriť. 
+		Nastáva dobeh vykurovania a chladnutie miestnosti v ktorej sa vykonávajú merania. Termostat sa opäť aktivuje až pri dosiahnutí teploty 22.49 °C, alebo nižšej.	
+	</p>	
 </div>
 <img src="https://i.imgur.com/rzZtoeP.png" style="display: block; max-width: 100%; height: auto;" alt="Ethernet termostat - Hlavný prehľad s modifikáciou cieľovej teploty a hysterézy - Vypnutý" title="Ethernet termostat - Hlavný prehľad s modifikáciou cieľovej teploty a hysterézy - Vypnutý">        			
-
 <b>Priebeh spracovania zadaných údajov (presmerovanie používateľa):</b>
 <img src="https://i.imgur.com/ZptC0UR.png" style="display: block; max-width: 100%; height: auto;" alt="Ethernet termostat - spracovanie údajov z HTML formulára" title="Ethernet termostat - spracovanie údajov z HTML formulára">        			
-
 <b>JSON výstup webservera v prehliadači / klientovi cez websocket:</b>
-<center><img src="https://chiptron.cz/images/articles/IzbovyTermostat/json.jpg" style="display: block; max-width: 100%; height: auto;" alt="Ethernet termostat - JSON output" title="Ethernet termostat - JSON output"></center>        		
-
+<center><img src="https://i.imgur.com/iqxV12k.png" style="display: block; max-width: 100%; height: auto;" alt="Ethernet termostat - JSON output" title="Ethernet termostat - JSON output"></center>        		
 <b>Výstup do UART monitoru - logika systému + nastavenie Ethernet adaptéru:</b>
 <center><img src="https://i.imgur.com/r5jNZf5.png" style="display: block; max-width: 100%; height: auto;" alt="Ethernet termostat - UART" title="Ethernet termostat - UART"></center>        		
-
 <b>Rozšírená verzia tohto termostatu obsahuje navyše - <font color="red">NIE JE OBSIAHNUTÁ V GITHUB REPOZITÁRI SO STROJOVÝMI KÓDMI:</font></b>
 <div class="alert alert-info">
 	<b>Pri záujme o plnú verziu projektu - </b>martinius96@gmail.com
