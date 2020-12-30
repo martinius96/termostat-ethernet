@@ -92,10 +92,14 @@
 Arduino je šikovná embeeded platforma, ktorú je možné využiť napríklad aj na stavbu izbového termostatu, ktorý si dnes ukážeme. 
 Implementácia využíva Arduino v kombinácii s Ethernet shieldom Wiznet W5100, ktorý funguje v režime webservera a dokáže prijímať požiadavky od klientov v sieti po HTTP protokole a odosielať na ne odpoveď - HTML kód.
 Termostat je prístupný z LAN siete v ktorej sa nachádza, pričom je vybavený webovým rozhraním ktoré slúži na konfiguráciu všetkých prvkov termostatu. 
-Webserver umožňuje beh niekoľkých na sebe nezávislých HTML stránok, ktoré môžu mať informatívny, alebo aj funkcionálny charakter. Webserver beží na porte 80 - HTTP.
+Webserver umožňuje beh niekoľkých na sebe nezávislých HTML stránok, ktoré môžu mať informatívny, alebo aj funkcionálny charakter. Webserver beží na porte 80 - HTTP. 
+Termostat dokáže automatizovane prostredníctvom výstupu ovládať signalizačné relé pre zapnutie plynového kotla. Dokáže tak nahradiť existujúci izbový termostat. 
+Ako rozhodovací algoritmus sa využíva cieľová teplota s hysterézou, ktorá sa porovnáva s nameranou teplotou z digitálneho senzora teploty Dallas DS18B20.
+<b>Rozlíšenie senzora DS18B20 pri meraní je 12-bitov, čomu rozpovedá rozlíšenie na 0.0625 °C. Dáta po OneWire zbernici môžu prísť do mikrokontroléru za 500 až 1000 ms.</b>
+Rozhodovacia logika systému sa vykonáva každých 10 sekúnd nezávisle na webserveri, nevyžaduje sa keep-alive spojenie pre vykonanie logiky.
 </p>
 <b>Po hardvérovej stránke projekt využíva:</b>
-<li>Arduino Uno / Mega 2560</li>
+<li>Arduino Uno</li>
 <li>Ethernet shield Wiznet W5100 / Ethernet modul Wiznet W5200-W5500</li>
 <li>Teplotný senzor DS18B20 na OneWire zbernici</li>
 <li>Relé SRD-5VDC-SL-C slúžiace na spínanie kotla (Active-LOW signál)</li>
@@ -105,48 +109,60 @@ Webserver umožňuje beh niekoľkých na sebe nezávislých HTML stránok, ktor�
 <li><b>/action.html</b> - spracúvava hodnoty z formulára, zapisuje ich do EEPROM pamäte, presmeruje používateľa späť na root stránku</li>
 <li><b>/get_data.json</b> - distribuuje dáta o aktuálnej teplote, referenčnej teplote a hysteréza tretej strane (počítač, mikrokontróler, iný klient...) v JSON formáte</li>
 <hr>				
-Elektromagnetické relé SRD-5VDC-SL-C, ktoré je v projekte použité umožňuje spínať až 10A pri 230V - výkon 2300W. 
-V prípade spínania jednosmerného obvodu (záťaže) je možné spínať 300W (10A pri 30V DC). 
-Prípadne je pre schému zapojenia plne kompatibilné aj SSR relé OMRON G3MB-202P, ktoré je vhodné iba pre neindukčnú záťaž a výhradne pre obvod so striedavým napätím. 
-Maximálny spínaný výkon 460W (230V, 2A). Logika systému sa vykonáva každých 10 sekúnd nezávisle na webserveri, nevyžaduje sa keep-alive spojenie pre vykonanie logiky. 
+Elektromagnetické relé SRD-5VDC-SL-C, ktoré je v projekte použité umožňuje spínať až 10A pri 230V - maximálny výkon 2300W. 
+V prípade spínania jednosmerného obvodu (záťaže) je možné spínať 300W (10A pri 30V DC max). 
+Pre schému zapojenia je plne kompatibilné aj SSR relé OMRON G3MB-202P, ktoré je vhodné iba pre neindukčnú záťaž a výhradne pre záťaž so striedavým napätím. 
+Maximálny spínaný výkon 460W (230V, 2A). 
 </p>
 
 <b>Webové rozhranie pre Ethernet termostat umožňuje:</b>
-<li>Prehliadať v reálnom čase teplotu zo senzora DS18B20</li>
-<li>Prehliadať v reálnom čase stav relé s dynamickou zmenou výstupu na stránke</li>
-<li>Modifikovať cieľovú (referenčnú) teplotu v rozsahu 5 až 50°C s 0,25°C krokom</li>
-<li>Modifikovať hysterézu v rozsahu 0 až 10°C s 0,25°C krokom</li>
+<li>Prehliadať v reálnom čase teplotu zo senzora DS18B20, uptime zariadenia, hodnotu výstupu s dynamickou zmenou, aktuálne nastavené konfiguračné údaje pre termostat t.j. cieľovú teplotu a hysterézu</li>
+<li>Modifikovať cieľovú (referenčnú) teplotu v rozsahu 5 až 50 °C s 0,25 °C krokom</li>
+<li>Modifikovať hysterézu v rozsahu 0 až 10 °C s 0,25 °C krokom</li>
 
 <b>ZAP/VYP regulácia kotla:</b> 
-<li>Príklad ZAP/VYP regulácie vykurovania - štandardný izbový termostat - <font color="red">Nereprezentuje tento projekt</font></li>	
+<li>Príklad ZAP/VYP regulácie vykurovania - <font color="red">VIZUALIZÁCIA NIE JE SÚČASŤOU PROJEKTU</font></li>	
 <li>Kotol je aktívny po dobu dostiahnutia cieľovej teploty + hysterézy</li>
-<li>Na vizualizácii teplôt vody je patrný tzv. dobeh a následné chladnutie vody</li>		
+<li>Na vizualizácii teplôt vody je patrný tzv. dobeh vykurovania a následné chladnutie vody až do opätovnej aktivity vykurovania, kedy je nameraná teplota pod nastavenú cieľovú teplotu - hystérzu</li>		
 <img src="https://i.imgur.com/IDWLuOr.png" style="display: block; max-width: 100%; height: auto;" alt="ZAP/VYP regulácia kotla s hysterézou" title="ZAP/VYP regulácia kotla s hysterézou">        			    
 <p>
 Webové rozhranie je navrhnuté pre prispôsobenie sa väčším i menším obrazovkám. Je reponzívne, podporuje širokouhlé obrazovky s vysokým rozlíšením, ale aj mobilné zariadenia. 
 Rozhranie využíva importované CSS štýly Bootstrap frameworku z externého CDN servera, ktorý načíta client-side zariadenie pri otvorení stránky bežiacej na Arduine. 
 Nakoľko je Arduino Uno limitované pamäťou, dokáže spustiť iba stránky s veľkosťou pár kB. Importovaním CSS štýlov z externého servera umožní žnížiť výkonové a pamäťové zaťaženie Arduina.  
-Programová implementácia (pri Arduine Uno) využíva 70% flash pamäte (32kB - 4kB Bootloader) a 44% RAM pamäte (2kB).
+Programová implementácia (pri Arduine Uno) využíva cca 70% flash pamäte (32kB - 4kB Bootloader) a 44% RAM pamäte (2kB).
 Statické časti webovej stránky (hlavička a pätička HTML dokumentu, linkovanie Bootstrap CSS, meta tagy, HTTP response hlavička, Content Type, formulár a ďalšie) sú uložené priamo vo flash pamäti Arduina, čo dokáže výrazne redukovať veľkosť používanej RAM pamäte pre obsah generovaný používateľovi. 
 Webserver je tak stabilnejší a zvláda aj multi-pripojenie viacerých zariadení v sieti súčasne.
 </p>
 <hr>
 <p>
 Aby ostali nastavené hodnoty zachované aj po výpadku napájania, sú uložené do EEPROM pamäte Arduina. 
-Referenčná teplota na offset 10, hysteréza na offset 100. Každá z hodnôt zaberá maximálne 5B v EEPROM pamäti + ukončovací znak. 
-Limit prepisov EEPROM je na úrovni 100-tisíc prepisov. Dáta sa prepisujú iba pri odoslaní HTML formulára, prevádzka termostatu je tak maximálne šetrná k EEPROM pamäti. 
-V prípade, že zariadenie pri prvom spustení nemá nič uložené na spomenutých EEPROM offsetoch, vykoná sa automatický zápis s predvolenými hodnotami - referencia: 20.25 °C, hysteréza 0.25 °C, tzv. fail-safe riešenie.
+Referenčná teplota je zapísaná na offset 10, hysteréza na offset 100. Každá z hodnôt zaberá maximálne 5B v EEPROM pamäti + ukončovací znak - terminátor. 
+Limit prepisov EEPROM je na úrovni 100-tisíc prepisov. Dáta sa prepisujú iba pri odoslaní HTML formulára. Prevádzka termostatu je tak maximálne šetrná k EEPROM pamäti s cieľom maximalizovať jej životnosť. 
+V prípade, že zariadenie pri prvom spustení nemá nič uložené na spomenutých EEPROM offsetoch, vykoná sa automatický zápis s predvolenými hodnotami - referencia: 20.25 °C, hysteréza 0.25 °C, tzv. fail-safe riešenie, aby bol termostat ihneď funkčný a pripravený k prevádzke.
 </p>
-
 <p>
-Prostredníctvom meta tagu Refresh vykonáva webserver obnovu celej stránky každých 10 sekúnd a prostredníctvom Javascriptu sa vypisuje do HTML stránky orientačný čas do refreshu. 
-Do tohto času je potrebné stihnúť zapísať zmenu pre termostat, inak sa input okná resetujú pri obnovení stránky. 
-Nakoľko built-in knižnica Ethernet neobsahuje využitie asynchrónneho webservera (podobne ako u ESP8266 / ESP32), je nutné prepisovať celú stránku. 
-Dynamický údaj, ktorý sa predovšetkým mení je aktuálna hodnota výstupu- Zapnutý / Vypnutý, ktorý informuje prevádzkovateľa o skutočnom stave výstupu spoločne aj s farebným označením.
-Na webovej stránke termostatu nájde používateľ aj informácie o uptime zariadenia (ako dlho beží), t.j. čas v dňoch, hodinách, minútach a sekundách.
+Prostredníctvom meta tagu Refresh vykonáva webserver obnovu celej stránky každých 10 sekúnd a prostredníctvom Javascriptu sa vypisuje do HTML stránky aj orientačný čas do refreshu. 
+Do tohto času je potrebné stihnúť zapísať zmenu pre termostat, inak sa input okná pre číselné vstupy do formulára resetujú pri obnovení stránky. 
+Nakoľko built-in knižnica Ethernet neobsahuje využitie asynchrónneho webservera (ktorý je možné využiť napríklad u mikrokontrolérov Espressif ESP8266 / ESP32), je nutné prepisovať celú stránku. 
+Dynamický údaj, ktorý sa predovšetkým mení je aktuálna hodnota výstupu - <b><font color="#27AE60">Zapnutý</font></b> / <b><font color="red">Vypnutý</font></b>, ktorý informuje prevádzkovateľa o skutočnom stave výstupu spoločne aj s farebným označením. 
+Nakoľko sa logika systému  vykonáva nezávisle na webserveri, do refreshu môže už byť výstup v inom stave, ako aktuálne vypísanom vo webaplikácii. Zmena výstupu je ihneď vypísaná napríklad na UART monitor.
+Na webovej stránke termostatu nájde používateľ aj informácie o uptime zariadenia (ako dlho beží), t.j. čas v dňoch, hodinách, minútach a sekundách. Dokáže tak určiť aj približný čas výpadku elektrickej energie a napájania v domácnosti, nakoľko je Arduino termostat navrhnutý na 24h / 7 dní nepretržitý beh.
 </p>
 
-<b>Hlavná stránka pre modifikáciu cieľovej teploty a hysterézy - ukážka zapnutého a vypnutého výstupu:</b>
+<b>Hlavná stránka pre modifikáciu cieľovej teploty a hysterézy - ukážka zapnutého:</b>
+<div class="alert alert-info">
+	<strong>Ukážkové dáta</strong>
+	<li><b>Cieľová teplota:<b>  22.75 °C</li>
+	<li><b>Hysteréza:<b>  0.25 °C</li>
+	<li><b>Namerané dáta:<b>  21.59 °C</li>
+	<li><b>Výstup:<b>  <font color="#27AE60">Zapnutý</font></li>
+		<hr>
+<p>
+Termostat vykuruje od nameranej teploty 22.49 °C a nižšej. 
+V prípade dosiahnutia teploty 23.01 °C sa výstup vypne, signalizačné relé sa rozpojí a kotol prestáva kúriť. 
+Nastáva dobeh vykurovania a chladnutie miestnosti v ktorej sa vykonávajú merania. Termostat sa opäť aktivuje až pri dosiahnutí teploty 22.49°C, alebo nižšej.
+</p>	
+</div>
 <img src="https://i.imgur.com/rzZtoeP.png" style="display: block; max-width: 100%; height: auto;" alt="Ethernet termostat - Hlavný prehľad s modifikáciou cieľovej teploty a hysterézy - Vypnutý" title="Ethernet termostat - Hlavný prehľad s modifikáciou cieľovej teploty a hysterézy - Vypnutý">        			
 
 <b>Priebeh spracovania zadaných údajov (presmerovanie používateľa):</b>
