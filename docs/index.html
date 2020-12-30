@@ -160,7 +160,7 @@ Na webovej stránke termostatu nájde používateľ aj informácie o uptime zari
 <p>
 Termostat vykuruje od nameranej teploty 22.49 °C a nižšej. 
 V prípade dosiahnutia teploty 23.01 °C sa výstup vypne, signalizačné relé sa rozpojí a kotol prestáva kúriť. 
-Nastáva dobeh vykurovania a chladnutie miestnosti v ktorej sa vykonávajú merania. Termostat sa opäť aktivuje až pri dosiahnutí teploty 22.49°C, alebo nižšej.
+Nastáva dobeh vykurovania a chladnutie miestnosti v ktorej sa vykonávajú merania. Termostat sa opäť aktivuje až pri dosiahnutí teploty 22.49 °C, alebo nižšej.
 </p>	
 </div>
 <img src="https://i.imgur.com/rzZtoeP.png" style="display: block; max-width: 100%; height: auto;" alt="Ethernet termostat - Hlavný prehľad s modifikáciou cieľovej teploty a hysterézy - Vypnutý" title="Ethernet termostat - Hlavný prehľad s modifikáciou cieľovej teploty a hysterézy - Vypnutý">        			
@@ -212,29 +212,13 @@ Nastáva dobeh vykurovania a chladnutie miestnosti v ktorej sa vykonávajú mera
 </pre>	
 <h3><font color="#3498DB">Fragment zdrojového kódu pre stránku Hlavného prehľadu - bez spracovania údajov z HTML formuláru</font></h3>
 <pre style="background-color:#3498DB;">
-  	  client.println(F("HTTP/1.1 200 OK"));
-          client.println(F("Content-Type: text/html"));
-          client.println();
-          client.println(F("&lt;!DOCTYPE html>"));
-          client.println(F("&lt;html>"));
-          client.println(F("&lt;head>"));
-          client.println(F("&lt;meta charset='utf-8'>"));
+          HTTP header
+	  DOCTYPE
+	  HTML
+	  HEAD
+	  client.println(F("&lt;meta charset='utf-8'>"));
           client.println(F("&lt;meta name='author' content='Martin Chlebovec'>"));
           client.println(F("&lt;meta http-equiv='Refresh' content='10'; />"));
-          client.println(F("&lt;meta name='viewport' content='width=device-width, initial-scale=1'>"));
-          client.println(F("&lt;link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css'>"));
-          client.println(F("&lt;script type='text/javascript'>"));
-          client.println(F("var timeleft = 10;"));
-          client.println(F("var downloadTimer = setInterval(function(){"));
-          client.println(F("if(timeleft &lt;= 0){"));
-          client.println(F("clearInterval(downloadTimer);"));
-          client.println(F("document.getElementById(\"countdown\").innerHTML = \"Reštart...\";"));
-          client.println(F("} else {"));
-          client.println(F("document.getElementById(\"countdown\").innerHTML = timeleft + \" sekúnd do reštartu\";"));
-          client.println(F("}"));
-          client.println(F("timeleft -= 1;"));
-          client.println(F("}, 1000);"));
-          client.println(F("&lt;/script>"));
           client.println(F("&lt;title>HTTP webserver - Arduino + Ethernet&lt;/title>"));
           client.println(F("&lt;/head>"));
           client.println(F("&lt;body>"));
@@ -255,36 +239,25 @@ Nastáva dobeh vykurovania a chladnutie miestnosti v ktorej sa vykonávajú mera
           client.print(teplota);
           client.println(F(" °C"));
           client.print(F("&lt;hr>"));
-          client.print(F("&lt;b>Uptime: &lt;/b>"));
-          client.print(days);
-          client.print(F("d"));
-          client.print(F(" "));
-          client.print(hours);
-          client.print(F("h"));
-          client.print(F(" "));
-          client.print(minutes);
-          client.print(F("m"));
-          client.print(F(" "));
-          client.print(seconds);
-          client.print(F("s"));
           client.println(F("&lt;h3>Autor: Martin Chlebovec - martinius96@gmail.com - https://martinius96.github.io/termostat-ethernet/&lt;/h3>"));
           client.println(F("&lt;h4>Verzia free - 1.0.2 build: 01. Oct 2020&lt;/h4>"));
           client.println(F("&lt;/center>"));
           client.println(F("&lt;/body>"));
           client.println(F("&lt;/html>"));
-          delay(1);
-          client.stop();
-          client.flush();
+	  FLUSH CLIENT
+	  STOP CLIENT
 </pre>
 <h3><font color="#D35400">Fragment zdrojového kódu s výpisom nastavených riadiacich dát po odoslaní HTML formuláru</font></h3>
 <li>S následným presmerovaním používateľa späť na hlavnú stránku po 5-tich sekundách od spracovania - tzv. lazy loading... (Spracovanie neobsiahnuté vo fragmente)</li>
 <pre style="background-color:#D35400;">
-            client.println(F("HTTP/1.1 200 OK"));
-            client.println(F("Content-Type: text/html"));
-            client.println();
-            client.println(F("&lt;!DOCTYPE html>"));
-            client.println(F("&lt;html>"));
-            client.println(F("&lt;head>"));
+	    backend_spracovanie dát z HTML formuláru (NEDOSTUPNÉ)
+	    .
+	    .
+	    .
+            HTTP header
+	    DOCTYPE
+	    HTML
+	    HEAD
             client.println(F("&lt;meta charset='utf-8'>"));
             client.println(F("&lt;meta http-equiv='Refresh' content='5; url=/' />"));
             client.println(F("&lt;title>HTTP webserver - Arduino + Ethernet&lt;/title>"));
@@ -296,28 +269,8 @@ Nastáva dobeh vykurovania a chladnutie miestnosti v ktorej sa vykonávajú mera
             client.println(F("&lt;b>Presmerovanie... Prosim cakajte&lt;/b>&lt;/center>"));
             client.println(F("&lt;/body>"));
             client.println(F("&lt;/html>"));
-            delay(1);
-            client.stop();
-            client.flush();
-</pre>
-	<h3><font color="#C0392B">Fragment zdrojového kódu pre JSON output</font></h3>
-<pre style="background-color:#C0392B;">
-	  client.println(F("HTTP/1.1 200 OK"));
-          client.println(F("Content-Type: application/json"));
-          client.println();
-          client.println(F("{"));
-          client.print(F("\"Hysteresis\":"));
-          client.print(read_String(100));
-          client.println(F(","));
-          client.print(F("\"Target_Temperature\":"));
-          client.print(read_String(10));
-          client.println(F(","));
-          client.print(F("\"Actual_Temperature\":"));
-          client.println(String(teplota));
-          client.println(F("}"));
-          delay(1);
-          client.stop();
-          client.flush();
+	    FLUSH CLIENT
+	    STOP CLIENT
 </pre>
 <h3><font color="#C0392B">Ukážkový výpis - JSON output pre ďalších klientov, spracovanie</font></h3>
 <div class="alert alert-danger">
