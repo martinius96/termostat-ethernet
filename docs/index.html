@@ -80,18 +80,6 @@
   <div class="col-sm-4"><center><img src="https://i.imgur.com/wtnzKqO.png" width="128px" height="128px" style="border-radius: 50%;" alt="Riadiaci mikrokontróler Arduino Uno pre termostat" title="Riadiaci mikrokontróler Arduino Uno pre termostat"></center></div>
   <div class="col-sm-4"><center><img src="https://i.imgur.com/aaS35X2.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ethernet shield Wiznet W5100" title="Ethernet shield Wiznet W5100"></center></div>
   <div class="col-sm-4"><center><img src="https://i.imgur.com/mz4dhRA.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ethernet modul Wiznet W5500" title="Ethernet modul Wiznet W5500"></center></div>
-</div>	
-<div class="alert alert-danger">
-	<b>Changelog verzie 1.0.2 Ethernet termostatu:</b>
-	<li>Opravený JSON output (prehodené riadiace teploty) k opačným entitám</li>
-	<li>Opravený Content-type pre JSON output z text/html na application/json</li>
-	<li>Všetky statické časti HTML stránok presunuté do ROM pamäte cez F() makro</li>
-	<li>Maximálne ohľahčená RAM pamäť pre bezproblémový beh low-latency webservera.</li>
-	<li>Pre DHCP príklad použitá funkcia Ethernet.maintain() pre renew času DHCP poolu.</li>
-	<li>(predĺženie rovnakej IP adresy / vyžiadanie novej - v závislosti od konfigurácie DHCP služby)</li>
-	<li>Zmena názvu JSON súboru z get_data na get_data.json</li>
-	<li>Zobrazený uptime zariadenia - dni, hodiny, minúty, sekundy</li>
-	<li>HTTP 404 - Not Found pri zobrazení umiestnenia, na ktoré nemá webserver callback</li>
 </div>				
 <hr><center><h2>Izbový termostat - Arduino + Ethernet Wiznet W5100 / W5500</h2></center><hr>
 <p>
@@ -288,6 +276,18 @@ Implmentácia obsahuje programy pre statickú / dynamickú IPv4 adresu priraden�
 <b>Termostat je určený iba pre interiérové teploty!</b> (nad 0°C), čomu je prispôsobená aj logika systému! 
 Termostatom je možné nahradiť už existujúci izbový termostat, možno dočasne nahradiť ohrievač v akváriu / teráriu pre udržiavanie stálej teploty.
 </p>
+<div class="alert alert-danger">
+	<b>Changelog verzie 1.0.2 Ethernet termostatu:</b>
+	<li>Opravený JSON output (prehodené riadiace teploty) k opačným entitám</li>
+	<li>Opravený Content-type pre JSON output z text/html na application/json</li>
+	<li>Všetky statické časti HTML stránok presunuté do ROM pamäte cez F() makro</li>
+	<li>Maximálne ohľahčená RAM pamäť pre bezproblémový beh low-latency webservera.</li>
+	<li>Pre DHCP príklad použitá funkcia Ethernet.maintain() pre renew času DHCP poolu.</li>
+	<li>(predĺženie rovnakej IP adresy / vyžiadanie novej - v závislosti od konfigurácie DHCP služby)</li>
+	<li>Zmena názvu JSON súboru z get_data na get_data.json</li>
+	<li>Zobrazený uptime zariadenia - dni, hodiny, minúty, sekundy</li>
+	<li>HTTP 404 - Not Found pri zobrazení umiestnenia, na ktoré nemá webserver callback</li>
+</div>	
  </div>
 		</div>
 </div>
