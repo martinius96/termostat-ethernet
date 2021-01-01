@@ -1,7 +1,8 @@
 /*|-------------------------------------------------|*/
 /*|Projekt: JSON client - ESP8266                   |*/
-/*|Popis: Pripojenie k WiFi termostatu v LAN sieti  |*/
-/*|stiahnutie JSON dat, vyparsovanie hodnot, vypis  |*/
+/*|Popis: Pripojenie k Ethernet termostatu v LAN    |*/
+/*|sieti, stiahnutie JSON dat, deserializacia,      |*/
+/*|vyparsovanie hodnot, vypis ziskanych dat na UART |*/
 /*|Autor: Martin Chlebovec                          |*/
 /*|E-mail: martinius96@gmail.com                    |*/
 /*|Revízia: 1. Januar 2021                          |*/
@@ -11,7 +12,7 @@
 #include <ArduinoJson.h>
 const char* ssid = "MOJE SSID"; //SSID vasej WiFi siete
 const char* password = "MOJE HESLO"; //HESLO vasej WiFi siete
-const char* host = "192.168.1.XX"; //IP adresa WiFi termostatu
+const char* host = "192.168.1.XX"; //IP adresa Ethernet termostatu
 const int httpPort = 80;
 WiFiClient client;
 unsigned long timer = 0;
@@ -22,7 +23,7 @@ void setup() {
   Serial.print("Pripajanie na WiFi siet: ");
   Serial.println(ssid);
   WiFi.begin(ssid, password); //pripoj sa na wifi siet s heslom
-  while (WiFi.status() != WL_CONNECTED) { //pokial sa nepripojime na wifi opakuj pripajanie a spustaj funkcie pre ovladanie v offline rezime
+  while (WiFi.status() != WL_CONNECTED) {
     delay(1000);
     Serial.print(".");
   }
