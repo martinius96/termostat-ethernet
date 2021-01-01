@@ -270,6 +270,14 @@ Na webovej stránke termostatu nájde používateľ aj informácie o uptime zari
 	"Actual_Temperature":21.43<br>
 }
 </div>
+		<hr>
+<h3>JSON client - výstup do Serial monitoru, parsovanie dát</h3>
+<li>Client umožňuje načítať JSON dáta, ktoré Ethernet termostat distribuuje</li>
+<li>Získa aktuálnu konfiguráciu cieľovej teploty a hysterézy a aktuálne nameranú teplotu senzorom DS18B20</li>
+<li>JSON client je navrhnutý pre ESP32, ESP8266 a Arduino s Ethernet shieldom / modulom Wiznet W5100 / W5500</li>
+<li>Dáta dokáže vyparsovať aj systém pre domácu automatizáciu, kde dokáže tieto hodnoty vizualizovať</li>
+<li>Možnosť Publishu dát na MQTT Broker, napríklad slovenský MQTT Broker zdarma pre vývojárov - <a href="https://mqtt.iotindustries.sk/sk/">IoT Industries Slovakia</a></li>
+<center><img src="https://i.imgur.com/4Cm5z8o.png" style="display: block; max-width: 100%; height: auto;" alt="JSON client pre Ethernet termostat - UART výstup" title="JSON client pre Ethernet termostat - UART výstup"></center>       		
 <p>
 Programovú implementáciu v strojových kódoch pre izbový (Ethernet) termostat je možné nájsť na: <a href="https://github.com/martinius96/termostat-ethernet/">https://github.com/martinius96/termostat-ethernet/</a>. 
 Implmentácia obsahuje programy pre statickú / dynamickú IPv4 adresu priradenú k Ethernet shieldu. 
