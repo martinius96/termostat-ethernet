@@ -1,7 +1,8 @@
 /*|-------------------------------------------------|*/
-/*|Projekt: JSON client - Arduino + Ethernet W5500  |*/
-/*|Popis: Pripojenie k WiFi termostatu v LAN sieti  |*/
-/*|stiahnutie JSON dat, vyparsovanie hodnot, vypis  |*/
+/*|Projekt: JSON client - Arduino + Ethernet W5100  |*/
+/*|Popis: Pripojenie k Ethernet termostatu v LAN    |*/
+/*|sieti, stiahnutie JSON dat, deserializacia,      |*/
+/*|vyparsovanie hodnot, vypis ziskanych dat na UART |*/
 /*|Autor: Martin Chlebovec                          |*/
 /*|E-mail: martinius96@gmail.com                    |*/
 /*|Revízia: 1. Januar 2021                          |*/
@@ -10,7 +11,7 @@
 
 #include <Ethernet2.h>
 #include <ArduinoJson.h>
-const char* host = "192.168.1.XX"; //IP adresa WiFi termostatu
+const char* host = "192.168.1.XX"; //IP adresa Ethernet termostatu
 const int httpPort = 80;
 byte mac[] = { 0xAA, 0xBB, 0xCC, 0x81, 0xBB, 0xAB };
 IPAddress ip(192, 168, 1, 253); //staticke pridelenie IP
