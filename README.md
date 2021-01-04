@@ -10,6 +10,7 @@
 * Pre meranie teploty Arduino využíva senzor Dallas DS18B20 na OneWire zbernici v parazitnom / normálnom zapojení (použité v schéme zapojenia)
 * **Arduino na UART vypíše pridelenú (respektíve statickú) IP adresu**
 * **Pri Ethernet module W5500 je nutné pripojiť aj vývod D2 Arduina na INT vývod Ethernet modulu** 
+* Projekt môže fungovať celoročne, aj ako Ethernet teplomer v prípade, že je odpojený výstup ku riadeniu kotla.
 
 | Názov súboru        | Shield           | IPv4           |
 | ------------- |:-------------:| ------------- |
