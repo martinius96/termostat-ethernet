@@ -8,6 +8,7 @@
 /*|Revízia: 1. Januar 2021                          |*/
 /*|-------------------------------------------------|*/
 
+#define ARDUINOJSON_USE_DOUBLE 1
 #include <ESP8266WiFi.h>
 #include <ArduinoJson.h>
 const char* ssid = "MOJE SSID"; //SSID vasej WiFi siete
