@@ -8,7 +8,7 @@
 /*|Revízia: 1. Januar 2021                          |*/
 /*|-------------------------------------------------|*/
 
-#define ARDUINOJSON_USE_DOUBLE 1
+//#define ARDUINOJSON_USE_DOUBLE 1 //uncomment if overflow is at UART output (https://i.imgur.com/OZaRey0.png) --> Core 2.5.2 and older fix, at 2.7.4 stable not required
 #include <ESP8266WiFi.h>
 #include <ArduinoJson.h>
 const char* ssid = "MOJE SSID"; //SSID vasej WiFi siete
