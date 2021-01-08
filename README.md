@@ -1,5 +1,6 @@
 # Termostat - Arduino + Ethernet W5100 / W5500
 * Termostat postavený na platforme Arduino s Ethernetom
+* Rozšírený popis k projektu, schéma zapojenia, dokumentácia: https://martinius96.github.io/termostat-ethernet/
 * Arduino funguje v režime HTTP webservera, kde ponúka na HTML stránkach komplexný prehľad aktuálne nameraných a platných údajov
 * Umožňuje zmeniť údaje o cieľovej - referenčnej teplote a hysteréze, ktorá sa používa pre riadenie vykurovania
 * Údaje sú zapísané do EEPROM pamäte, ktorá má životnosť až 100-tisíc prepisov
