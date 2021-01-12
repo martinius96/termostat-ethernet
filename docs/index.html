@@ -96,7 +96,7 @@ Rozhodovacia logika systému sa vykonáva každých 10 sekúnd nezávisle na web
 <li>Arduino Uno</li>
 <li>Ethernet shield Wiznet W5100 / Ethernet modul Wiznet W5200-W5500</li>
 <li>Teplotný senzor DS18B20 na OneWire zbernici v puzdre TO-92, alebo vo vodotesnom vyhotovení v hliníkovej rúrke</li>
-<li>Relé SRD-5VDC-SL-C slúžiace na spínanie kotla (Active-LOW signál)</li>
+<li>Elektromagnetické relé SRD-5VDC-SL-C / SSR relé OMRON G3MB-202P slúžiace na spínanie kotla (Active-LOW signál)</li>
 <p style="text-align: justify;">
 <b>HTML stránky bežiace na Arduine:</b>
 <li><b>/</b> - root stránka obsahujúca formulár, aktuálny výpis logického výstupu pre relé, teplotu</li>
@@ -105,7 +105,7 @@ Rozhodovacia logika systému sa vykonáva každých 10 sekúnd nezávisle na web
 <hr>				
 Elektromagnetické relé SRD-5VDC-SL-C, ktoré je v projekte použité umožňuje spínať až 10A pri 230V - maximálny výkon 2300W. 
 V prípade spínania jednosmerného obvodu (záťaže) je možné spínať 300W (10A pri 30V DC max). 
-Pre schému zapojenia je plne kompatibilné aj SSR relé OMRON G3MB-202P, ktoré je vhodné iba pre neindukčnú záťaž a výhradne pre záťaž so striedavým napätím. 
+Pre schému zapojenia je plne kompatibilné aj SSR relé OMRON G3MB-202P, ktoré je vhodné iba pre neindukčnú záťaž a výhradne pre záťaž so striedavým napätím (DC obvod nedokáže po zopnutí rozopnúť). 
 Maximálny spínaný výkon 460W (230V, 2A). <b>Termostat je možné používať celoročne. V prípade nepotrebného riadenia je možné výstup fyzicky odpojiť a termostat využívať ako Ethernet teplomer pre zisk dát z miestnosti, kde sa nachádza.</b>
 </p>
 
@@ -230,7 +230,7 @@ Na webovej stránke termostatu nájde používateľ aj informácie o uptime zari
           client.println(F(" °C"));
           client.print(F("&lt;hr>"));
           client.println(F("&lt;h3>Autor: Martin Chlebovec - martinius96@gmail.com - https://martinius96.github.io/termostat-ethernet/&lt;/h3>"));
-          client.println(F("&lt;h4>Verzia free - 1.0.2 build: 01. Oct 2020&lt;/h4>"));
+          client.println(F("&lt;h4>Verzia free - 1.0.2.1 build: 12. Jan 2021&lt;/h4>"));
           client.println(F("&lt;/center>"));
           client.println(F("&lt;/body>"));
           client.println(F("&lt;/html>"));
