@@ -59,13 +59,13 @@
   </div>
 </nav>  
 <div class="alert alert-success">
-	<strong>Projekt k repozitáru - Github: </strong><a href="https://github.com/martinius96/termostat-ethernet/">Termostat - Ethernet</a>
+	<strong>Repozitár projektu Ethernet termostat - strojové kódy: </strong><a href="https://github.com/martinius96/termostat-ethernet/">Github</a>
 </div>	
 <div class="alert alert-info">
+	<strong>Verzia 1.0.3 projektu Ethernet termostat je posledným updatom verzie zdarma. Ďalšie chyby, bugy a bezpečnostné chyby nebudú riešené.</strong>
+</div>					
+<div class="alert alert-info">
 	<strong>Článok k projektu na Chiptron.cz: </strong><a href="https://chiptron.cz/articles.php?article_id=273">Izbový termostat - Arduino + Ethernet</a>
-</div>	
-<div class="alert alert-danger">
-	<strong>Podporte projekt pre pridanie nových funkcionalít do free verzie, sprístupnenie zdrojového kódu (.ino): </strong><a href="https://www.paypal.com/paypalme/chlebovec">PayPal</a>
 </div>	
 <span class="label label-default">Arduino</span>
 <span class="label label-primary">Ethernet</span>
@@ -285,7 +285,9 @@ Implmentácia obsahuje programy pre statickú / dynamickú IPv4 adresu priraden�
 Termostatom je možné nahradiť už existujúci izbový termostat, možno dočasne nahradiť ohrievač v akváriu / teráriu pre udržiavanie stálej teploty.
 </p>
 <div class="alert alert-danger">
-	<b>Changelog verzie 1.0.2 Ethernet termostatu:</b>
+	<b>Changelog verzie 1.0.3 Ethernet termostatu:</b>
+	<li>Pre HTML form museli byť pre nekompatibilitu prehliadača Google Chrome pre Android odstránené typy number pre input.</li>
+	<li>Upravený backend, pre porovnanie dátového typu vstupu s (ne)akceptáciou vstupu.</li>
 	<li>Opravený JSON output (prehodené riadiace teploty) k opačným entitám</li>
 	<li>Opravený Content-type pre JSON output z text/html na application/json</li>
 	<li>Všetky statické časti HTML stránok presunuté do ROM pamäte cez F() makro</li>
