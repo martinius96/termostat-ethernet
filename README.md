@@ -55,3 +55,16 @@
 ![Ethernet termostat- presmerovanie používateľa po odoslaní dát do formulára](https://i.imgur.com/k9J9DFG.png)
 ![UART - RS232 výstup termostatu - Arduino](https://i.imgur.com/qQ74dpi.png)
 ![JSON output - Ethernet termostat - Arduino](https://chiptron.cz/images/articles/IzbovyTermostat/json.jpg)
+
+# JSON klienti
+* Programové implementácia pre klientov na platforme Arduino, ESP8266, ESP32, ktorí sa dokážu pripojiť k WiFi termostatu
+* Dokážu načítať dáta, ktoré termostat distribuuje - hysteréza, cieľová teplota, nameraná teplota
+* Dáta z JSON formátu deserializujú, vyparsujú pre ďalšie použitie, archivácia, upload do MySQL databázy
+* Možnosť na základe dát riadiť perifériu (solenoid radiátora, ohrev, ventilátor, notifikácie)
+* Pripájanie JSON klienta sa realizuje každých 15 sekúnd k termostatu cez websocket
+* V rozšírenej MQTT implementácii JSON klienta sa dáta posielajú na dostupný MQTT Broker - IoT Industries Slovakia
+* Dáta sa Publishujú do hlavného topicu esp32, pričom je každá entita rozdelená subtopicom
+* Subtopicy sú: hysteresis, actual_temp, target_temp
+* **Tento MQTT Broker je verejný a tak môžu byť dáta zmenené, prepísané, čítané akýkoľvek používateľom služby**
+* Možno prispôsobiť pre váš MQTT broker a systém inteligentnej domácnosti, kde môžete mať dáta z termostatu - Hassio, Domoticz, MQTT Mosquitto
+![JSON klient - Arduino, ESP8266, ESP32](https://i.imgur.com/Ee9GvTI.png)
