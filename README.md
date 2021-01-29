@@ -57,7 +57,7 @@
 ![JSON output - Ethernet termostat - Arduino](https://chiptron.cz/images/articles/IzbovyTermostat/json.jpg)
 
 # JSON klienti
-* Programové implementácia pre klientov na platforme Arduino, ESP8266, ESP32, ktorí sa dokážu pripojiť k WiFi termostatu
+* Programové implementácia pre klientov na platforme Arduino, ESP8266, ESP32, ktorí sa dokážu pripojiť k Ethernet termostatu
 * Dokážu načítať dáta, ktoré termostat distribuuje - hysteréza, cieľová teplota, nameraná teplota
 * Dáta z JSON formátu deserializujú, vyparsujú pre ďalšie použitie, archivácia, upload do MySQL databázy
 * Možnosť na základe dát riadiť perifériu (solenoid radiátora, ohrev, ventilátor, notifikácie)
