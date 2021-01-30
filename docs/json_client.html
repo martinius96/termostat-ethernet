@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="sk-SK">
+<head>
+  	<meta property="og:title" content="JSON klient - Ethernet termostat - MQTT Publish, ArduinoJson, deserializácia, parsovanie dát" />
+  	<meta property="og:locale" content="sk_SK" />    	
+	<meta name="robots" content="index, follow">
+	<link rel="icon" type="image/png" href="favicon.png">
+	<link rel="sitemap" type="application/xml" title="Sitemap" href="sitemap.xml" />
+    	<meta name='revisit-after' content='2 days'>
+    	<title>JSON klient - Ethernet termostat - MQTT Publish, ArduinoJson, deserializácia, parsovanie dát</title>
+    	<meta property='fb:admins' content='100001242570317'>
+    	<meta charset="utf-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+    	<meta name="description" content="JSON klient na platforme Arduino, ESP866, ESP32 pre projekt Ethernet termostat. Umožňujú parsovanie dát, Publish na MQTT službu IoT Industries Slovakia">
+    	<meta name="keywords" content="json, arduino, ethernet, wifi, esp8266, esp32, parsing, arduinojson, deserialization, mqtt, publish, subscribe, dáta, prenos, http, mqtts, šifrovane, socket, iot, industries, slovakia, termostat, thermostat">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<meta name="google-site-verification" content="UwZZh2EXv3iWUAi_1Z0hLxVCz6ySJ4UdY_BPoLtejwo" />
+	<script type="text/javascript">
+    		window.smartlook||(function(d) {
+    			var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];
+    			var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';
+    			c.charset='utf-8';c.src='https://rec.smartlook.com/recorder.js';h.appendChild(c);
+    		})(document);
+    		smartlook('init', 'db50efe9fff280a17db52b82be221240cbbd3dbe');
+	</script>    
+			<style>
+	#right {
+  position: absolute;
+  right: 0px;
+}
+	</style>
+</head>
+<body>
+	<div class="container">
+  		<div class="row">
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="index.html">Termostat - Ethernet</a>
+    </div>
+    <ul class="nav navbar-nav">
+      	<li><a href="index.html">Prehľad</a></li>
+	<li><a href="zapojenie.html">Zapojenie</a></li>      
+	<li class=""><a href="spustenie.html">Spustenie Ethernet termostatu</a></li>
+  <li class="active"><a href="json_client.html">JSON client</a></li>
+      	<li><a href="kontakt.html">Kontakt</a></li>
+<li style="float: right; "><a href="https://martinius96.github.io/WiFi-termostat/" class="btn btn-success" role="button" title="Zmeniť projekt na WiFi termostat"><img src="https://www.flaticon.com/premium-icon/icons/svg/3686/3686730.svg" width=16px height=16px> <font color="white">WiFi termostat</font></a></li></ul>
+  </div>
+</nav>   			
+<div class="col-sm-12">
+				<div class="alert alert-success">
+					<strong>Repozitár projektu so zdrojovými kódmi pre JSON klientov - Github: </strong><a href="https://github.com/martinius96/termostat-ethernet/">Termostat - Ethernet</a>
+				</div>	
+<span class="label label-default">Arduino</span>
+<span class="label label-primary">Ethernet</span>
+<span class="label label-success">Wiznet W5100 / W5500</span>
+<span class="label label-info">DS18B20</span>
+<span class="label label-warning">OneWire</span>
+<span class="label label-danger">Dallas</span>
+<span class="label label-default">HTML</span>
+<span class="label label-primary">Webserver</span>
+<span class="label label-success">WebSocket</span>
+<hr><center><h2>JSON klienti - Ethernet termostat</h2></center><hr>
+<p style="text-align: justify;">
+JSON klient postavený na platforme Arduino, ESP8266, ESP32 umožňuje pripojenie cez websocket k Ethernet termostatu.
+Klient vykonáva cyklický HTTP GET request každých 15 sekúnd pre získanie obsahu podstránky /get_data.json, kde webserver distribuuje dáta o cieľovej teplote, hysteréze a aktuálne nameranej teplote senzorom DS18B20 na OneWire zbernici.
+Načítaný JSON payload dokáže JSON klient vyparsovať z HTTP response a následne tento reťazec deserializovať.
+Po deserializácii je možné pristupovať k jednotlivým kľúčom, ku ktorým sú priradené hodnoty a tie získať --> vyparsovať.
+Vyparsované dáta sa vypíšu na UART - Sériovú linku - 115200 baud/s.
+V používateľskej aplikácii, ktorá môže byť do existujúcich zdrojových kódov JSON klientov doplnená je možné ovládať entity na základe týchto hodnôt, napríklad: otváranie ventilov radiátorov, solenoid, vetranie, uzavretie okien atď..
+Prípadne je možné dáta archivovať - odoslať ich na webserver, kde môžu byť uložené napríklad do MySQL databázy, do Loxone domácej automatizácie.
+Súčasťou firmvéru označeného ako MQTT, respektíve MQTTS (šifrované MQTT) je možné dáta odosielať na MQTT Broker IoT Industries Slovakia - slovenský free MQTT Broker určený pre vývojárov.
+MQTT i MQTTS variant využíva socket, ktorý sa používa i pre HTTP request pre získanie JSON payloadu.
+Existujúci MQTT server môže byť v zdrojových kódoch nahradený za váš a tak môžete dáta z termostatu sprístupniť aj do systémov domácej automatizácie (Hassio, Mosquitto MQTT, Domoticz, Loxone a iné...).
+V aktuálnej programovej implementácii mikrokontróler (JSON klient) odosiela získané dáta na MQTT Broker do topicu termostat, pričom jednotlivé teploty sú odlíšené v subtopicoch.
+<b>Subtopicy pod hlavným topicom termostat sú:</b> 
+<li>hysteresis</li>
+<li>actual_temp</li>
+<li>target_temp</li>
+<b>Daný JSON klient má k daným subtopicom prihlásený aj Subscribe.</b>
+Využíva topic termostat/#, ktorý vracia obsah všetkých subtopicov.</b>
+<b><font color="red">UPOZORNENIE: MQTT Broker IoT Industries Slovakia, ktorý sa vo vzorovej implementácii používa je verejný a tak môžu byť dáta zmenené, prepísané, čítané akýmkoľvek používateľom!</font></b>
+Ak do svojho mikrokontroléru nahrá firmvér JSON klienta bez zmeny akýkoľvek iný používateľ, bude vám dané dáta v preddefinovanom topicu prepisovať a rovnako aj vy jemu. Je tak vhodné pri vlastnej implementácii zvoliť iný topic, kam budú dáta odosielané.
+</p>    
+<h4>Bloková schéma fungovanie JSON klienta:</h4>
+<center>
+<img src="https://i.imgur.com/m2O62dn.jpg" style="display: block; max-width: 100%; height: auto;" title="JSON klient - Arduino, ESP8266, ESP32, MQTT integrácia - Ethernet termostat" alt="JSON klient - Arduino, ESP8266, ESP32, MQTT integrácia - Ethernet termostat">
+</center>
+	</div>
+					</div>
+</body>
+</html>
