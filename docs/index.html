@@ -285,8 +285,8 @@ MQTT vytvorí nešifrované spojenie s MQTT Brokrom, MQTTS šifrované. Oba typy
 Využíva sa slovenský MQTT Broker pre vývojárov <a href="https://mqtt.iotindustries.sk/sk/">IoT Industries Slovakia</a> - možné používať zdarma.
 <b>Mikrokontróler zapisuje dáta pod hlavný topic termostat do subtopicov hysteresis, actual_temp, target_temp.</b>
 <b>Daný JSON MQTT klient má k daným subtopicom prihlásený Subscribe prostredníctvom čítania hlavného topicu termostat/# a všetkých jeho subtopicov.</b>
-<b><font color="red">Tento MQTT Broker je verejný a tak môžu byť dáta zmenené, prepísané, čítané akýkoľvek používateľom služby</font></b>
-Ak do svojho mikrokontroléru nahrá firmvér JSON klienta bez zmeny, akýkoľvek iný používateľ vám dané dáta v preddefinovanom topicu prepíše
+<b><font color="red">Tento MQTT Broker je verejný a tak môžu byť dáta zmenené, prepísané, čítané akýmkoľvek používateľom služby</font></b>
+Ak do svojho mikrokontroléru nahrá firmvér JSON klienta bez zmeny akýkoľvek iný používateľ, bude vám dané dáta v preddefinovanom topicu prepisovať a rovnako aj vy jemu.
 </p>
 <center><img src="https://i.imgur.com/4Cm5z8o.png" style="display: block; max-width: 100%; height: auto;" alt="JSON client pre WiFi termostat - UART výstup" title="JSON client pre WiFi termostat - UART výstup"></center>       		
 <center><img src="https://i.imgur.com/5BtdmFH.png" style="display: block; max-width: 100%; height: auto;" alt="JSON client MQTT Broker IoT Industries Slovakia - výstup topicu - Subscribe termostat" title="JSON client MQTT Broker IoT Industries Slovakia - výstup topicu - Subscribe termostat"></center>       		
