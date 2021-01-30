@@ -75,16 +75,18 @@ Súčasťou firmvéru označeného ako MQTT, respektíve MQTTS (šifrované MQTT
 MQTT i MQTTS variant využíva socket, ktorý sa používa i pre HTTP request pre získanie JSON payloadu.
 Existujúci MQTT server môže byť v zdrojových kódoch nahradený za váš a tak môžete dáta z termostatu sprístupniť aj do systémov domácej automatizácie (Hassio, Mosquitto MQTT, Domoticz, Loxone a iné...).
 V aktuálnej programovej implementácii mikrokontróler (JSON klient) odosiela získané dáta na MQTT Broker do topicu termostat, pričom jednotlivé teploty sú odlíšené v subtopicoch.
-<b>Subtopicy pod hlavným topicom termostat sú:</b> 
+</p> 
+<h4>Subtopicy pod hlavným topicom termostat sú:</h4> 
 <li>hysteresis</li>
 <li>actual_temp</li>
 <li>target_temp</li>
+<p style="text-align: justify;">
 <b>Daný JSON klient má k daným subtopicom prihlásený aj Subscribe.</b>
-Využíva topic termostat/#, ktorý vracia obsah všetkých subtopicov.</b>
+Využíva Subscribe na topic termostat/#, ktorý vracia obsah všetkých subtopicov, ktoré hierarchicky pod termostat existujú.</b>
 <b><font color="red">UPOZORNENIE: MQTT Broker IoT Industries Slovakia, ktorý sa vo vzorovej implementácii používa je verejný a tak môžu byť dáta zmenené, prepísané, čítané akýmkoľvek používateľom!</font></b>
 Ak do svojho mikrokontroléru nahrá firmvér JSON klienta bez zmeny akýkoľvek iný používateľ, bude vám dané dáta v preddefinovanom topicu prepisovať a rovnako aj vy jemu. Je tak vhodné pri vlastnej implementácii zvoliť iný topic, kam budú dáta odosielané.
 </p>    
-<h4>Bloková schéma fungovanie JSON klienta:</h4>
+<h4>Bloková schéma - popis funkčnosti JSON klienta:</h4>
 <center>
 <img src="https://i.imgur.com/m2O62dn.jpg" style="display: block; max-width: 100%; height: auto;" title="JSON klient - Arduino, ESP8266, ESP32, MQTT integrácia - Ethernet termostat" alt="JSON klient - Arduino, ESP8266, ESP32, MQTT integrácia - Ethernet termostat">
 </center>
