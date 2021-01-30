@@ -77,9 +77,9 @@ Existujúci MQTT server môže byť v zdrojových kódoch nahradený za váš a 
 V aktuálnej programovej implementácii mikrokontróler (JSON klient) odosiela získané dáta na MQTT Broker do topicu termostat, pričom jednotlivé teploty sú odlíšené v subtopicoch.
 </p> 
 <h4>Cieľové topicy sú:</h4> 
-<li>termostat/hysteresis - pre hysterézu</li>
-<li>termostat/actual_temp - pre aktuálne nameranú teplotu</li>
-<li>termostat/target_temp - pre cieľovú (referenčnú) teplotu</li>
+<li><b>termostat/hysteresis</b> - pre hysterézu</li>
+<li><b>termostat/actual_temp</b> - pre aktuálne nameranú teplotu</li>
+<li><b>termostat/target_temp</b> - pre cieľovú (referenčnú) teplotu</li>
 <p style="text-align: justify;">
 <b>Daný JSON klient má k daným subtopicom prihlásený aj Subscribe, overuje tak aj informáciu, či bola do MQTT Brokra úspešná publikovaná.</b>
 <b>Využíva Subscribe na topic termostat/#</b>, ktorý vracia obsah všetkých subtopicov, ktoré hierarchicky pod termostat existujú.</b>
