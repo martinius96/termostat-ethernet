@@ -271,13 +271,25 @@ Na webovej stránke termostatu nájde používateľ aj informácie o uptime zari
 }
 </div>
 		<hr>
-<h3>JSON client - výstup do Serial monitoru, parsovanie dát</h3>
-<li>Client umožňuje načítať JSON dáta, ktoré Ethernet termostat distribuuje</li>
-<li>Získa aktuálnu konfiguráciu cieľovej teploty a hysterézy a aktuálne nameranú teplotu senzorom DS18B20</li>
-<li>JSON client je navrhnutý pre ESP32, ESP8266 a Arduino s Ethernet shieldom / modulom Wiznet W5100 / W5500</li>
-<li>Dáta dokáže vyparsovať aj systém pre domácu automatizáciu, kde dokáže tieto hodnoty vizualizovať</li>
-<li>Možnosť Publishu dát na MQTT Broker, napríklad slovenský MQTT Broker zdarma pre vývojárov - <a href="https://mqtt.iotindustries.sk/sk/">IoT Industries Slovakia</a></li>
-<center><img src="https://i.imgur.com/4Cm5z8o.png" style="display: block; max-width: 100%; height: auto;" alt="JSON client pre Ethernet termostat - UART výstup" title="JSON client pre Ethernet termostat - UART výstup"></center>       		
+<h3>JSON client - výstup do Serial monitoru, parsovanie dát, integrácia MQTT / MQTTS</h3>
+<p style="text-align: justify;">
+<b>Client umožňuje načítať JSON dáta, ktoré Ethernet termostat distribuuje na podstránke /get_data.json</b>
+Načítané JSON data dokáže klient deserializovať a vyparsovať a následne s nimi pracovať.
+Dáta mikrokontróler vypíše aj na UART vrátane JSON formátu dát v akom ich prebral
+Na základe vyparsovaných dát môžu byť archivované - zapísané do MySQL databázy, Loxone systému...
+Taktiež je možné riadiť v domácnosti iné entity na základe týchto hodnôt (otváranie ventilov radiátorov, solenoid, vetranie, uzavretie okien atď..)
+Získané hodnoty z JSON dát sú: aktuálne nastavená cieľová teplota a hysteréza, aktuálne nameraná teplota senzorom Dallas DS18B20 na OneWire zbernici
+JSON client je navrhnutý pre ESP32, ESP8266 a Arduino s Ethernet shieldom / modulom Wiznet W5100 / W5500
+JSON klientom existuje aj rozšírený firmvér s MQTT, respektíve MQTTS názvom.
+MQTT vytvorí nešifrované spojenie s MQTT Brokrom, MQTTS šifrované. Oba typy spojení využívajú socket.
+Využíva sa slovenský MQTT Broker pre vývojárov <a href="https://mqtt.iotindustries.sk/sk/">IoT Industries Slovakia</a> - možné používať zdarma.
+<b>Mikrokontróler zapisuje dáta pod hlavný topic termostat do subtopicov hysteresis, actual_temp, target_temp.</b>
+<b>Daný JSON MQTT klient má k daným subtopicom prihlásený Subscribe prostredníctvom čítania hlavného topicu termostat/# a všetkých jeho subtopicov.</b>
+<b><font color="red">Tento MQTT Broker je verejný a tak môžu byť dáta zmenené, prepísané, čítané akýkoľvek používateľom služby</font></b>
+Ak do svojho mikrokontroléru nahrá firmvér JSON klienta bez zmeny, akýkoľvek iný používateľ vám dané dáta v preddefinovanom topicu prepíše
+</p>
+<center><img src="https://i.imgur.com/4Cm5z8o.png" style="display: block; max-width: 100%; height: auto;" alt="JSON client pre WiFi termostat - UART výstup" title="JSON client pre WiFi termostat - UART výstup"></center>       		
+<center><img src="https://i.imgur.com/5BtdmFH.png" style="display: block; max-width: 100%; height: auto;" alt="JSON client MQTT Broker IoT Industries Slovakia - výstup topicu - Subscribe termostat" title="JSON client MQTT Broker IoT Industries Slovakia - výstup topicu - Subscribe termostat"></center>       		
 <p style="text-align: justify;">
 Programovú implementáciu v strojových kódoch pre izbový (Ethernet) termostat je možné nájsť na: <a href="https://github.com/martinius96/termostat-ethernet/">https://github.com/martinius96/termostat-ethernet/</a>. 
 Implmentácia obsahuje programy pre statickú / dynamickú IPv4 adresu priradenú k Ethernet shieldu. 
