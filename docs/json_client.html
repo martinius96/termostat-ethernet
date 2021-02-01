@@ -77,7 +77,7 @@ Po deserializácii je možné pristupovať k jednotlivým kľúčom, ku ktorým 
 Vyparsované dáta sa vypíšu na UART - Sériovú linku - 115200 baud/s.
 V používateľskej aplikácii, ktorá môže byť do existujúcich zdrojových kódov JSON klientov doplnená je možné ovládať entity na základe týchto hodnôt, napríklad: otváranie ventilov radiátorov, solenoid, vetranie, uzavretie okien atď..
 Prípadne je možné dáta archivovať - odoslať ich na webserver, kde môžu byť uložené napríklad do MySQL databázy, do Loxone domácej automatizácie.
-Súčasťou firmvéru označeného ako MQTT, respektíve MQTTS (šifrované MQTT) je možné dáta odosielať na MQTT Broker IoT Industries Slovakia - slovenský free MQTT Broker určený pre vývojárov.
+<b>Súčasťou firmvéru označeného ako MQTT, respektíve MQTTS (šifrované MQTT) je rozšírený JSON klient o možnosť odosielať - Publishovať na MQTT Broker IoT Industries Slovakia - slovenský free MQTT Broker určený pre vývojárov.</b>
 MQTT i MQTTS variant využíva socket, ktorý sa používa i pre HTTP request pre získanie JSON payloadu.
 Existujúci MQTT server môže byť v zdrojových kódoch nahradený za váš a tak môžete dáta z termostatu sprístupniť aj do systémov domácej automatizácie (Hassio, Mosquitto MQTT, Domoticz, Loxone a iné...).
 V aktuálnej programovej implementácii mikrokontróler (JSON klient) odosiela získané dáta na MQTT Broker do topicu termostat, pričom jednotlivé teploty sú odlíšené v subtopicoch.
