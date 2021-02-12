@@ -91,13 +91,14 @@ Pre získanie fingerprintu, potažmo Root CA certifikátu pre konkrétny MQTT se
 <br><b>Príkaz pre získanie Root CA certifikátu, ktorý vydal certifikát pre MQTT server (Issuer):</b><br>
 <code>openssl s_client -showcerts -verify 5 -connect mqttserver.com:8883 < /dev/null</code>
 </div>
-<h4>Cieľové topicy sú:</h4> 
+<h4>Používané topicy pre Publish na MQTT Broker sú:</h4> 
 <li><b>termostat/hysteresis</b> - pre hysterézu</li>
 <li><b>termostat/actual_temp</b> - pre aktuálne nameranú teplotu</li>
 <li><b>termostat/target_temp</b> - pre cieľovú (referenčnú) teplotu</li>
+<h4>Topic pre Subscribe:</h4>
+<li><b>termostat/#</b> - odoberá všetky subtopicy pod termostat/, teda hysteréza, aktuálna a cieľová teplota</li>
 <p style="text-align: justify;">
-<b>Daný JSON klient má k daným subtopicom prihlásený aj Subscribe, overuje tak aj informáciu, či bola do MQTT Brokra úspešná publikovaná.</b>
-<b>Využíva Subscribe na topic termostat/#</b>, ktorý vracia obsah všetkých subtopicov, ktoré hierarchicky pod termostat existujú.</b>
+<b>MQTT klient má prihlásený Subscribe na hlavný topic termostat a všetky jeho subtopicy. Dokáže tak zároveň aj overiť, či bola informácia na MQTT Broker úspešná publikovaná.</b>
 <b><font color="red">UPOZORNENIE: MQTT Broker IoT Industries Slovakia, ktorý sa vo vzorovej implementácii používa je verejný a tak môžu byť dáta zmenené, prepísané, čítané akýmkoľvek používateľom!</font></b>
 Ak do svojho mikrokontroléru nahrá firmvér JSON klienta bez zmeny akýkoľvek iný používateľ, bude vám dané dáta v preddefinovanom topicu prepisovať a rovnako aj vy jemu. Je tak vhodné pri vlastnej implementácii zvoliť iný topic, kam budú dáta odosielané.
 </p>    
