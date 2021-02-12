@@ -72,4 +72,4 @@
 * Pre súkromný MQTT broker je možné využiť aj autentizáciu menom a heslom, viz. dokumentácia: https://pubsubclient.knolleary.net/api
 * K dispozícii je aj firmvér pre JSON MQTT klientov s označením MQTTS - využívajú šifrované spojenie cez socket s MQTT brokerom
 * Tento typ firmvéru je dostupný iba pre ESP8266 a ESP32. Arduino s Ethernetom nepodporuje šifrovanie
-![JSON klient - Arduino, ESP8266, ESP32](https://i.imgur.com/5BtdmFH.png)
+![JSON klient - Arduino, ESP8266, ESP32](https://i.imgur.com/UEnHDb2.png)
