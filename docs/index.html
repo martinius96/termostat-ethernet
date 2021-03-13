@@ -137,7 +137,7 @@ V prípade, že zariadenie pri prvom spustení nemá nič uložené na spomenut�
 </p>
 <p style="text-align: justify;">
 Prostredníctvom meta tagu Refresh vykonáva webserver obnovu celej stránky každých 30 sekúnd a prostredníctvom Javascriptu sa vypisuje do HTML stránky aj orientačný čas do refreshu. 
-Do tohto času je potrebné stihnúť zapísať zmenu pre termostat, inak sa input okná pre číselné vstupy do formulára resetujú pri obnovení stránky. <b>Na základe spätnej väzby od používateľov Android zariadení bol čas pre Refresh preĺžený z 10 na 30 sekúnd.</b>
+Do tohto času je potrebné stihnúť zapísať zmenu pre termostat, inak sa input okná pre číselné vstupy do formulára resetujú pri obnovení stránky. <b>Na základe spätnej väzby od používateľov Android zariadení bol čas pre Refresh predĺžený z 10 na 30 sekúnd.</b>
 Nakoľko built-in knižnica Ethernet neobsahuje využitie asynchrónneho webservera (ktorý je možné využiť napríklad u mikrokontrolérov Espressif ESP8266 / ESP32), je nutné prepisovať celú stránku. 
 Dynamický údaj, ktorý sa predovšetkým mení je aktuálna hodnota výstupu - <b><font color="#27AE60">Zapnutý</font></b> / <b><font color="red">Vypnutý</font></b>, ktorý informuje prevádzkovateľa o skutočnom stave výstupu spoločne aj s farebným označením. 
 Nakoľko sa logika systému  vykonáva nezávisle na webserveri, do refreshu môže už byť výstup v inom stave, ako aktuálne vypísanom vo webaplikácii. Zmena výstupu je ihneď vypísaná napríklad na UART monitor.
