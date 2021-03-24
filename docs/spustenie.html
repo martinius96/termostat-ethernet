@@ -85,14 +85,20 @@
 	<strong>Nahratie programu do Arduina cez avrdude (vzorovo pre COM21 a program sketch.ino.hex):</strong><br>
 	avrdude -CC: avrdude.conf -v -patmega328p -carduino -PCOM21 -b115200 -D -Uflash:w:sketch.ino.hex:i
 </div>	
+<div class="alert alert-danger">
+	<strong>Nahratie programu do Arduina Nano s "OLD Bootloader" cez avrdude (vzorovo pre COM21 a program sketch.ino.hex):</strong><br>
+	avrdude -CC: avrdude.conf -v -patmega328p -carduino -PCOM21 -b57600 -D -Uflash:w:sketch.ino.hex:i
+</div>	
 <hr><center><h2>Spustenie projektu izbový termostat - Arduino + Ethernet Wiznet W5100 / W5500</h2></center><hr>
 <p style="text-align: justify;">
 Projekt Ethernet (izbový) termostat existuje aj vo verzii zdarma, ktorá je dostupná v repozitári na Githube.
 Verzia obsahuje celkom 6 strojových - predkompilovaných programov pre platformu Arduino Uno.
 Strojový kód (.hex) zaručuje, že daný program je kompatibilný a má totožnú funkčnosť na všetky zariadenia, do ktorých sa nahrá a spustí.
+Nahratie firmvéru je rýchle a jednoduché cez nástroj AVRDUDE / XLoader s grafickým rozhraním. Hlavná aplikácia sa spustí ihneď po nahratí firmvéru.
 Kód je tak univerzálny a poskytuje možnosť na ukážku poskytnúť autorovi záujemcom o vyskúšanie projektu jeho build bez prístupu ku zdrojovému (.ino) kódu.
+<b>Nakoľko má každý Ethernet termostat rovnakú - preddefinovanú MAC adresu, je možné v LAN sieti využívať iba jeden termostat, inak dôjde ku konfliktu MAC adries a nebude komunikovať ani jeden termostat.</b>
 <div class="alert alert-danger">
-	<b>Free verzia je tak dostupná iba vo forme strojového kódu bez prístupu k aplikácii napísanej v .ino formáte.</b>
+	<b>Verzia zdarma (free) je dostupná iba vo forme strojového kódu bez prístupu k aplikácii napísanej v .ino formáte z ktorej bol program kompilovaný.</b>
 </div>	
 </p>
 <center>
@@ -102,8 +108,8 @@ Kód je tak univerzálny a poskytuje možnosť na ukážku poskytnúť autorovi 
 <li>Ethernet Wiznet W5100</li>
 <li>Ethernet Wiznet W5500 (W5200 - 5500 compatible)</li>
 <b>Rozdelenie strojových kódov na základe pridelenia IPv4 LAN adresy:</b>
-<li><b>Statická</b> - pridelená staticky priamo v zdrojovom kóde (192.168.4.1 / 192.168.1.254) 24-bit maska</li>
-<li><b>Dynamická</b> - pridelená dynamicky cez DHCP server v  LAN sieti (môže byť priradená staticky na cieľovú MAC adresu)</li>
+<li><b>Statická</b> - pridelená staticky priamo v zdrojovom kóde (192.168.4.1 / 192.168.1.254) 24-bit maska, t.j. sieť 192.168.4.0 / 192.168.1.0</li>
+<li><b>Dynamická</b> - pridelená dynamicky cez DHCP server v  LAN sieti (môže byť priradená staticky na cieľovú MAC adresu prostredníctvom pravidla v routri)</li>
 <center>
 <div class="table-responsive">   
 <table class="table" style="border: 1px solid black;">
