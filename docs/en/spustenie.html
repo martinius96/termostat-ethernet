@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- Primary Meta Tags -->
+	<title>Project launch - Room thermostat - Arduino + Ethernet</title>
+	<meta name="description" content="Instructions for installation and start-up of a room thermostat project built on the Arduuino Uno platform and Ethernet shield Wiznet W5100.">
+	<meta name="keywords" content="Thermostat, xloader, uploader, flash, software, firmware, arduino, wiznet, ethernet, w5100, w5500, heating, heating, webserver, socket, connection, breadfruit, contact, ds18b20, onewire, 1-wire">
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://martinius96.github.io/termostat-ethernet/en/spustenie.html">
+	<meta property="og:title" content="Project launch - Room thermostat - Arduino + Ethernet">
+	<meta property="og:description" content="Instructions for installation and start-up of a room thermostat project built on the Arduuino Uno platform and Ethernet shield Wiznet W5100">
+	<meta property="og:image" content="">
+
+	<!-- Twitter -->
+	<meta property="twitter:card" content="summary_large_image">
+	<meta property="twitter:url" content="https://martinius96.github.io/termostat-ethernet/en/spustenie.html">
+	<meta property="twitter:title" content="Project launch - Room thermostat - Arduino + Ethernet">
+	<meta property="twitter:description" content="Instructions for installation and start-up of a room thermostat project built on the Arduuino Uno platform and Ethernet shield Wiznet W5100.">
+	<meta property="twitter:image" content="">
+	
+	<link rel="icon" type="image/png" href="favicon.png">
+	<link rel="sitemap" type="application/xml" title="Sitemap" href="../sitemap.xml" />
+	<meta name="google-site-verification" content="UwZZh2EXv3iWUAi_1Z0hLxVCz6ySJ4UdY_BPoLtejwo" />    	
+	<meta property='fb:admins' content='100001242570317'>
+    	<meta charset="utf-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+    		window.smartlook||(function(d) {
+    			var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];
+    			var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';
+    			c.charset='utf-8';c.src='https://rec.smartlook.com/recorder.js';h.appendChild(c);
+    		})(document);
+    		smartlook('init', 'db50efe9fff280a17db52b82be221240cbbd3dbe');
+	</script>  
+	<style>
+	table td {
+  border: 1px solid black;
+}	table th {
+  border: 1px solid black;
+}
+	#right {
+  position: absolute;
+  right: 0px;
+}
+	</style>
+</head>
+<body>
+	<div class="container">
+  		<div class="row">
+    			<div class="col-sm-12">
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="index.html">Thermostat - Ethernet</a>
+    </div>
+    <ul class="nav navbar-nav">
+      	<li class=""><a href="index.html">Overview</a></li>
+	<li><a href="zapojenie.html">Involvement</a></li>      
+	<li class="active"><a href="spustenie.html">Startup instructions</a></li>
+  <li><a href="json_client.html">JSON client</a></li>
+      	<li><a href="kontakt.html">Contact</a></li>
+<li style="float: right; "><a href="https://martinius96.github.io/WiFi-termostat/en/" class="btn btn-success" role="button" title="Zmeniť projekt na WiFi termostat"><img src="https://www.flaticon.com/premium-icon/icons/svg/3686/3686730.svg" width=16px height=16px> <font color="white">WiFi thermostat</font></a></li></ul>
+  </div>
+</nav>  
+				<div class="alert alert-success">
+					<strong>Repository project - Github: </strong><a href="https://github.com/martinius96/termostat-ethernet/">Termostat - Ethernet</a>
+				</div>	
+<span class="label label-default">Arduino</span>
+<span class="label label-primary">Ethernet</span>
+<span class="label label-success">Wiznet W5100 / W5500</span>
+<span class="label label-info">DS18B20</span>
+<span class="label label-warning">OneWire</span>
+<span class="label label-danger">Dallas</span>
+<span class="label label-default">HTML</span>
+<span class="label label-primary">Webserver</span>
+<span class="label label-success">WebSocket</span>
+<div class="alert alert-info">
+	<strong>MAC address of Ethernet thermostat: </strong>DE:AD:BE:EF:FE:ED - <strong>For the needs of static IP address assignment from the DHCP service</strong>
+</div>	
+<div class="alert alert-warning">
+	<strong>Uploading the program to Arduino via avrdude (sample for COM21 and the program sketch.ino.hex):</strong><br>
+	avrdude -CC: avrdude.conf -v -patmega328p -carduino -PCOM21 -b115200 -D -Uflash:w:sketch.ino.hex:i
+</div>	
+<div class="alert alert-danger">
+	<strong>Uploading the program to Arduino Nano with "OLD Bootloader" via avrdude (sample for COM21 and program sketch.ino.hex):</strong><br>
+	avrdude -CC: avrdude.conf -v -patmega328p -carduino -PCOM21 -b57600 -D -Uflash:w:sketch.ino.hex:i
+</div>	
+<hr><center><h2>Launch of the room thermostat project - Arduino + Ethernet Wiznet W5100 / W5500</h2></center><hr>
+<p style="text-align: justify;">
+The Ethernet (room) thermostat project also exists in a free version, which is available in the Githube repository.
+The version contains a total of 6 machine - precompiled programs for the Arduino Uno platform.
+Machine code (.hex) guarantees that the program is compatible and has the same functionality for all devices to which it is loaded and run.
+Firmware upload is quick and easy via the AVRDUDE / XLoader with a graphical interface. The main application starts immediately after the firmware is loaded.
+The code is thus universal and provides an opportunity to provide the author interested in trying out the project of its build without access to the source (.ino) code.
+<b>Since each Ethernet thermostat has the same - predefined MAC address, it is possible to use only one thermostat in the LAN network, otherwise there will be a conflict of MAC addresses and not a single thermostat will communicate.</b>
+<div class="alert alert-danger">
+	<b>The free version is only available in machine code form without access to the application written in .ino format from which the program was compiled.</b>
+</div>	
+</p>
+<center>
+	<img src="https://i.imgur.com/PwduwOz.jpg" style="display: block; max-width: 100%; height: auto;" alt="Strojový kód aplikácie Ethernet izbový termostat" title="Strojový kód aplikácie Ethernet izbový termostat">	
+</center>
+<b> Machine shield splitting based on Ethernet shield: </b>
+<li> Ethernet Wiznet W5100 </li>
+<li> Ethernet Wiznet W5500 (W5200 - 5500 compatible) </li>
+<b> Machine code distribution based on IPv4 LAN address assignment: </b>
+<li> <b> Static </b> - assigned statically directly in the source code (192.168.4.1 / 192.168.1.254) 24-bit mask, i. network 192.168.4.0 / 192.168.1.0 </li>
+<li> <b> Dynamic </b> - assigned dynamically via DHCP server in the LAN network (can be statically assigned to the destination MAC address via a rule in the router) </li>
+<center>
+<div class="table-responsive">   
+<table class="table" style="border: 1px solid black;">
+<thead>
+<tr>
+<th>Firmware name</th>
+<th align="center">Shield</th>
+<th>IPv4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dynamic_W5100.hex</td>
+<td align="center">W5100</td>
+<td>controlled via DHCP (includes maintain to extend lease time / request new IP)</td>
+</tr>
+<tr>
+<td>dynamic_W5500.hex</td>
+<td align="center">W5500</td>
+<td>controlled via DHCP (includes maintain to extend lease time / request new IP)</td>
+</tr>
+<tr>
+<td>static_W5100_1_254.hex</td>
+<td align="center">W5100</td>
+<td>192.168.1.254</td>
+</tr>
+<tr>
+<td>static_W5100_4_1.hex</td>
+<td align="center">W5100</td>
+<td>192.168.4.1</td>
+</tr>
+<tr>
+<td>static_W5500_1_254.hex</td>
+<td align="center">W5500</td>
+<td>192.168.1.254</td>
+</tr>
+<tr>
+<td>static_W5500_4_1.hex</td>
+<td align="center">W5500</td>
+<td>192.168.4.1</td>
+</tr>
+</tbody>
+</table>
+	</div></center>
+<p style="text-align: justify;">
+To upload machine code to Arduino, it is possible to use the AVRDUDE tool, which also uses the Arduino IDE environment to upload the compiled program.
+The tool can be run directly from the command line, but it is necessary to set all configurable data correctly, so it is not suitable for less experienced programmers or laymen.
+XLoader is a Windows application (tool) with a simple graphical interface that allows the selection of firmware - machine code (.hex), the target platform and can dynamically show the COM port on which the device is located.
+It allows you to burn firmware to AVR platforms, i. Arduino Uno, Nano, Duemilanove (AtMega328 / AtMega168), Arduino Mega (AtMega1280 / AtMega2560).
+By simply clicking on Upload, the machine code can be uploaded automatically (XLoader uses the AVRDUDE tool similar to the Arduino IDE). The XLoader window informs about the successful upload in the form of a list of the number of bytes uploaded.
+</p>				
+<center>
+	<img src="https://i.imgur.com/9dMxWT5.png" style="display: block; max-width: 100%; height: auto;" alt="XLoader - Arduino - AVRDUDE - Termostat - Ethernet" title="XLoader - Arduino - AVRDUDE - Termostat - Ethernet">	
+</center>
+<b>After successfully uploading the machine code to the Arduino, the thermostat is fully ready and available at its IP address. The program works on the basis of the project wiring diagram and the logic from the description.</b>
+				<hr><center><h2>Video tutorial for uploading firmware to Arduino via XLoader</h2></center><hr>
+<center><iframe width="50%" height="315" src="https://www.youtube.com/embed/fAUKYuYNkMo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></center>	
+			</div>
+		</div>
+</div>
+</body>
+</html>
