@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- Primary Meta Tags -->
+	<title>Room thermostat - Arduino - Ethernet - Wiring</title>
+	<meta name="title" content="Room thermostat - Arduino - Ethernet - Wiring">
+	<meta name="description" content="Room thermostat designed on the Arduino Uno platform + Ethernet shield Wiznet W5100 / W5500. Thermostat for heating / cooling.">
+	<meta name="keywords" content="Thermostat, digital, arduino, wiznet, ethernet, w5100, w5500, heating, heating, webserver, socket, connection, circuit, resistor, divider, power supply, ds18b20, onewire, 1-wire">
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://martinius96.github.io/termostat-ethernet/en/zapojenie.html">
+	<meta property="og:title" content="Room thermostat - Arduino - Ethernet - Wiring">
+	<meta property="og:description" content="Room thermostat designed on the Arduino Uno platform + Ethernet shield Wiznet W5100 / W5500. Thermostat for heating / cooling.">
+	<meta property="og:image" content="">
+
+	<!-- Twitter -->
+	<meta property="twitter:card" content="summary_large_image">
+	<meta property="twitter:url" content="https://martinius96.github.io/termostat-ethernet/en/zapojenie.html">
+	<meta property="twitter:title" content="Room thermostat - Arduino - Ethernet - Wiring">
+	<meta property="twitter:description" content="Izbový termostat navrhnutý na platforme Arduino Uno + Ethernet shield Wiznet W5100 / W5500. Termostat pre vykurovanie / chladenie.">
+	<meta property="twitter:image" content="">
+	
+	<link rel="icon" type="image/png" href="favicon.png">
+	<link rel="sitemap" type="application/xml" title="Sitemap" href="../sitemap.xml" />
+	<meta name="google-site-verification" content="UwZZh2EXv3iWUAi_1Z0hLxVCz6ySJ4UdY_BPoLtejwo" />    	
+	<meta property='fb:admins' content='100001242570317'>
+    	<meta charset="utf-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+    	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+    		window.smartlook||(function(d) {
+    			var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];
+    			var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';
+    			c.charset='utf-8';c.src='https://rec.smartlook.com/recorder.js';h.appendChild(c);
+    		})(document);
+    		smartlook('init', 'db50efe9fff280a17db52b82be221240cbbd3dbe');
+	</script>    
+			<style>
+	#right {
+  position: absolute;
+  right: 0px;
+}
+	</style>
+</head>
+<body>
+	<div class="container">
+  		<div class="row">
+    			<div class="col-sm-12">
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="index.html">Thermostat - Ethernet</a>
+    </div>
+    <ul class="nav navbar-nav">
+      	<li><a href="index.html">Overview</a></li>
+	<li class="active"><a href="zapojenie.html">Involvement</a></li>      
+	<li class=""><a href="spustenie.html">Startup instructions</a></li>
+  <li><a href="json_client.html">JSON client</a></li>
+      	<li><a href="kontakt.html">Contact</a></li>
+	<li style="float: right; "><a href="https://martinius96.github.io/WiFi-termostat/en/" class="btn btn-success" role="button" title="Zmeniť projekt na WiFi termostat"><img src="https://www.flaticon.com/premium-icon/icons/svg/3686/3686730.svg" width=16px height=16px> <font color="white">WiFi thermostat</font></a></li>	   
+</ul>
+  </div>
+</nav>  
+				<div class="alert alert-success">
+					<strong>Repository project - Github: </strong><a href="https://github.com/martinius96/termostat-ethernet/">Thermostat - Ethernet</a>
+				</div>	
+<span class="label label-default">Arduino</span>
+<span class="label label-primary">Ethernet</span>
+<span class="label label-success">Wiznet W5100 / W5500</span>
+<span class="label label-info">DS18B20</span>
+<span class="label label-warning">OneWire</span>
+<span class="label label-danger">Dallas</span>
+<span class="label label-default">HTML</span>
+<span class="label label-primary">Webserver</span>
+<span class="label label-success">WebSocket</span>
+  <div class="row">
+  <div class="col-sm-3"><center><img src="https://i.imgur.com/sMrQ8Es.png" width="128px" height="128px" style="border-radius: 50%;" alt="Teplotný senzor DS18B20 v puzdre TO-92" title="Teplotný senzor DS18B20 v puzdre TO-92"><br><b>Dallas DS18B20 - case TO-92</b></center></div>
+  <div class="col-sm-3"><center><img src="https://i.imgur.com/FNWTjFE.png" width="128px" height="128px" style="border-radius: 50%;" alt="Teplotný senzor DS18B20 - vodotesné vyhotovenie" title="Teplotný senzor DS18B20 - vodotesné vyhotovenie"><br><b>Dallas DS18B20 - external versione</b></center></div>
+  <div class="col-sm-3"><center><img src="https://i.imgur.com/eMp0SSr.png" width="128px" height="128px" style="border-radius: 50%;" alt="SSR relé OMRON G3MB-202P" title="SSR relé OMRON G3MB-202P"><br><b>SSR relay OMRON G3MB-202P</b></center></div>
+  <div class="col-sm-3"><center><img src="https://i.imgur.com/cqaEQJ7.png" width="128px" height="128px" style="border-radius: 50%;" alt="Elektromagnetické relé SRD-05VDC-SL-C" title="Elektromagnetické relé SRD-05VDC-SL-C"><br><b>Electromagnetic relay SRD-05VDC-SL-C</b></center></div>
+</div>					
+<h3>Pinout of the DS18B20 sensor in the TO-92 housing, or in a water test version</h3>				
+<center><img src="https://i.imgur.com/IeVkEgU.png" style="display: block; max-width: 100%; height: auto;" alt="Ethernet termostat - Pinout OneWire senzora DS18B20" title="Ethernet termostat - Pinout OneWire senzora DS18B20"></center>				
+<h3>Table connection of terminals - Arduino Uno / Nano (AtMega328P)</h3>
+<div class="table-responsive">   
+	<table class="table" style="border: 1px solid black;">
+				<thead>
+<tr>
+<td align="left" style="background-color:#27AE60"><strong>Arduino</strong></td>
+<td align="right" style="background-color:#27AE60"><strong>Relay</strong></td>
+</tr>
+<tr>
+<td align="left">GND</td>
+<td align="right">GND</td>
+</tr>
+<tr>
+<td align="left">5V</td>
+<td align="right">Vcc</td>
+</tr>
+<tr>
+<td align="left">D6</td>
+<td align="right">IO</td>
+</tr>	
+<tr>
+<td align="left" style="background-color:#C0392B"><strong>Arduino</strong></td>
+<td align="right" style="background-color:#C0392B"><strong>DS18B20</strong></td>
+</tr>
+<tr>
+<td align="left">GND</td>
+<td align="right">GND</td>
+</tr>
+<tr>
+<td align="left">5V</td>
+<td align="right">Vcc</td>
+</tr>
+<tr>
+<td align="left">D5</td>
+<td align="right">DATA</td>
+</tr>
+</tbody>
+</table>
+				</div>
+<h2>Wiring diagram - Ethernet thermostat:</h2>
+<li>Arduino Uno, Nano compatible</li>
+<img src="https://i.imgur.com/GgJrAOj.png" style="display: block; max-width: 100%; height: auto;" alt="Ethernet termostat - Schéma zapojenia - plynové kúrenie" title="Ethernet termostat - Schéma zapojenia - plynové kúrenie">        			
+<h2>Connected Ethernet room thermostat with DS18B20 sensor on the OneWire bus via breadboard:</h2>
+<img src="https://i.imgur.com/pwZqOfS.jpg" style="display: block; max-width: 100%; height: auto;" alt="Ethernet termostat - Zapojenie cez breadboard" title="Ethernet termostat - Zapojenie cez breadboard"> 			 
+<h2> The following types of thermostats can be replaced: </h2>
+<li> Ethernet thermostat can be integrated instead of an existing room thermostat with COM and NO contact without any change in connection. </li>
+<li> After connecting the boiler to the COM and NO contacts, it can be used immediately and controlled with the set data in the web interface. </li>
+<b> Replaced thermostats during Ethernet thermostat test run: - <font color = "red"> reported by thermostat users </font> </b>
+<li>EMOS Thermo</li>
+<li>SALUS 091FL</li>
+<li>EBERLE 525</li>
+<li>HONEYWELL CM27</li>
+<li>TECH CS-296</li>
+</div>
+		</div>
+</div>
+</body>
+</html>
