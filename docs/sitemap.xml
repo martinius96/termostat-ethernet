@@ -9,63 +9,58 @@
 
 <url>
   <loc>https://martinius96.github.io/termostat-ethernet/</loc>
-  <lastmod>2021-03-27T00:40:02+00:00</lastmod>
-  <priority>1.00</priority>
-</url>
-<url>
-  <loc>https://martinius96.github.io/termostat-ethernet/en/</loc>
-  <lastmod>2021-03-27T00:40:02+00:00</lastmod>
+  <lastmod>2021-06-22T22:14:10+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
   <loc>https://martinius96.github.io/termostat-ethernet/index.html</loc>
-  <lastmod>2021-03-27T00:40:02+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://martinius96.github.io/termostat-ethernet/en/index.html</loc>
-  <lastmod>2021-03-27T00:40:02+00:00</lastmod>
+  <lastmod>2021-06-22T22:14:10+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://martinius96.github.io/termostat-ethernet/zapojenie.html</loc>
-  <lastmod>2021-03-27T00:40:02+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://martinius96.github.io/termostat-ethernet/en/zapojenie.html</loc>
-  <lastmod>2021-03-27T00:40:02+00:00</lastmod>
+  <lastmod>2021-06-22T22:14:10+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://martinius96.github.io/termostat-ethernet/spustenie.html</loc>
-  <lastmod>2021-03-27T00:40:02+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://martinius96.github.io/termostat-ethernet/en/spustenie.html</loc>
-  <lastmod>2021-03-27T00:40:02+00:00</lastmod>
+  <lastmod>2021-06-22T22:14:10+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://martinius96.github.io/termostat-ethernet/json_client.html</loc>
-  <lastmod>2021-03-27T00:40:02+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://martinius96.github.io/termostat-ethernet/en/json_client.html</loc>
-  <lastmod>2021-03-27T00:40:02+00:00</lastmod>
+  <lastmod>2021-06-22T22:14:10+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://martinius96.github.io/termostat-ethernet/kontakt.html</loc>
-  <lastmod>2021-03-27T00:40:02+00:00</lastmod>
+  <lastmod>2021-06-22T22:14:10+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://martinius96.github.io/termostat-ethernet/en/kontakt.html</loc>
-  <lastmod>2021-03-27T00:40:02+00:00</lastmod>
+  <loc>https://martinius96.github.io/termostat-ethernet/en/index.html</loc>
+  <lastmod>2021-06-22T22:14:10+00:00</lastmod>
   <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://martinius96.github.io/termostat-ethernet/en/zapojenie.html</loc>
+  <lastmod>2021-06-22T22:14:10+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://martinius96.github.io/termostat-ethernet/en/spustenie.html</loc>
+  <lastmod>2021-06-22T22:14:10+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://martinius96.github.io/termostat-ethernet/en/json_client.html</loc>
+  <lastmod>2021-06-22T22:14:10+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://martinius96.github.io/termostat-ethernet/en/kontakt.html</loc>
+  <lastmod>2021-06-22T22:14:10+00:00</lastmod>
+  <priority>0.64</priority>
 </url>
 
 
