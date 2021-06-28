@@ -84,7 +84,7 @@ Existujúci MQTT server môže byť v zdrojových kódoch nahradený za váš a 
 V aktuálnej programovej implementácii mikrokontróler (JSON klient) odosiela získané dáta na MQTT Broker do topicu termostat, pričom jednotlivé teploty sú odlíšené v subtopicoch.
 </p> 
 <div class="alert alert-info">
-  <strong>Implementácia pre MQTTS je dostupná iba pre platformy ESP8266, ESP32.</strong> ESP8266 využíva pre šifrované spojenie fingerprint - odtlačok certifikátu MQTT servera (verejného kľúča). 
+<strong>Implementácia pre MQTTS je dostupná iba pre platformy ESP8266, ESP32.</strong> ESP8266 využíva pre šifrované spojenie fingerprint - odtlačok certifikátu MQTT servera (verejného kľúča). 
 ESP32 využíva Root CA certifikát pre šifrované spojenie s MQTT serverom. <b>Šifrovaný port MQTT servera je štandardne 8883, nešifrovaný 1883.</b> 
 Pre získanie fingerprintu, potažmo Root CA certifikátu pre konkrétny MQTT server (doménu) je možné využiť nástroj OpenSSL, ktorý umožňuje jednoduché načítanie a zobrazenie predmetných informácii.
 <br><b>Príkaz pre získanie fingerprintu MQTT servera:</b><br>
@@ -92,22 +92,22 @@ Pre získanie fingerprintu, potažmo Root CA certifikátu pre konkrétny MQTT se
 <br><b>Príkaz pre získanie Root CA certifikátu, ktorý vydal certifikát pre MQTT server (Issuer):</b><br>
 <code>openssl s_client -showcerts -verify 5 -connect mqttserver.com:8883 < /dev/null</code>
 </div>
-<h4>Používané topicy pre Publish na MQTT Broker sú:</h4> 
+<hr><h4>Používané topicy pre Publish na MQTT Broker sú:</h4> <hr>
 <li><b>termostat/hysteresis</b> - pre hysterézu</li>
 <li><b>termostat/actual_temp</b> - pre aktuálne nameranú teplotu</li>
 <li><b>termostat/target_temp</b> - pre cieľovú (referenčnú) teplotu</li>
-<h4>Topic pre Subscribe:</h4>
+<hr><h4>Topic pre Subscribe:</h4><hr>
 <li><b>termostat/#</b> - odoberá všetky subtopicy pod termostat/, teda hysteréza, aktuálna a cieľová teplota</li>
 <p style="text-align: justify;">
 <b>MQTT klient má prihlásený Subscribe na hlavný topic termostat a všetky jeho subtopicy. Dokáže tak zároveň aj overiť, či bola informácia na MQTT Broker úspešná publikovaná.</b>
 <b><font color="red">UPOZORNENIE: MQTT Broker IoT Industries Slovakia, ktorý sa vo vzorovej implementácii používa je verejný a tak môžu byť dáta zmenené, prepísané, čítané akýmkoľvek používateľom!</font></b>
 Ak do svojho mikrokontroléru nahrá firmvér JSON klienta bez zmeny akýkoľvek iný používateľ, bude vám dané dáta v preddefinovanom topicu prepisovať a rovnako aj vy jemu. Je tak vhodné pri vlastnej implementácii zvoliť iný topic, kam budú dáta odosielané.
 </p>    
-<h4>Bloková schéma - popis funkčnosti JSON klienta:</h4>
+<hr><h4>Bloková schéma - popis funkčnosti JSON klienta:</h4><hr>
 <center>
 <img src="https://i.imgur.com/m2O62dn.jpg" style="display: block; max-width: 100%; height: auto;" title="JSON klient - Arduino, ESP8266, ESP32, MQTT integrácia - Ethernet termostat" alt="JSON klient - Arduino, ESP8266, ESP32, MQTT integrácia - Ethernet termostat">
 </center>
-<h4>JSON klient - UART výstup (Sériová linka):</h4>
+<hr><h4>JSON klient - UART výstup (Sériová linka):</h4><hr>
 <center><img src="https://i.imgur.com/4Cm5z8o.png" style="display: block; max-width: 100%; height: auto;" alt="JSON client pre WiFi termostat - UART výstup" title="JSON client pre WiFi termostat - UART výstup"></center>       		
 <h4>HiveMQ client - Subscribe topicu termostat/#</h4>
 <center><img src="https://i.imgur.com/UEnHDb2.png" style="display: block; max-width: 100%; height: auto;" alt="JSON client MQTT Broker IoT Industries Slovakia - výstup topicu - Subscribe termostat" title="JSON client MQTT Broker IoT Industries Slovakia - výstup topicu - Subscribe termostat"></center> 
