@@ -2,20 +2,20 @@
 <html lang="sk-SK">
 <head>
 	<!-- Primary Meta Tags -->
-	<title>Spustenie projektu - Izbový termostat - Arduino + Ethernet</title>
+	<title>Spustenie projektu - Izbový termostat - Arduino + Ethernet Wiznet / ENC28J60</title>
 	<meta name="description" content="Návod na inštaláciu a spustenie projektu izbový termostat postavenom na platforme Arduuino Uno a Ethernet shield Wiznet W5100.">
 	<meta name="keywords" content="Termostat, xloader, uploader, flash, softvér, firmvér, arduino, wiznet, ethernet, w5100, w5500, vykurovanie, kúrenie, webserver, socket, zapojenie, chlebovec, kontakt, ds18b20, onewire, 1-wire">
 	<!-- Open Graph / Facebook -->
 	<meta property="og:type" content="website">
 	<meta property="og:url" content="https://martinius96.github.io/termostat-ethernet/spustenie.html">
-	<meta property="og:title" content="Spustenie projektu - Izbový termostat - Arduino + Ethernet">
+	<meta property="og:title" content="Spustenie projektu - Izbový termostat - Arduino + Ethernet Wiznet / ENC28J60">
 	<meta property="og:description" content="Návod na inštaláciu a spustenie projektu izbový termostat postavenom na platforme Arduuino Uno a Ethernet shield Wiznet W5100.">
 	<meta property="og:image" content="">
 
 	<!-- Twitter -->
 	<meta property="twitter:card" content="summary_large_image">
 	<meta property="twitter:url" content="https://martinius96.github.io/termostat-ethernet/spustenie.html">
-	<meta property="twitter:title" content="Spustenie projektu - Izbový termostat - Arduino + Ethernet">
+	<meta property="twitter:title" content="Spustenie projektu - Izbový termostat - Arduino + Ethernet Wiznet / ENC28J60">
 	<meta property="twitter:description" content="Návod na inštaláciu a spustenie projektu izbový termostat postavenom na platforme Arduuino Uno a Ethernet shield Wiznet W5100.">
 	<meta property="twitter:image" content="">
 	
@@ -93,7 +93,7 @@
 <hr><center><h2>Spustenie projektu izbový termostat - Arduino + Ethernet Wiznet W5100 / W5500</h2></center><hr>
 <p style="text-align: justify;">
 Projekt Ethernet (izbový) termostat existuje aj vo verzii zdarma, ktorá je dostupná v repozitári na Githube.
-Verzia obsahuje celkom 6 strojových - predkompilovaných programov pre platformu Arduino Uno.
+Verzia obsahuje celkom 6 strojových - predkompilovaných programov pre platformu Arduino Uno, respektíve Nano.
 Strojový kód (.hex) zaručuje, že daný program je kompatibilný a má totožnú funkčnosť na všetky zariadenia, do ktorých sa nahrá a spustí.
 Nahratie firmvéru je rýchle a jednoduché cez nástroj AVRDUDE / XLoader s grafickým rozhraním. Hlavná aplikácia sa spustí ihneď po nahratí firmvéru.
 Kód je tak univerzálny a poskytuje možnosť na ukážku poskytnúť autorovi záujemcom o vyskúšanie projektu jeho build bez prístupu ku zdrojovému (.ino) kódu.
@@ -123,32 +123,32 @@ Kód je tak univerzálny a poskytuje možnosť na ukážku poskytnúť autorovi 
 </thead>
 <tbody>
 <tr>
-<td>dynamic_W5100.hex</td>
+<td><a href="https://github.com/martinius96/termostat-ethernet/blob/master/firmware/dynamic_W5100.hex">dynamic_W5100.hex</a></td>
 <td align="center">W5100</td>
 <td>priradená cez DHCP (obsahuje i maintain pre predĺženie lease time / vyžiadanie novej IP)</td>
 </tr>
 <tr>
-<td>dynamic_W5500.hex</td>
+<td><a href="https://github.com/martinius96/termostat-ethernet/blob/master/firmware/dynamic_W5500.hex">dynamic_W5500.hex</a></td>
 <td align="center">W5500</td>
 <td>priradená cez DHCP (obsahuje i maintain pre predĺženie lease time / vyžiadanie novej IP)</td>
 </tr>
 <tr>
-<td>static_W5100_1_254.hex</td>
+<td><a href="https://github.com/martinius96/termostat-ethernet/blob/master/firmware/static_W5100_1_254.hex">static_W5100_1_254.hex</a></td>
 <td align="center">W5100</td>
 <td>192.168.1.254</td>
 </tr>
 <tr>
-<td>static_W5100_4_1.hex</td>
+<td><a href="https://github.com/martinius96/termostat-ethernet/blob/master/firmware/static_W5100_4_1.hex">static_W5100_4_1.hex</a></td>
 <td align="center">W5100</td>
 <td>192.168.4.1</td>
 </tr>
 <tr>
-<td>static_W5500_1_254.hex</td>
+<td><a href="https://github.com/martinius96/termostat-ethernet/blob/master/firmware/static_W5500_1_254.hex">static_W5500_1_254.hex</a></td>
 <td align="center">W5500</td>
 <td>192.168.1.254</td>
 </tr>
 <tr>
-<td>static_W5500_4_1.hex</td>
+<td><a href="https://github.com/martinius96/termostat-ethernet/blob/master/firmware/static_W5500_4_1.hex">static_W5500_4_1.hex</a></td>
 <td align="center">W5500</td>
 <td>192.168.4.1</td>
 </tr>
