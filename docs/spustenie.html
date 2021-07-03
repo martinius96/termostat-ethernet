@@ -80,7 +80,7 @@
 <span class="label label-primary">Webserver</span>
 <span class="label label-success">WebSocket</span>
 <div class="alert alert-info">
-	<strong>MAC adresa Ethernet termostatu: </strong>DE:AD:BE:EF:FE:ED - <strong>Pre potreby statického priradenia IP adresy z DHCP služby</strong>
+	<strong>MAC adresa Ethernet termostatu: </strong>DE:AD:BE:EF:FE:ED - Pre potreby statického priradenia IP adresy z DHCP služby
 </div>	
 <div class="alert alert-warning">
 	<strong>Nahratie programu do Arduina cez avrdude (vzorovo pre COM21 a program sketch.ino.hex):</strong><br>
@@ -92,12 +92,12 @@
 </div>	
 <hr><center><h2>Spustenie projektu izbový termostat - Arduino + Ethernet Wiznet W5100 / W5500</h2></center><hr>
 <p style="text-align: justify;">
-Projekt Ethernet (izbový) termostat existuje aj vo verzii zdarma, ktorá je dostupná v repozitári na Githube.
-Verzia obsahuje celkom 6 strojových - predkompilovaných programov pre platformu Arduino Uno, respektíve Nano.
+<b>Projekt Ethernet termostat je dostupný zdarma vo forme strojových kódov pre cieľovú platformu Arduino Uno / Nano (s čipom AVR ATmega328P).</b>
+Verzia obsahuje celkom 6 strojových - predkompilovaných programov pre Ethernet shield Wiznet W5100 a W5500, firmvéry sa líšia statickou / dynamickou adresou získanou cez DHCP server.
 Strojový kód (.hex) zaručuje, že daný program je kompatibilný a má totožnú funkčnosť na všetky zariadenia, do ktorých sa nahrá a spustí.
 Nahratie firmvéru je rýchle a jednoduché cez nástroj AVRDUDE / XLoader s grafickým rozhraním. Hlavná aplikácia sa spustí ihneď po nahratí firmvéru.
 Kód je tak univerzálny a poskytuje možnosť na ukážku poskytnúť autorovi záujemcom o vyskúšanie projektu jeho build bez prístupu ku zdrojovému (.ino) kódu.
-<b>Nakoľko má každý Ethernet termostat rovnakú - preddefinovanú MAC adresu, je možné v LAN sieti využívať iba jeden termostat, inak dôjde ku konfliktu MAC adries a nebude komunikovať ani jeden termostat.</b>
+<b>Nakoľko má každý Ethernet termostat rovnakú - preddefinovanú MAC adresu, je možné v LAN sieti využívať iba jeden termostat, inak dôjde ku konfliktu MAC adries a nebude komunikovať ani jeden termostat!</b>
 <div class="alert alert-danger">
 	<b>Verzia zdarma (free) je dostupná iba vo forme strojového kódu bez prístupu k aplikácii napísanej v .ino formáte z ktorej bol program kompilovaný.</b>
 </div>	
@@ -157,10 +157,12 @@ Kód je tak univerzálny a poskytuje možnosť na ukážku poskytnúť autorovi 
 	</div></center>
 <p style="text-align: justify;">
 Pre nahratie strojového kódu do Arduina je možné využiť nástroj AVRDUDE, ktorý pre nahrávanie skompilovaného programu využíva i prostredie Arduino IDE.
-Nástroj je možné spúšťať priamo z príkazového riadku, ale je nutné správne nastaviť všetky konfigurovateľné údaje a tak nie je vhodný pre menej skúsených programátorov, či laikov.
-XLoader je Windows aplikácia (nástroj) s jednoduchým grafickým rozhraním, ktoré umožňuje výber firmvéru - strojového kódu (.hex), cieľovej platformy a vie dynamicky ukázať COM port, na ktorom sa zariadenie nachádza.
-Umožňuje vypalovať firmvér do AVR platforiem t.j. Arduino Uno, Nano, Duemilanove (AtMega328 / AtMega168), Arduino Mega (AtMega1280 / AtMega2560).
-Jednoduchým kliknutím na Upload je možné strojový kód automatizovane nahrať (XLoader využíva podobne ako Arduino IDE nástroj AVRDUDE). Okno XLoadera informuje o úspešnom uploade formou výpisu počtu uploadovaných bajtov.
+Nástroj je možné spúšťať priamo z príkazového riadku (CLI), ale je nutné správne nastaviť všetky konfigurovateľné údaje (rýchlosť nahrávania firmvéru, cieľový COM port, cieľový mikrokontróler a nalinkovať avrdude.conf) a tak nie je vhodný pre menej skúsených programátorov, či laikov.
+Pre menej skúsených používateľov je vhodná alternatíva XLoader. Táto Windows aplikácia (nástroj) s jednoduchým grafickým rozhraním umožňuje výber firmvéru - strojového kódu (.hex), cieľovej platformy a vie dynamicky ukázať COM port, na ktorom sa zariadenie nachádza, ak je jeho ovládač nainštalovaný v operačnom systéme.
+Xloader umožňuje nahrať firmvér do AVR platforiem t.j. Arduino Uno, Nano, Duemilanove (AtMega328 / AtMega168), Arduino Mega (AtMega1280 / AtMega2560) a pod...
+Jednoduchým kliknutím na Upload je možné strojový kód automatizovane nahrať (XLoader využíva podobne ako Arduino IDE nástroj AVRDUDE). 
+Okno XLoadera informuje o úspešnom uploade formou výpisu počtu uploadovaných bajtov.
+Od tohto momentu je termostat plne aktívny. V prípade DHCP verzie firmvéru sa pridelená IP adresa vypíše do UART monitoru.
 </p>				
 <center>
 	<img src="https://i.imgur.com/9dMxWT5.png" style="display: block; max-width: 100%; height: auto;" alt="XLoader - Arduino - AVRDUDE - Termostat - Ethernet" title="XLoader - Arduino - AVRDUDE - Termostat - Ethernet">	
