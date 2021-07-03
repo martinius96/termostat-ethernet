@@ -2,7 +2,7 @@
 <html lang="sk-SK">
 <head>
 	<!-- Primary Meta Tags -->
-	<title>Izbový termostat - Arduino - Ethernet Wiznet W5100 - Webserver</title>
+	<title>Izbový termostat - Arduino - Ethernet Wiznet W5100 / W5500 - Webaplikácia</title>
 	<meta name="description" content="Izbový termostat navrhnutý na platforme Arduino Uno + Ethernet shield Wiznet W5100 / W5500. Termostat pre vykurovanie / chladenie.">
 	<meta name="keywords" content="Termostat, digitálny, arduino, wiznet, ethernet, w5100, w5500, vykurovanie, kúrenie, webserver, socket, http, web, ip, ipv4, ds18b20, onewire, 1-wire">
 	<!-- Open Graph / Facebook -->
@@ -85,11 +85,13 @@
 </div>				
 <hr><center><h2>Izbový termostat - Arduino + Ethernet Wiznet W5100 / W5500</h2></center><hr>
 <p style="text-align: justify;">
-Arduino je šikovná embeeded platforma, ktorú je možné využiť napríklad aj na stavbu izbového termostatu, ktorý si dnes ukážeme. 
-Implementácia využíva Arduino v kombinácii s Ethernet shieldom Wiznet W5100, ktorý funguje v režime webservera a dokáže prijímať požiadavky od klientov v sieti po HTTP protokole a odosielať na ne odpoveď - HTML kód.
-Termostat je prístupný z LAN siete v ktorej sa nachádza, pričom je vybavený webovým rozhraním ktoré slúži na konfiguráciu všetkých prvkov termostatu. 
-Webserver umožňuje beh niekoľkých na sebe nezávislých HTML stránok, ktoré môžu mať informatívny, alebo aj funkcionálny charakter. Webserver beží na porte 80 - HTTP. 
-Termostat dokáže automatizovane prostredníctvom výstupu ovládať signalizačné relé pre zapnutie plynového kotla. Dokáže tak nahradiť existujúci izbový termostat. 
+Arduino je šikovná embeeded platforma, ktorú je možné využiť napríklad na stavbu izbového termostatu s Ethernet konektivitou a webserverom implementovaným na Arduine. 
+Implementácia využíva Arduino Uno / Nano s čipom AVR ATmega328P v kombinácii s Ethernet shieldom Wiznet W5100 / W5500. 
+Programovo funguje termostat v režime webservera, kde dokáže prijímať požiadavky od klientov v sieti po HTTP protokole a odosielať na ne odpoveď - HTML / JSON kód.
+Termostat je prístupný z LAN siete v ktorej sa nachádza, pričom je vybavený webovým rozhraním ktoré slúži na konfiguráciu všetkých prvkov termostatu, t.j. cieľovej (referenčnej) teploty a hysterézy. 
+Webserver umožňuje beh niekoľkých na sebe nezávislých HTML stránok, ktoré môžu mať informatívny, alebo aj funkcionálny charakter (implementovaný backend). 
+Webserver beží na štandardnom HTTP porte - 80. 
+Termostat dokáže automatizovane prostredníctvom GPIO výstupu ovládať signalizačné relé pre zapnutie / vypnutie plynového kotla. Dokáže tak nahradiť existujúci izbový termostat. 
 Ako rozhodovací algoritmus sa využíva cieľová teplota s hysterézou, ktorá sa porovnáva s nameranou teplotou z digitálneho senzora teploty Dallas DS18B20.
 <b>Rozlíšenie senzora DS18B20 pri meraní je 12-bitov, čomu rozpovedá rozlíšenie na 0.0625 °C. Dáta po OneWire zbernici môžu prísť do mikrokontroléru po vyžiadaní za 500 až 1000 ms.</b>
 Rozhodovacia logika systému sa vykonáva každých 10 sekúnd nezávisle na webserveri, nevyžaduje sa keep-alive spojenie pre vykonanie logiky, systém tak funguje autonómne a nevyžaduje pozornosť používateľa.
