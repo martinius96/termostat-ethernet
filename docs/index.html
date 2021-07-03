@@ -86,13 +86,16 @@
 <hr><center><h2>Izbový termostat - Arduino + Ethernet Wiznet W5100 / W5500</h2></center><hr>
 <p style="text-align: justify;">
 Arduino je šikovná embeeded platforma, ktorú je možné využiť napríklad na stavbu izbového termostatu s Ethernet konektivitou a webserverom implementovaným na Arduine. 
-Implementácia využíva Arduino Uno / Nano s čipom AVR ATmega328P v kombinácii s Ethernet shieldom Wiznet W5100 / W5500. 
-Programovo funguje termostat v režime webservera, kde dokáže prijímať požiadavky od klientov v sieti po HTTP protokole a odosielať na ne odpoveď - HTML / JSON kód.
+Implementácia využíva Arduino Uno / Nano s čipom AVR ATmega328P v kombinácii s Ethernet shieldom Wiznet W5100 / W5500 s ktorým komunikuje cez SPI zbernicu, resp. ICSP header. 
+Programovo funguje termostat v režime webservera, kde dokáže prijímať požiadavky od klientov v sieti po HTTP protokole a odosielať na ne odpoveď - HTML / JSON kód a vykonávať pri ich spustení funkcie backendu (funkčnosti).
 Termostat je prístupný z LAN siete v ktorej sa nachádza, pričom je vybavený webovým rozhraním ktoré slúži na konfiguráciu všetkých prvkov termostatu, t.j. cieľovej (referenčnej) teploty a hysterézy. 
 Webserver umožňuje beh niekoľkých na sebe nezávislých HTML stránok, ktoré môžu mať informatívny, alebo aj funkcionálny charakter (implementovaný backend). 
 Webserver beží na štandardnom HTTP porte - 80. 
-Termostat dokáže automatizovane prostredníctvom GPIO výstupu ovládať signalizačné relé pre zapnutie / vypnutie plynového kotla. Dokáže tak nahradiť existujúci izbový termostat. 
+Termostat dokáže automatizovane prostredníctvom GPIO výstupu ovládať signalizačné relé pre zapnutie / vypnutie kotla. 
+Dokáže tak nahradiť existujúci izbový termostat a sprístupniť ho v sieti klientom.
+Termostat dokáže obsluhovať akékoľvek zariadenie s prehliadačom - počítač / smartfón / tablet / Smart TV a podobne. 
 Ako rozhodovací algoritmus sa využíva cieľová teplota s hysterézou, ktorá sa porovnáva s nameranou teplotou z digitálneho senzora teploty Dallas DS18B20.
+Cieľová teplota a hysteréza je načítaná z EEPROM pamäte, kde je uchovaná aj v prípade výpadku napájania permanentne a pri zápise nových dát sa prepíše.
 <b>Rozlíšenie senzora DS18B20 pri meraní je 12-bitov, čomu rozpovedá rozlíšenie na 0.0625 °C. Dáta po OneWire zbernici môžu prísť do mikrokontroléru po vyžiadaní za 500 až 1000 ms.</b>
 Rozhodovacia logika systému sa vykonáva každých 10 sekúnd nezávisle na webserveri, nevyžaduje sa keep-alive spojenie pre vykonanie logiky, systém tak funguje autonómne a nevyžaduje pozornosť používateľa.
 </p>
@@ -133,7 +136,7 @@ Webserver je tak stabilnejší a zvláda aj multi-pripojenie viacerých zariaden
 </p>
 <hr>
 <p style="text-align: justify;">
-Aby ostali nastavené hodnoty zachované aj po výpadku napájania, sú uložené do EEPROM pamäte Arduina. 
+Aby ostali nastavené hodnoty zachované aj po výpadku napájania, sú uložené do EEPROM pamäte Arduina (celkom k dispozícii 512 B). 
 Referenčná teplota je zapísaná na offset 10, hysteréza na offset 100. Každá z hodnôt zaberá maximálne 5B v EEPROM pamäti + ukončovací znak - terminátor. 
 Limit prepisov EEPROM je na úrovni 100-tisíc prepisov. Dáta sa prepisujú iba pri odoslaní HTML formulára. Prevádzka termostatu je tak maximálne šetrná k EEPROM pamäti s cieľom maximalizovať jej životnosť. 
 V prípade, že zariadenie pri prvom spustení nemá nič uložené na spomenutých EEPROM offsetoch, vykoná sa automatický zápis s predvolenými hodnotami - referencia: 20.25 °C, hysteréza 0.25 °C, tzv. fail-safe riešenie, aby bol termostat ihneď funkčný a pripravený k prevádzke.
