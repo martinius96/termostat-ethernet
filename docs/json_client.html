@@ -44,16 +44,16 @@
       	<li><a href="index.html">Prehľad</a></li>
 	<li><a href="zapojenie.html">Zapojenie</a></li>      
 	<li class=""><a href="spustenie.html">Spustenie Ethernet termostatu</a></li>
-  <li class="active"><a href="json_client.html">JSON client</a></li>
+  	<li class="active"><a href="json_client.html">JSON client</a></li>
       	<li><a href="kontakt.html">Kontakt</a></li>
 <a href="en/json_client.html"><img src="https://www.flaticon.com/svg/static/icons/svg/299/299688.svg" alt="English.png, 2,2kB" title="English" height="32" width="32"></a>
 <li style="float: right; "><a href="https://martinius96.github.io/WiFi-termostat/" class="btn btn-success" role="button" title="Zmeniť projekt na WiFi termostat"><img src="https://www.flaticon.com/premium-icon/icons/svg/3686/3686730.svg" width=16px height=16px> <font color="white">WiFi termostat</font></a></li></ul>
   </div>
 </nav>   			
 <div class="col-sm-12">
-				<div class="alert alert-success">
-					<strong>Repozitár projektu so zdrojovými kódmi pre JSON klientov - Github: </strong><a href="https://github.com/martinius96/termostat-ethernet/">Termostat - Ethernet</a>
-				</div>	
+<div class="alert alert-success">
+	<strong>Repozitár projektu so zdrojovými kódmi pre JSON klientov - Github: </strong><a href="https://github.com/martinius96/termostat-ethernet/tree/master/examples">Ethernet termostat - JSON klienti</a>
+</div>	
 <span class="label label-default">Arduino</span>
 <span class="label label-primary">Ethernet</span>
 <span class="label label-success">Wiznet W5100 / W5500</span>
@@ -81,7 +81,7 @@ Prípadne je možné dáta archivovať - odoslať ich na webserver, kde môžu b
 <b>Súčasťou firmvéru označeného ako MQTT, respektíve MQTTS (šifrované MQTT) je rozšírený JSON klient o možnosť odosielať - Publishovať na MQTT Broker IoT Industries Slovakia - slovenský free MQTT Broker určený pre vývojárov.</b>
 MQTT i MQTTS variant využíva socket, ktorý sa používa i pre HTTP request pre získanie JSON payloadu.
 Existujúci MQTT server môže byť v zdrojových kódoch nahradený za váš a tak môžete dáta z termostatu sprístupniť aj do systémov domácej automatizácie (Hassio, Mosquitto MQTT, Domoticz, Loxone a iné...).
-V aktuálnej programovej implementácii mikrokontróler (JSON klient) odosiela získané dáta na MQTT Broker do topicu termostat, pričom jednotlivé teploty sú odlíšené v subtopicoch.
+V aktuálnej programovej implementácii mikrokontróler (JSON klient) odosiela získané dáta na MQTT Broker do koreňového topicu termostat, pričom jednotlivé teploty sú odlíšené v subtopicoch.
 </p> 
 <div class="alert alert-info">
 <strong>Implementácia pre MQTTS je dostupná iba pre platformy ESP8266, ESP32.</strong> ESP8266 využíva pre možnosť vytvorenia šifrované spojenia fingerprint (odtlačok certifikátu MQTT servera). 
