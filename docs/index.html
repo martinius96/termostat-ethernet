@@ -96,8 +96,9 @@ Dokáže tak nahradiť existujúci izbový termostat a sprístupniť ho v sieti 
 Termostat dokáže obsluhovať akékoľvek zariadenie s prehliadačom - počítač / smartfón / tablet / Smart TV a podobne. 
 Ako rozhodovací algoritmus sa využíva cieľová teplota s hysterézou, ktorá sa porovnáva s nameranou teplotou z digitálneho senzora teploty Dallas DS18B20.
 Cieľová teplota a hysteréza je načítaná z EEPROM pamäte, kde je uchovaná aj v prípade výpadku napájania permanentne a pri zápise nových dát sa prepíše.
-<b>Rozlíšenie senzora DS18B20 pri meraní je 12-bitov, čomu rozpovedá rozlíšenie na 0.0625 °C. Dáta po OneWire zbernici môžu prísť do mikrokontroléru po vyžiadaní za 500 až 1000 ms.</b>
-Rozhodovacia logika systému sa vykonáva každých 10 sekúnd nezávisle na webserveri, nevyžaduje sa keep-alive spojenie pre vykonanie logiky, systém tak funguje autonómne a nevyžaduje pozornosť používateľa.
+<b>Rozlíšenie senzora DS18B20 pri meraní je 12-bitov, čomu rozpovedá rozlíšenie na teploty 0.0625 °C, čo je minimálny rozlišovací krok medzi rozlišnými meraniami. 
+Dáta po OneWire zbernici môžu prísť do mikrokontroléru po vyžiadaní za 500 až 1000 ms v závislosti od počtu senzorov na OneWire zbernici, dĺžke zbernice a podobne...</b>
+Rozhodovacia logika termostatu sa vykonáva každých 10 sekúnd nezávisle na webaplikácii, nevyžaduje sa keep-alive spojenie pre vykonanie logiky, systém tak funguje autonómne a nevyžaduje pozornosť používateľa.
 </p>
 <b>Po hardvérovej stránke projekt využíva:</b>
 <li>Arduino Uno</li>
