@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="de-DE">
+<head>
+	<!-- Primary Meta Tags -->
+	<title>Raumthermostat zur Kesselsteuerung mit Webanwendung - Webserver - Arduino + Ethernet Wiznet W5100 / W5500</title>
+	<meta name="description" content="Raumthermostat entwickelt auf der Arduino Uno-Plattform + Ethernet-Schild Wiznet W5100 / W5500. Thermostat zum Heizen / Kühlen.">
+	<meta name="keywords" content="Termostat, digitálny, arduino, wiznet, ethernet, w5100, w5500, vykurovanie, kúrenie, webserver, socket, http, web, ip, ipv4, ds18b20, onewire, 1-wire">
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://martinius96.github.io/termostat-ethernet/de/">
+	<meta property="og:title" content="Raumthermostat zur Kesselsteuerung mit Webanwendung - Webserver - Arduino + Ethernet Wiznet W5100 / W5500">
+	<meta property="og:description" content="Raumthermostat entwickelt auf der Arduino Uno-Plattform + Ethernet-Schild Wiznet W5100 / W5500. Thermostat zum Heizen / Kühlen.">
+
+	<!-- Twitter -->
+	<meta property="twitter:card" content="summary_large_image">
+	<meta property="twitter:url" content="https://martinius96.github.io/termostat-ethernet/de/">
+	<meta property="twitter:title" content="Raumthermostat zur Kesselsteuerung mit Webanwendung - Webserver - Arduino + Ethernet Wiznet W5100 / W5500">
+	<meta property="twitter:description" content="Raumthermostat entwickelt auf der Arduino Uno-Plattform + Ethernet-Schild Wiznet W5100 / W5500. Thermostat zum Heizen / Kühlen.">
+	
+	<link rel="icon" type="image/png" href="favicon.png">
+	<link rel="sitemap" type="application/xml" title="Sitemap" href="../sitemap.xml" />
+	<meta name="google-site-verification" content="UwZZh2EXv3iWUAi_1Z0hLxVCz6ySJ4UdY_BPoLtejwo" />    	
+	<meta property='fb:admins' content='100001242570317'>
+    	<meta charset="utf-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+    		window.smartlook||(function(d) {
+    			var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];
+    			var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';
+    			c.charset='utf-8';c.src='https://rec.smartlook.com/recorder.js';h.appendChild(c);
+    		})(document);
+    		smartlook('init', 'db50efe9fff280a17db52b82be221240cbbd3dbe');
+	</script>    
+			<style>
+	#right {
+  position: absolute;
+  right: 0px;
+}
+	</style>
+</head>
+<body>
+	<div class="container">
+  		<div class="row">
+    			<div class="col-sm-12">
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="index.html">Thermostat - Ethernet</a>
+    </div>
+    <ul class="nav navbar-nav">
+      	<li class="active"><a href="index.html">Überblick</a></li>
+	<li><a href="zapojenie.html">Beteiligung</a></li>      
+	<li class=""><a href="spustenie.html">Ethernet-Thermostat starten</a></li>
+  <li><a href="json_client.html">JSON-Client</a></li>
+      	<li><a href="kontakt.html">Kontakt</a></li>
+<a href="../en/index.html"><img src="https://www.flaticon.com/svg/static/icons/svg/299/299688.svg" alt="English.png, 2,2kB" title="English" height="32" width="32"></a>
+	 <li style="float: right; "><a href="https://martinius96.github.io/WiFi-termostat/" class="btn btn-success" role="button" title="Ändern Sie das Projekt in einen WiFi-Thermostat"><img src="https://www.flaticon.com/premium-icon/icons/svg/3686/3686730.svg" width=16px height=16px> <font color="white">WiFi-Thermostat</font></a></li> </ul>
+  </div>
+</nav>  
+<div class="alert alert-success">
+	<strong>Projekt-Repository für Ethernet-Thermostate - Maschinencodes: </strong><a href="https://github.com/martinius96/termostat-ethernet/">Github</a>
+</div>	
+<span class="label label-default">Arduino</span>
+<span class="label label-primary">Ethernet</span>
+<span class="label label-success">Wiznet W5100 / W5500</span>
+<span class="label label-info">DS18B20</span>
+<span class="label label-warning">OneWire</span>
+<span class="label label-danger">Dallas</span>
+<span class="label label-default">HTML</span>
+<span class="label label-primary">Webserver</span>
+<span class="label label-success">WebSocket</span>
+  <div class="row">
+  <div class="col-sm-4"><center><img src="https://i.imgur.com/wtnzKqO.png" width="128px" height="128px" style="border-radius: 50%;" alt="Riadiaci mikrokontróler Arduino Uno pre termostat" title="Riadiaci mikrokontróler Arduino Uno pre termostat"><br><b>Arduino Uno / Nano</b></center></div>
+  <div class="col-sm-4"><center><img src="https://i.imgur.com/aaS35X2.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ethernet shield Wiznet W5100" title="Ethernet shield Wiznet W5100"><br><b>Ethernet Wiznet W5100</b></center></div>
+  <div class="col-sm-4"><center><img src="https://i.imgur.com/mz4dhRA.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ethernet modul Wiznet W5500" title="Ethernet modul Wiznet W5500"><br><b>Ethernet Wiznet W5500</b></center></div>
+</div>				
+<hr><center><h2>Raumthermostat - Arduino + Ethernet Wiznet W5100 / W5500</h2></center><hr>
+<p style="text-align: justify;">
+Arduino ist eine praktische eingebettete Plattform, mit der beispielsweise ein Raumthermostat mit Ethernet-Konnektivität und einem auf Arduino implementierten Webserver erstellt werden kann.
+Die Implementierung verwendet Arduino Uno / Nano mit AVR ATmega328P-Chip in Kombination mit dem Ethernet-Shield Wiznet W5100 / W5500, mit dem es über SPI-Bus kommuniziert, resp. ICSP-Header.
+Der Thermostat arbeitet programmgesteuert im Webserver-Modus, wo er über das HTTP-Protokoll Anfragen von Clients im Netzwerk empfangen und ihnen eine Antwort senden kann - HTML / JSON-Code und die Backend-Funktion (Funktionalität) ausführen, wenn sie gestartet werden.
+Der Thermostat ist über das LAN-Netzwerk, in dem er sich befindet, zugänglich, während er mit einer Webschnittstelle ausgestattet ist, mit der alle Elemente des Thermostats konfiguriert werden können, d. Soll-(Referenz-)Temperatur und Hysterese.
+Der Webserver ermöglicht den Betrieb mehrerer unabhängiger HTML-Seiten, die informativ oder sogar funktional sein können (implementiertes Backend).
+Der Webserver läuft auf einem Standard-HTTP-Port - 80.
+Der Thermostat kann über den GPIO-Ausgang automatisch das Melderelais zum Ein-/Ausschalten des Kessels ansteuern.
+Es kann somit ein vorhandenes Raumthermostat ersetzen und den Clients im Netzwerk zur Verfügung stellen.
+Der Thermostat kann jedes Gerät mit einem Browser bedienen - Computer / Smartphone / Tablet / Smart TV und dergleichen.
+Der Entscheidungsalgorithmus verwendet eine Solltemperatur mit Hysterese, die mit der von einem digitalen Temperatursensor Dallas DS18B20 gemessenen Temperatur verglichen wird.
+Solltemperatur und Hysterese werden aus dem EEPROM-Speicher gelesen, wo sie auch bei Stromausfall dauerhaft gespeichert und beim Schreiben neuer Daten überschrieben werden.
+<b> Die Auflösung des DS18B20-Sensors bei der Messung beträgt 12 Bit, was durch die Auflösung bis zu Temperaturen von 0,0625 ° C angegeben wird, was der minimale Auflösungsschritt zwischen verschiedenen Messungen ist.
+Daten über den OneWire-Bus können bei Bedarf in 500 bis 1000 ms zum Mikrocontroller kommen, abhängig von der Anzahl der Sensoren am OneWire-Bus, der Länge des Busses usw. ... </b>
+Die Entscheidungslogik des Thermostats wird alle 10 Sekunden unabhängig von der Webanwendung ausgeführt, es ist keine Keep-Alive-Verbindung erforderlich, um die Logik auszuführen, so dass das System autonom arbeitet und keine Aufmerksamkeit des Benutzers erfordert.
+</p>
+<b>In Bezug auf die Hardware verwendet das Projekt:</b>
+<li>Arduino Uno</li>
+<li>Ethernet-Abschirmung Wiznet W5100 / Ethernet-Modul Wiznet W5200-W5500 </li>
+<li>Temperatursensor DS18B20 am OneWire-Bus im TO-92-Gehäuse oder in wasserdichter Ausführung im Aluminiumrohr </li>
+<li> Elektromagnetisches Relais SRD-5VDC-SL-C / SSR-Relais OMRON G3MB-202P zur Kesselschaltung (Active-LOW-Signal) </li>
+<p style="text-align: justify;">
+<b> HTML-Seiten, die auf Arduino ausgeführt werden: </b>
+<li> <b> / </b> - Grundseite mit Formular, aktueller Logikausgang für Relais, Temperatur </li>
+<li> <b> /action.html </b> - verarbeitet Werte aus dem Formular, schreibt sie in den EEPROM-Speicher, leitet den Benutzer zurück zur Stammseite </li>
+<li> <b> /get_data.json </b> - verteilt aktuelle Temperatur-, Referenztemperatur- und Hysteresedaten an Dritte (Computer, Mikrocontroller, anderer Client ...) im JSON-Format </li>
+<hr>				
+Das im Projekt verwendete elektromagnetische Relais SRD-5VDC-SL-C ermöglicht das Schalten von bis zu 10A bei 230V - maximale Leistung 2300W.
+Beim Schalten eines Gleichstromkreises (Last) können 300W (10A bei 30V DC max.) geschaltet werden.
+Das OMRON G3MB-202P SSR-Relais ist auch voll kompatibel zum Schaltplan, der nur für nicht induktive Lasten und ausschließlich für AC-Lasten geeignet ist (DC-Kreis kann nach dem Einschalten nicht öffnen).
+Maximale Schaltleistung 460W (230V, 2A). <b> Der Thermostat kann das ganze Jahr über verwendet werden. Im Falle einer unnötigen Steuerung kann der Ausgang physisch getrennt werden und der Thermostat kann als Ethernet-Thermometer verwendet werden, um Daten aus dem Raum zu erhalten, in dem er sich befindet. </b>
+</p>
+
+<b> Die Webschnittstelle für den Ethernet-Thermostat ermöglicht Ihnen: </b>
+<li> Sehen Sie in Echtzeit die Temperatur des DS18B20-Sensors, die Betriebszeit des Geräts, den Ausgabewert mit dynamischer Änderung, die aktuell eingestellten Konfigurationsdaten für den Thermostat, d. Solltemperatur und Hysterese </li>
+<li>Ändern Sie die Zieltemperatur (Referenztemperatur) von 5 bis 50 ° C in Schritten von 0,25 ° C </li>
+<li> Ändern Sie die Hysterese von 0 bis 10 ° C in Schritten von 0,25 ° C </li>
+
+<b> Kessel EIN / AUS-Steuerung: </b>
+<li>Beispiel für EIN / AUS der Heizungssteuerung - <font color = "red"> VISUALISIERUNG IST NICHT TEIL DES PROJEKTS </font> </li>
+<li>Der Kessel ist aktiv, solange die Solltemperatur + Hysterese erreicht ist </li>
+<li> Die Visualisierung von Wassertemperaturen zeigt die sogenannte Heizlauf und anschließendes Abkühlen des Wassers bis die Heizung wieder aktiviert wird, wenn die gemessene Temperatur unter der eingestellten Solltemperatur liegt - Hysterese </li>
+<img src="https://i.imgur.com/IDWLuOr.png" style="display: block; max-width: 100%; height: auto;" alt="ZAP/VYP regulácia kotla s hysterézou" title="ZAP/VYP regulácia kotla s hysterézou">        			    
+<p style="text-align: justify;">
+Die Weboberfläche ist für größere und kleinere Bildschirme ausgelegt. Es ist reaktionsschnell, unterstützt Breitbild-High-Definition-Bildschirme, aber auch mobile Geräte.
+Die Schnittstelle verwendet importierte CSS-Stile des Bootstrap-Frameworks von einem externen CDN-Server, der das clientseitige Gerät lädt, wenn eine Seite geöffnet wird, die auf Arduino ausgeführt wird.
+Da der Arduino Uno speicherbegrenzt ist, kann er nur Seiten mit einer Größe von wenigen KB ausführen. Durch den Import von CSS-Stilen von einem externen Server können Sie die Leistung und Speicherbelastung von Arduino reduzieren.
+Die Software-Implementierung (für Arduine Uno) verwendet ca. 70% des Flash-Speichers (32kB - 4kB Bootloader) und 44% des RAM-Speichers (2kB).
+Statische Teile einer Webseite (HTML-Dokument-Header und -Fußzeile, Bootstrap-CSS-Verknüpfung, Meta-Tags, HTTP-Response-Header, Inhaltstyp, Formular und mehr) werden direkt im Flash-Speicher von Arduino gespeichert, was den für den Benutzer verwendeten RAM erheblich reduzieren kann -generierte Inhalte.
+Der Webserver ist dadurch stabiler und kann die Mehrfachverbindung mehrerer Geräte im Netzwerk gleichzeitig verarbeiten. Der Verbrauch des gesamten Thermostats beträgt bis zu 200 mA bei 5V Versorgung - unter 1W.
+</p>
+<hr>
+<p style="text-align: justify;">
+Um die eingestellten Werte auch nach einem Stromausfall beizubehalten, werden diese im EEPROM-Speicher des Arduino (insgesamt 512 B) abgelegt.
+Die Referenztemperatur wird auf Offset 10 geschrieben, Hysterese auf Offset 100. Jeder der Werte belegt maximal 5B im EEPROM-Speicher + Terminator.
+Die EEPROM-Transkriptionsgrenze liegt bei 100.000 Transkripten. Daten werden nur überschrieben, wenn das HTML-Formular gesendet wird. Der Betrieb des Thermostaten schont somit den EEPROM-Speicher, um dessen Lebensdauer zu maximieren.
+Wenn das Gerät beim ersten Start nichts auf den genannten EEPROM-Offsets gespeichert hat, wird automatisch mit Standardwerten geschrieben - Referenz: 20,25 ° C, Hysterese 0,25 ° C, sog. ausfallsichere Lösung, damit der Thermostat sofort funktions- und betriebsbereit ist.
+</p>
+<p style="text-align: justify;">
+Mit dem Refresh-Meta-Tag aktualisiert der Webserver alle 30 Sekunden die gesamte Seite und die ungefähre Aktualisierungszeit wird ebenfalls per Javascript in die HTML-Seite geschrieben.
+Zu diesem Zeitpunkt ist es notwendig, die Änderung für den Thermostaten zu schreiben, da sonst die Eingabefenster für numerische Eingaben in das Formular beim Aktualisieren der Seite zurückgesetzt werden. <b> Basierend auf dem Feedback von Nutzern von Android-Geräten wurde die Aktualisierungszeit von 10 auf 30 Sekunden verlängert. </b>
+Da die eingebaute Ethernet-Bibliothek die Verwendung eines asynchronen Webservers (der beispielsweise mit den Espressif ESP8266 / ESP32 Mikrocontrollern verwendet werden kann) nicht beinhaltet, ist es notwendig die gesamte Seite neu zu schreiben.
+Die sich hauptsächlich ändernden dynamischen Daten sind der aktuelle Wert der Ausgabe - <b> <font color = "# 27AE60"> Zapnutý (ON) </font> </b> / <b> <font color = "red"> Vypnutý (OFF) < /font> </b>, die den Bediener über den aktuellen Zustand der Ausgabe zusammen mit der Farbcodierung informiert.
+Da die Logik des Systems unabhängig vom Webserver ausgeführt wird, kann sich die Ausgabe bereits in einem anderen Zustand befinden als aktuell in der Webanwendung aufgelistet. Die Ausgabeänderung wird z. B. sofort auf den UART-Monitor geschrieben.
+Auf der Website des Thermostats findet der Benutzer auch Informationen zur Betriebszeit des Geräts (wie lange es in Betrieb war), d. Zeit in Tagen, Stunden, Minuten und Sekunden.
+</p>
+<div class="alert alert-danger">
+	<strong>Der Autor des Ethernet-Thermostats ist nicht verantwortlich für die Funktionalität des Thermostats, Kesselausfall, Stromschlag aufgrund einer unsachgemäßen Installation des Thermostats im Netzwerk. </strong> Der Thermostat wird unter der MIT-Lizenz vertrieben.
+</div>	
+<b> Hauptseite zur Änderung der Solltemperatur und der Hysterese - Ausgabe am Beispiel: </b>
+<div class="alert alert-info">
+<strong> Beispieldaten </strong>
+<li> <b>Zieltemperatur: </b>22,75 °C</li>
+<li> <b> Hysterese: </b> 0,25 ° C </li>
+<li> <b>Messdaten: </b> 21,59 ° C </li>
+<li> <b> Ausgabe: </b> <font color="#27AE60">Zapnutý (ON)</font></li>
+	<hr>
+	<p style="text-align: justify;">
+		Der Thermostat heizt ab einer gemessenen Temperatur von 22,49°C und darunter.
+Wenn die Temperatur 23,01 ° C erreicht, wird der Ausgang ausgeschaltet, das Melderelais öffnet und der Gaskessel hört auf zu heizen.
+Das Aufheizen und Abkühlen des Raumes, in dem die Messungen durchgeführt werden, erfolgt. Der Thermostat wird erst wieder aktiviert, wenn die Temperatur 22,49 ° C oder niedriger erreicht.	
+	</p>	
+</div>
+<img src="https://i.imgur.com/rzZtoeP.png" style="display: block; max-width: 100%; height: auto;" alt="Ethernet termostat - Hlavný prehľad s modifikáciou cieľovej teploty a hysterézy - Vypnutý" title="Ethernet termostat - Hlavný prehľad s modifikáciou cieľovej teploty a hysterézy - Vypnutý">        			
+<b>Verarbeitungsprozess der eingegebenen Daten (Nutzerumleitung):</b>
+<img src="https://i.imgur.com/ZptC0UR.png" style="display: block; max-width: 100%; height: auto;" alt="Ethernet termostat - spracovanie údajov z HTML formulára" title="Ethernet termostat - spracovanie údajov z HTML formulára">        			
+<b>JSON-Webserver-Ausgabe im Browser / Client über Websocket:</b>
+<center><img src="https://i.imgur.com/iqxV12k.png" style="display: block; max-width: 100%; height: auto;" alt="Ethernet termostat - JSON output" title="Ethernet termostat - JSON output"></center>        		
+<b>Ausgabe an UART-Monitor - Systemlogik + Ethernet-Adaptereinstellungen:</b>
+<center><img src="https://i.imgur.com/r5jNZf5.png" style="display: block; max-width: 100%; height: auto;" alt="Ethernet termostat - UART" title="Ethernet termostat - UART"></center>        		
+<b>Eine erweiterte Version dieses Thermostats enthält außerdem - <font color = "red"> NICHT IM GITHUB-MASCHINENCODE-REPOSITORY ENTHALTEN:</font></b>
+<div class="alert alert-info">
+	<b> Wenn Sie daran interessiert sind, die Vollversion des Projekts mit dem Quellcode (.ino) zu erwerben - </b>martinius96@gmail.com
+</div>
+<li> Manueller Modus für Relais (unbegrenzte Zeit, hart EIN / AUS) </li>
+<li> Watchdog-Timer </li>
+<li> Verfügbare Sensoren SHT21, SHT31, DHT22, BME280, BMP280 und andere </li>
+<li> Kühlmodus </li>
+<li>Steuerung und Konfiguration über RS232 / UART unabhängig von Ethernet </li>
+<li> Möglichkeit, ESP8266-, ESP32-Plattformen für Thermostate zu verwenden </li>
+<hr>
+<center><h2>Quellcode-Schnipsel (ohne Backend)</h2></center>
+<hr>		
+<li><b><font color="red">QUELLCODES SIND NUR FRAGMENTE UND KÖNNEN NICHT OHNE ANDERE (NICHT VERFÜGBAR) TEILE DAVON VERWENDET WERDEN. ENTHALTEN VARIABLEN, FUNKTIONEN, DIE DEFINITIONEN, BZW. ERKLÄRUNGEN SIND NICHT VERFÜGBAR.</font></b></li>
+<h3><font color="#2ECC71">Quellcodefragment für Thermostatlogik - Entscheidungsschwelle</font></h3>
+<li>Es wird alle 10 Sekunden durchgeführt, unabhängig von der Webserver- oder Clientverbindung</li>
+<pre style="background-color:#2ECC71;">
+    teplota = sensorsA.getTempCByIndex(0);
+    String referencia = read_String(10);
+    String hystereza = read_String(100);
+    float referencia_teplota = referencia.toFloat();
+    float hystereza_teplota = hystereza.toFloat();
+    float minus_hystereza_teplota = (-1 * hystereza_teplota);
+    float rozdiel = referencia_teplota - teplota;
+    if (rozdiel > hystereza_teplota) {
+      Serial.println("RELE ZAP");
+      stav = "ZAP";
+      digitalWrite(rele, LOW);
+    } else if (rozdiel < minus_hystereza_teplota) {
+      Serial.println("RELE VYP");
+      stav = "VYP";
+      digitalWrite(rele, HIGH);
+    }
+    sensorsA.requestTemperatures();
+</pre>	
+<h3><font color="#3498DB">Quellcode-Snippet für die Seite „Allgemeiner Bericht“ – ohne die Daten aus dem HTML-Formular zu verarbeiten</font></h3>
+<pre style="background-color:#3498DB;">
+          HTTP header
+	  DOCTYPE
+	  HTML
+	  HEAD
+	  client.println(F("&lt;meta charset='utf-8'>"));
+          client.println(F("&lt;meta name='author' content='Martin Chlebovec'>"));
+          client.println(F("&lt;meta http-equiv='Refresh' content='10'; />"));
+          client.println(F("&lt;title>HTTP webserver - Arduino + Ethernet&lt;/title>"));
+          client.println(F("&lt;/head>"));
+          client.println(F("&lt;body>"));
+          client.println(F("&lt;center>&lt;h3>Zadajte dáta pre webserver (budú uložené do EEPROM):&lt;/h3>"));
+          client.println(F("&lt;form action='/action.html' method='get'>"));
+          client.println("&lt;b>Referenčná teplota:&lt;/b>&lt;br>&lt;input type='number' id='fname' name='fname' min='5' max='50' step='0.25' value=" + read_String(10) + ">&lt;br>");
+          client.println("&lt;b>Hysteréza:&lt;/b>&lt;br>&lt;input type='number' id='fname2' name='fname2' min='0' max='10' step='0.25' value=" + read_String(100) + ">&lt;br>");
+          client.println(F("&lt;input type='submit' class='btn btn-success' value='Zapísať'>"));
+          client.println(F("&lt;/form>&lt;hr>"));
+          if (stav == "ZAP") {
+            client.println(F("&lt;b>&lt;font color='green'>Výstup: Zapnutý&lt;/font>&lt;/b>"));
+          }
+          if (stav == "VYP") {
+            client.println(F("&lt;b>&lt;font color='red'>Výstup: Vypnutý&lt;/font>&lt;/b>"));
+          }
+          client.println(F("&lt;div id=\"countdown\">&lt;/div>"));
+          client.print(F("&lt;b>Aktuálna teplota senzora DS18B20:&lt;/b> "));
+          client.print(teplota);
+          client.println(F(" °C"));
+          client.print(F("&lt;hr>"));
+          client.println(F("&lt;h3>Autor: Martin Chlebovec - martinius96@gmail.com - https://martinius96.github.io/termostat-ethernet/&lt;/h3>"));
+          client.println(F("&lt;h4>Verzia free - 1.0.2.1 build: 12. Jan 2021&lt;/h4>"));
+          client.println(F("&lt;/center>"));
+          client.println(F("&lt;/body>"));
+          client.println(F("&lt;/html>"));
+	  FLUSH CLIENT
+	  STOP CLIENT
+</pre>
+<h3><font color="#D35400">Fragment des Quellcodes mit einer Liste der eingestellten Kontrolldaten nach dem Absenden des HTML-Formulars</font></h3>
+<li>Mit der anschließenden Weiterleitung des Nutzers zurück auf die Hauptseite nach 5 Sekunden ab Verarbeitung - dem sogenannten Lazy Loading ... (Datenverarbeitung ist nicht im Fragment enthalten)</li>
+<pre style="background-color:#D35400;">
+	    Backend_Verarbeitung von Daten aus HTML-Formular
+	    .
+	    .
+	    .
+            HTTP header
+	    DOCTYPE
+	    HTML
+	    HEAD
+            client.println(F("&lt;meta charset='utf-8'>"));
+            client.println(F("&lt;meta http-equiv='Refresh' content='5; url=/' />"));
+            client.println(F("&lt;title>HTTP webserver - Arduino + Ethernet&lt;/title>"));
+            client.println(F("&lt;/head>"));
+            client.println(F("&lt;body>"));
+            client.println(F("&lt;center>&lt;h3>Server prijal data z formulára:&lt;/h3>"));
+            client.println("&lt;li>&lt;b>Referenčná teplota: &lt;/b>" + String(H_1) + "&lt;/li>");
+            client.println("&lt;li>&lt;b>Hysteréza: &lt;/b>" + String(H_2) + "&lt;/li>");
+            client.println(F("&lt;b>Presmerovanie... Prosim cakajte&lt;/b>&lt;/center>"));
+            client.println(F("&lt;/body>"));
+            client.println(F("&lt;/html>"));
+	    FLUSH CLIENT
+	    STOP CLIENT
+</pre>
+<h3><font color="#C0392B">Beispiel-Anweisung - JSON-Ausgabe für andere Clients, Verarbeitung</font></h3>
+<div class="alert alert-danger">
+{<br>
+	"Hysteresis":0.25,<br>
+	"Target_Temperature":21.75,<br>
+	"Actual_Temperature":21.43<br>
+}
+</div>
+<p style="text-align: justify;">
+Die Softwareimplementierung in Maschinencodes für den Raumthermostat (Ethernet) finden Sie unter: <a href="https://github.com/martinius96/termostat-ethernet/"> https://github.com/martinius96/termostat -ethernet / </a>.
+Die Implementierung enthält Programme für die dem Ethernet-Shield zugewiesene statische / dynamische IPv4-Adresse.
+<b>Der Thermostat ist nur für Innentemperaturen gedacht!</b> (über 0°C), an die die Systemlogik angepasst ist!
+Der Thermostat kann verwendet werden, um einen vorhandenen Raumthermostat zu ersetzen, die Heizung im Aquarium / Terrarium kann vorübergehend ersetzt werden, um eine konstante Temperatur zu halten.
+</p>
+<div class="alert alert-danger">
+<b> Änderungsprotokoll Ethernet-Thermostat Version 1.0.3: </b>
+<li> Für HTML-Formulare mussten eingegebene Zahlen aufgrund von Inkompatibilität mit Google Chrome für Android entfernt werden. </li>
+<li> Modifiziertes Backend, um den Eingabedatentyp mit der (Nicht-) Akzeptanz der Eingabe zu vergleichen. </li>
+<li> JSON-Ausgabe (umgekehrte Kontrolltemperaturen) an gegenüberliegende Entitäten korrigiert </li>
+<li> Inhaltstyp für die JSON-Ausgabe von Text / HTML an Anwendung / Json korrigiert </li>
+<li> Alle statischen Teile von HTML-Seiten wurden über das F()-Makro ins ROM verschoben </li>
+<li> Maximaler leichter RAM für den problemlosen Betrieb eines Webservers mit geringer Latenz. </li>
+<li> Für das DHCP-Beispiel wird die Funktion Ethernet.maintain() verwendet, um die DHCP-Poolzeit zu erneuern. </li>
+<li> (die gleiche IP-Adresse erneuern / eine neue anfordern - abhängig von Ihrer DHCP-Dienstkonfiguration) </li>
+<li> Benennen Sie eine JSON-Datei von get_data in get_data.json um </li>
+<li>Anzeige der Gerätebetriebszeit - Tage, Stunden, Minuten, Sekunden </li>
+<li> HTTP 404 - Nicht gefunden, wenn ein Standort angezeigt wird, zu dem der Webserver keinen Rückruf hat </li>
+</div>	
+ </div>
+		</div>
+</div>
+</body>
+</html>
