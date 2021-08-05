@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="de-DE">
+<head>
+  	<meta property="og:title" content="JSON-Client - Ethernet-Thermostat - MQTT Publish, ArduinoJson, Deserialisierung, Datenanalyse" />
+  	<meta property="og:locale" content="de_DE" />    	
+	<meta name="robots" content="index, follow">
+	<link rel="icon" type="image/png" href="favicon.png">
+	<link rel="sitemap" type="application/xml" title="Sitemap" href="../sitemap.xml" />
+    	<meta name='revisit-after' content='2 days'>
+    	<title>JSON-Client - Ethernet-Thermostat - MQTT Publish, ArduinoJson, Deserialisierung, Datenanalyse</title>
+    	<meta property='fb:admins' content='100001242570317'>
+    	<meta charset="utf-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+    	<meta name="description" content="JSON-Client auf Arduino-Plattform, ESP866, ESP32 für Ethernet-Thermostat-Projekt. Sie ermöglichen das Analysieren von Daten, Veröffentlichen im MQTT-Dienst IoT Industries Slovakia">
+    	<meta name="keywords" content="json, arduino, ethernet, wifi, esp8266, esp32, parsing, arduinojson, deserialisierung, mqtt, veröffentlichen, abonnieren, daten, übertragung, http, mqtts, verschlüsselt, buchse, iot, industrien, slowakei, thermostat, thermostat">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<meta name="google-site-verification" content="UwZZh2EXv3iWUAi_1Z0hLxVCz6ySJ4UdY_BPoLtejwo" />
+	<script type="text/javascript">
+    		window.smartlook||(function(d) {
+    			var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];
+    			var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';
+    			c.charset='utf-8';c.src='https://rec.smartlook.com/recorder.js';h.appendChild(c);
+    		})(document);
+    		smartlook('init', 'db50efe9fff280a17db52b82be221240cbbd3dbe');
+	</script>    
+			<style>
+	#right {
+  position: absolute;
+  right: 0px;
+}
+	</style>
+</head>
+<body>
+	<div class="container">
+  		<div class="row">
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="index.html">Thermostat - Ethernet</a>
+    </div>
+    <ul class="nav navbar-nav">
+      	<li><a href="index.html">Überblick</a></li>
+	<li><a href="zapojenie.html">Beteiligung</a></li>      
+	<li class=""><a href="spustenie.html">Ethernet-Thermostat starten</a></li>
+  	<li class="active"><a href="json_client.html">JSON-Client</a></li>
+      	<li><a href="kontakt.html">Kontakt</a></li>
+<a href="../en/json_client.html"><img src="https://www.flaticon.com/svg/static/icons/svg/299/299688.svg" alt="English.png, 2,2kB" title="English" height="32" width="32"></a>
+<li style="float: right; "><a href="https://martinius96.github.io/WiFi-termostat/" class="btn btn-success" role="button" title="Ändern Sie das Projekt in einen WiFi-Thermostat"><img src="https://www.flaticon.com/premium-icon/icons/svg/3686/3686730.svg" width=16px height=16px> <font color="white">WiFi-Thermostat</font></a></li></ul>
+  </div>
+</nav>   			
+<div class="col-sm-12">
+<div class="alert alert-success">
+	<strong>Projekt-Repository mit Quellcode für JSON-Clients - Github: </strong><a href="https://github.com/martinius96/termostat-ethernet/tree/master/examples">Ethernet-Thermostat - JSON-Clients</a>
+</div>	
+<span class="label label-default">Arduino</span>
+<span class="label label-primary">Ethernet</span>
+<span class="label label-success">Wiznet W5100 / W5500</span>
+<span class="label label-info">DS18B20</span>
+<span class="label label-warning">OneWire</span>
+<span class="label label-danger">Dallas</span>
+<span class="label label-default">HTML</span>
+<span class="label label-primary">Webserver</span>
+<span class="label label-success">WebSocket</span>
+<div class="row">
+  <div class="col-sm-3"><center><img src="https://i.imgur.com/X946pmi.png" width="128px" height="128px" style="border-radius: 50%;" alt="JSON DATA" title="JSON DATA"><br><b>JSON DATA</b></center></div>
+  <div class="col-sm-3"><center><img src="https://i.imgur.com/B2xdel0.png" width="128px" height="128px" alt="ArduinoJSON" title="ArduinoJSON"><br><b>ArduinoJSON</b></center></div>
+  <div class="col-sm-3"><center><img src="https://i.imgur.com/oXhOEZi.png" width="128px" height="128px" style="border-radius: 50%;" alt="MQTT" title="MQTT"><br><b>MQTT</b></center></div>
+  <div class="col-sm-3"><center><img src="https://i.imgur.com/WWpufkP.png" width="128px" height="128px" style="border-radius: 50%;" alt="HTTP" title="HTTP"><br><b>HTTP</b></center></div>
+</div>	
+<hr><center><h2>JSON-Clients - Ethernet-Thermostat</h2></center><hr>
+<p style="text-align: justify;">
+Der auf der Arduino-Plattform ESP8266, ESP32 basierende JSON-Client ermöglicht die Verbindung über einen Websocket mit einem Ethernet-Thermostat.
+<b> Der Client führt alle 15 Sekunden eine zyklische HTTP-GET-Anfrage aus, um den Inhalt der Unterseite /get_data.json abzurufen, auf der der Webserver Zieltemperatur-, Hysterese- und aktuelle Temperaturdaten an den DS18B20-Sensor auf dem OneWire-Bus im JSON-Format verteilt . </b>
+Die geladene JSON-Nutzlast kann den JSON-Client aus der HTTP-Antwort parsen und dann diese Zeichenfolge deserialisieren.
+Nach der Deserialisierung ist es möglich, auf die einzelnen Schlüssel zuzugreifen, denen die Werte zugeordnet sind und diese zu erhalten -> parsen.
+Die übereinstimmenden Daten werden auf den UART geschrieben - Serielle Leitung - 115200 Baud / s.
+In einer Benutzeranwendung, die zu bestehenden JSON-Client-Quellcodes hinzugefügt werden kann, können Entitäten basierend auf diesen Werten gesteuert werden, z.
+Alternativ ist es möglich, Daten zu archivieren – an einen Webserver zu senden, wo sie beispielsweise in einer MySQL-Datenbank in der Loxone Hausautomation gespeichert werden können.
+<b> Ein Teil der Firmware, die als MQTT oder MQTTS (encrypted MQTT) gekennzeichnet ist, ist ein erweiterter JSON-Client mit der Möglichkeit zum Senden - Publish to MQTT Broker IoT Industries Slovakia - Slowakischer kostenloser MQTT-Broker für Entwickler. </b>
+Sowohl die MQTT- als auch die MQTTS-Variante verwenden einen Socket, der auch für HTTP-Anfragen zum Abrufen von JSON-Nutzlasten verwendet wird.
+Der vorhandene MQTT-Server kann in Ihrem Quellcode durch Ihren ersetzt werden, sodass Sie die Daten des Thermostats auch Hausautomationssystemen (Hassio, Mosquitto MQTT, Domoticz, Loxone und andere ...) zur Verfügung stellen können.
+In der aktuellen Software-Implementierung sendet der Mikrocontroller (JSON-Client) die erfassten Daten an den MQTT-Broker an das Wurzelthema des Thermostats, während die einzelnen Temperaturen in Unterthemen unterschieden werden.
+</p> 
+<div class="alert alert-info">
+<strong> Die Implementierung für MQTTS ist nur für die Plattformen ESP8266 und ESP32 verfügbar. </strong> ESP8266 verwendet eine verschlüsselte Fingerabdruckverbindung (MQTT-Serverzertifikat-Fingerabdruck), um eine verschlüsselte Verbindung herzustellen.
+ESP32 verwendet ein Root-CA-Zertifikat, um eine verschlüsselte Verbindung zum MQTT-Server aufbauen zu können. <b> Der verschlüsselte Port des MQTT-Servers ist standardmäßig 8883, unverschlüsselt 1883. </b>
+Um einen Fingerabdruck oder ein Root-CA-Zertifikat für einen bestimmten MQTT-Server (Domäne) zu erhalten, kann das kryptografische Tool OpenSSL verwendet werden, das ein einfaches Abrufen und Anzeigen der betreffenden Informationen ermöglicht.
+<br> <b> Befehl zum Abrufen des MQTT-Server-Fingerabdrucks: </b> <br>
+<code>openssl s_client -connect mqttserver.com:8883 -showcerts < /dev/null 2>/dev/null | openssl x509 -in /dev/stdin -sha1 -noout -fingerprint</code>
+<br> <b> Befehl zum Abrufen des Root-CA-Zertifikats, das das Zertifikat für den MQTT-Server (Aussteller) ausgestellt hat: </b> <br>
+<code>openssl s_client -showcerts -verify 5 -connect mqttserver.com:8883 < /dev/null</code>
+</div>
+<hr><h4>Die für Publish on MQTT Broker verwendeten Themen sind:</h4> <hr>
+<li><b>termostat/hysteresis</b> - für Hysterese</li>
+<li><b>termostat/actual_temp</b> - für die aktuell gemessene Temperatur</li>
+<li><b>termostat/target_temp</b> - für die Soll-(Referenz-)Temperatur</li>
+<hr><h4>Thema für Abonnieren:</h4><hr>
+<li><b>termostat/#</b> - übernimmt alle Unterthemen unter dem termostat/, also Hysterese, aktuelle und Solltemperatur</li>
+<p style="text-align: justify;">
+<b>637 / 5000
+Výsledky prekladov
+Der MQTT-Client hat ein abonniertes Abonnement für das Hauptthema Thermostat und alle seine Unterthemen. Es kann auch überprüfen, ob die Informationen erfolgreich auf MQTT Broker veröffentlicht wurden. </b>
+<b> <font color = "red"> WARNUNG: Der in der Beispielimplementierung verwendete MQTT Broker IoT Industries Slovakia ist öffentlich und somit können die Daten von jedem Benutzer geändert, überschrieben und gelesen werden! </font> </ b>
+Wenn ein anderer Benutzer die JSON-Client-Firmware unverändert auf seinen Mikrocontroller hochlädt, werden die Daten im vordefinierten Thema sowohl von Ihnen als auch von ihm überschrieben. Es empfiehlt sich daher, während der eigentlichen Umsetzung ein anderes Thema zu wählen, an das die Daten gesendet werden. 
+</p>    
+<hr><h4>Blockdiagramm - Beschreibung der JSON-Client-Funktionalität:</h4><hr>
+<center>
+<img src="https://i.imgur.com/m2O62dn.jpg" style="display: block; max-width: 100%; height: auto;" title="JSON klient - Arduino, ESP8266, ESP32, MQTT integrácia - Ethernet termostat" alt="JSON klient - Arduino, ESP8266, ESP32, MQTT integrácia - Ethernet termostat">
+</center>
+<hr><h4>JSON-Client - UART-Ausgabe (Serielle Leitung):</h4><hr>
+<center><img src="https://i.imgur.com/4Cm5z8o.png" style="display: block; max-width: 100%; height: auto;" alt="JSON client pre WiFi termostat - UART výstup" title="JSON client pre WiFi termostat - UART výstup"></center>       		
+<h4>HiveMQ-Client - Thema abonnieren termostat/#</h4>
+<center><img src="https://i.imgur.com/UEnHDb2.png" style="display: block; max-width: 100%; height: auto;" alt="JSON client MQTT Broker IoT Industries Slovakia - výstup topicu - Subscribe termostat" title="JSON client MQTT Broker IoT Industries Slovakia - výstup topicu - Subscribe termostat"></center> 
+	
+	</div>
+					</div>
+</body>
+</html>
