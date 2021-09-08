@@ -43,9 +43,6 @@
 * PID regulácia teploty pre termostat
 * Možnosť využitia platforiem ESP8266, ESP32 pre termostat
 
-**Pri záujme o kúpu rozšírenej verzie / základnej verzie so zdrojovým kódom .ino:**
-* martinius96@gmail.com
-
 **Rozšírené informácie k projektu v článku:**
 * http://deadawp.blog.sector.sk/blogclanok/13223/izbovy-termostat-arduino-ethernet.htm
 
