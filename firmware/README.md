@@ -18,3 +18,6 @@
 * Termostat nemá konfiguračné rozhranie pre sieť a jej nastavenie
 * Na základe firmvéru je IP adresa priradená z DHCP poolu, alebo je nastavená statická
 * IP adresa je vždy vypísaná na HW UART --> 115200 baud/s
+<p align="center">
+  <img src="https://i.imgur.com/r5jNZf5.png" />
+</p>
