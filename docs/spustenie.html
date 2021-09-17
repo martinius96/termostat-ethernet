@@ -165,6 +165,18 @@ Od tohto momentu je termostat plne aktívny. V prípade DHCP verzie firmvéru sa
 <center>
 	<img src="https://i.imgur.com/9dMxWT5.png" style="display: block; max-width: 100%; height: auto;" alt="XLoader - Arduino - AVRDUDE - Termostat - Ethernet" title="XLoader - Arduino - AVRDUDE - Termostat - Ethernet">	
 </center>
+<hr><center><h4>Zvolenie COM portu</h4></center><hr>
+<p style="text-align: justify;">
+V prípade nahrávania firmvéru cez AVRDUDE je nutné špecifikovať COM port manuálne priamo v príkaze pre nahratie firmvéru do mikrokontroléra.
+Aktuálny port, kde je prihlásený mikrokontróler nájdete v Správcovi zariadení.
+Zariadenie je najčastejšie označené ako USB-SERIAL CH340 v prípade klonov, alebo napr. Arduino Uno v prípade originálnych Arduino dosiek.
+U verzií Arduina Nano je možné nájsť aj označenie FT232RL device, ak používa prevodník FTDI232RL.
+Baudrate pre New Bootloader je: 115200 baud/s, pre Old Bootloader: 57600 (najmä čínske verzie Arduina Nano V3.0).
+Na nesprávny baudrate upozorní samotné rozhranie XLoader hláškou o neúspešnom nahratí firmvéru.
+</p>
+<center>
+	<img src="https://i.imgur.com/N1CHBoL.png" style="display: block; max-width: 100%; height: auto;" alt="Správca zariadení - Arduino COM port" title="Správca zariadení - Arduino COM port">	
+</center>
 <div class="alert alert-info">
 <b>Po úspešnom nahratí strojového kódu do Arduina je termostat plne pripravený a je dostupný na svojej IP adrese. Program funguje na základe schémy zapojenia projektu a logiky z popisu.</b>
 			</div>				
