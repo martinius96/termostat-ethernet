@@ -79,19 +79,31 @@
 <span class="label label-default">HTML</span>
 <span class="label label-primary">Webserver</span>
 <span class="label label-success">WebSocket</span>
-  <div class="row">
-  <div class="col-sm-4"><center><img src="https://i.imgur.com/wtnzKqO.png" width="128px" height="128px" style="border-radius: 50%;" alt="Riadiaci mikrokontróler Arduino Uno pre termostat" title="Riadiaci mikrokontróler Arduino Uno pre termostat"><br><b>Arduino Uno / Nano</b></center></div>
-  <div class="col-sm-4"><center><img src="https://i.imgur.com/aaS35X2.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ethernet shield Wiznet W5100" title="Ethernet shield Wiznet W5100"><br><b>Ethernet Wiznet W5100</b></center></div>
-  <div class="col-sm-4"><center><img src="https://i.imgur.com/mz4dhRA.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ethernet modul Wiznet W5500" title="Ethernet modul Wiznet W5500"><br><b>Ethernet Wiznet W5500</b></center></div>
+<hr><h4>Kompatibilný riadiaci hardvér pre Ethernet termostat:</h4><hr>
+<div class="row">
+<div class="col-sm-3"><center><img src="https://i.imgur.com/wtnzKqO.png" width="128px" height="128px" style="border-radius: 50%;" alt="Riadiaci mikrokontróler Arduino UNO" title="Riadiaci mikrokontróler Arduino UNO"><br><b><a href="https://www.gme.sk/klon-arduino-uno-r3-atmega328p-ch340-mini-usb">Arduino UNO</a></b></center></div>
+<div class="col-sm-3"><center><img src="https://i.imgur.com/XHC8DBe.png" width="128px" height="128px" style="border-radius: 50%;" alt="Riadiaci mikrokontróler Arduino Nano" title="Riadiaci mikrokontróler Arduino Nano"><br><b><a href="https://www.gme.sk/klon-arduino-nano-v3-0-r3-ch340g">Arduino Nano</a></b></center></div>
+<div class="col-sm-3"><center><img src="https://i.imgur.com/4xX0BoE.png" width="128px" height="128px" style="border-radius: 50%;" alt="Riadiaci mikrokontróler AtMega328P DIP" title="Riadiaci mikrokontróler AtMega328P DIP"><br><b><a href="https://www.gme.sk/atmega328p-pu-sdip28-atmel">AtMega328P - DIP28</a></b></center></div>
+<div class="col-sm-3"><center><img src="https://i.imgur.com/FANTMuW.png" width="128px" height="128px" style="border-radius: 50%;" alt="Riadiaci mikrokontróler AtMega328P SMD" title="Riadiaci mikrokontróler AtMega328P SMD"><br><b><a href="https://www.gme.sk/atmega328p-au-tqfp32-atmel">AtMega328P - SMD</a></b></center></div>
+</div>	
+<hr><h4>Kompatibilné Ethernet moduly a shieldy pre Ethernet termostat:</h4><hr>
+<div class="row">
+<div class="col-sm-3"><center><img src="https://i.imgur.com/aaS35X2.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ethernet shield Wiznet W5100" title="Ethernet shield Wiznet W5100"><br><b>Ethernet Wiznet W5100</b></center></div>
+<div class="col-sm-3"><center><img src="https://i.imgur.com/GaZYxl0.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ethernet modul Wiznet W5200" title="Ethernet modul Wiznet W5200"><br><b>Ethernet Wiznet W5200</b></center></div> 
+<div class="col-sm-3"><center><img src="https://i.imgur.com/rME7SWd.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ethernet modul Wiznet W5200" title="Ethernet modul Wiznet W5300"><br><b>Ethernet Wiznet W5300</b></center></div>   
+<div class="col-sm-3"><center><img src="https://i.imgur.com/mz4dhRA.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ethernet modul Wiznet W5500" title="Ethernet modul Wiznet W5500"><br><b>Ethernet Wiznet W5500</b></center></div>
 </div>				
-<hr><center><h2>Izbový termostat - Arduino + Ethernet Wiznet W5100 / W5500</h2></center><hr>
+<hr><center><h4>Izbový termostat - Arduino + Ethernet</h4></center><hr>
 <p style="text-align: justify;">
 Arduino je šikovná embeeded platforma, ktorú je možné využiť napríklad na stavbu izbového termostatu s Ethernet konektivitou a webserverom implementovaným na Arduine. 
 Implementácia využíva Arduino Uno / Nano s čipom AVR ATmega328P v kombinácii s Ethernet shieldom Wiznet W5100 / W5500 s ktorým komunikuje cez SPI zbernicu, resp. ICSP header. 
-Programovo funguje termostat v režime webservera, kde dokáže prijímať požiadavky od klientov v sieti po HTTP protokole a odosielať na ne odpoveď - HTML / JSON kód a vykonávať pri ich spustení funkcie backendu (funkčnosti).
+Programovo funguje termostat v režime webservera, kde dokáže prijímať požiadavky (requesty) od klientov v sieti po HTTP protokole a odosielať na ne odpoveď (response) - HTML / JSON kód a vykonávať pri ich spustení funkcie backendu (vykonanie scriptu, ovládanie GPIO, zápis do pamäte, funkčnosť...).
 Termostat je prístupný z LAN siete v ktorej sa nachádza, pričom je vybavený webovým rozhraním ktoré slúži na konfiguráciu všetkých prvkov termostatu, t.j. cieľovej (referenčnej) teploty a hysterézy. 
-Webserver umožňuje beh niekoľkých na sebe nezávislých HTML stránok, ktoré môžu mať informatívny, alebo aj funkcionálny charakter (implementovaný backend). 
+Webserver umožňuje beh niekoľkých na sebe nezávislých HTML stránok, ktoré môžu mať informatívny (textový výstup), alebo aj funkcionálny charakter (implementovaný backend s funkciami termostatu). 
 Webserver beží na štandardnom HTTP porte - 80. 
+</p>
+<hr>
+<p style="text-align: justify;">
 Termostat dokáže automatizovane prostredníctvom GPIO výstupu ovládať signalizačné relé pre zapnutie / vypnutie kotla. 
 Dokáže tak nahradiť existujúci izbový termostat a sprístupniť ho v sieti klientom.
 Termostat dokáže obsluhovať akékoľvek zariadenie s prehliadačom - počítač / smartfón / tablet / Smart TV a podobne. 
@@ -119,9 +131,9 @@ Maximálny spínaný výkon 460W (230V, 2A). <b>Termostat je možné používať
 </p>
 
 <b>Webové rozhranie pre Ethernet termostat umožňuje:</b>
-<li>Prehliadať v reálnom čase teplotu zo senzora DS18B20, uptime zariadenia, hodnotu výstupu s dynamickou zmenou, aktuálne nastavené konfiguračné údaje pre termostat t.j. cieľovú teplotu a hysterézu</li>
-<li>Modifikovať cieľovú (referenčnú) teplotu v rozsahu 5 až 50 °C s 0,25 °C krokom</li>
-<li>Modifikovať hysterézu v rozsahu 0 až 10 °C s 0,25 °C krokom</li>
+<li>Prehliadať v reálnom čase teplotu zo senzora DS18B20 na OneWire zbernici, uptime zariadenia, stav výstupu s dynamickou zmenou, aktuálne nastavené konfiguračné údaje pre termostat t.j. cieľovú teplotu a hysterézu z EEPROM</li>
+<li>Modifikovať cieľovú (referenčnú) teplotu <del>v rozsahu 5 až 50 °C s 0,25 °C krokom</del></li>
+<li>Modifikovať hysterézu <del>v rozsahu 0 až 10 °C s 0,25 °C krokom</del></li>
 
 <b>ZAP/VYP regulácia kotla:</b> 
 <li>Príklad ZAP/VYP regulácie vykurovania - <font color="red">VIZUALIZÁCIA NIE JE SÚČASŤOU PROJEKTU</font></li>	
@@ -143,6 +155,7 @@ Referenčná teplota je zapísaná na offset 10, hysteréza na offset 100. Každ
 Limit prepisov EEPROM je na úrovni 100-tisíc prepisov. Dáta sa prepisujú iba pri odoslaní HTML formulára. Prevádzka termostatu je tak maximálne šetrná k EEPROM pamäti s cieľom maximalizovať jej životnosť. 
 V prípade, že zariadenie pri prvom spustení nemá nič uložené na spomenutých EEPROM offsetoch, vykoná sa automatický zápis s predvolenými hodnotami - referencia: 20.25 °C, hysteréza 0.25 °C, tzv. fail-safe riešenie, aby bol termostat ihneď funkčný a pripravený k prevádzke.
 </p>
+<hr>
 <p style="text-align: justify;">
 Prostredníctvom meta tagu Refresh vykonáva webserver obnovu celej stránky každých 30 sekúnd a prostredníctvom Javascriptu sa vypisuje do HTML stránky aj orientačný čas do refreshu. 
 Do tohto času je potrebné stihnúť zapísať zmenu pre termostat, inak sa input okná pre číselné vstupy do formulára resetujú pri obnovení stránky. <b>Na základe spätnej väzby od používateľov Android zariadení bol čas pre Refresh predĺžený z 10 na 30 sekúnd.</b>
