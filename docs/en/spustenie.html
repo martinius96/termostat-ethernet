@@ -96,7 +96,7 @@
 The Ethernet (room) thermostat project also exists in a free version, which is available in the Githube repository.
 The version contains a total of 6 machine - precompiled programs for the Arduino Uno platform.
 Machine code (.hex) guarantees that the program is compatible and has the same functionality for all devices to which it is loaded and run.
-Firmware upload is quick and easy via the AVRDUDE / XLoader with a graphical interface. The main application starts immediately after the firmware is loaded.
+Firmware upload is quick and easy via the AVRDUDE / <a href="https://www.hobbytronics.co.uk/arduino-xloader">XLoader</a> with a graphical interface. The main application starts immediately after the firmware is loaded.
 The code is thus universal and provides an opportunity to provide the author interested in trying out the project of its build without access to the source (.ino) code.
 <b>Since each Ethernet thermostat has the same - predefined MAC address, it is possible to use only one thermostat in the LAN network, otherwise there will be a conflict of MAC addresses and not a single thermostat will communicate.</b>
 <div class="alert alert-danger">
@@ -159,15 +159,15 @@ The code is thus universal and provides an opportunity to provide the author int
 <p style="text-align: justify;">
 To upload machine code to Arduino, it is possible to use the AVRDUDE tool, which also uses the Arduino IDE environment to upload the compiled program.
 The tool can be run directly from the command line, but it is necessary to set all configurable data correctly, so it is not suitable for less experienced programmers or laymen.
-XLoader is a Windows application (tool) with a simple graphical interface that allows the selection of firmware - machine code (.hex), the target platform and can dynamically show the COM port on which the device is located.
+<a href="https://www.hobbytronics.co.uk/arduino-xloader">XLoader</a> is a Windows application (tool) with a simple graphical interface that allows the selection of firmware - machine code (.hex), the target platform and can dynamically show the COM port on which the device is located.
 It allows you to burn firmware to AVR platforms, i. Arduino Uno, Nano, Duemilanove (AtMega328 / AtMega168), Arduino Mega (AtMega1280 / AtMega2560).
-By simply clicking on Upload, the machine code can be uploaded automatically (XLoader uses the AVRDUDE tool similar to the Arduino IDE). The XLoader window informs about the successful upload in the form of a list of the number of bytes uploaded.
+By simply clicking on Upload, the machine code can be uploaded automatically (<a href="https://www.hobbytronics.co.uk/arduino-xloader">XLoader</a> uses the AVRDUDE tool similar to the Arduino IDE). The XLoader window informs about the successful upload in the form of a list of the number of bytes uploaded.
 </p>				
 <center>
 	<img src="https://i.imgur.com/9dMxWT5.png" style="display: block; max-width: 100%; height: auto;" alt="XLoader - Arduino - AVRDUDE - Termostat - Ethernet" title="XLoader - Arduino - AVRDUDE - Termostat - Ethernet">	
 </center>
 <b>After successfully uploading the machine code to the Arduino, the thermostat is fully ready and available at its IP address. The program works on the basis of the project wiring diagram and the logic from the description.</b>
-				<hr><center><h2>Video tutorial for uploading firmware to Arduino via XLoader</h2></center><hr>
+				<hr><center><h2>Video tutorial for uploading firmware to Arduino via <a href="https://www.hobbytronics.co.uk/arduino-xloader">XLoader</a></h2></center><hr>
 <center><iframe width="50%" height="315" src="https://www.youtube.com/embed/fAUKYuYNkMo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></center>	
 			</div>
 		</div>
