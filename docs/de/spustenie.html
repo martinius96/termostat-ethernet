@@ -165,6 +165,18 @@ Ab diesem Moment ist der Thermostat voll aktiv. Bei der DHCP-Firmware-Version wi
 <center>
 	<img src="https://i.imgur.com/9dMxWT5.png" style="display: block; max-width: 100%; height: auto;" alt="XLoader - Arduino - AVRDUDE - Termostat - Ethernet" title="XLoader - Arduino - AVRDUDE - Termostat - Ethernet">	
 </center>
+<hr><center><h4>COM-Port-Auswahl</h4></center><hr>
+<p style="text-align: justify;">
+Beim Firmware-Upload über AVRDUDE ist es notwendig, den COM-Port direkt im Befehl zum Firmware-Upload auf den Mikrocontroller manuell anzugeben. 
+Den aktuellen Port, an dem der Mikrocontroller angemeldet ist, finden Sie im Geräte-Manager. 
+Bei Klonen wird das Gerät am häufigsten als USB-SERIAL CH340 gekennzeichnet, oder z.B. Arduino Uno bei original Arduino-Boards. 
+Bei Arduino Nano-Versionen ist die Gerätebezeichnung FT232RL auch zu finden, wenn der FTDI232RL-Konverter verwendet wird. 
+Die Baudrate für den New Bootloader beträgt: 115200 Baud/s, für den Old Bootloader: 57600 (insbesondere die chinesische Version des Arduino Nano V3.0). 
+Die XLoader-Schnittstelle selbst warnt vor einer falschen Baudrate mit einer Meldung, dass der Firmware-Upload fehlgeschlagen ist.
+</p>
+<center>
+	<img src="https://i.imgur.com/N1CHBoL.png" style="display: block; max-width: 100%; height: auto;" alt="Správca zariadení - Arduino COM port" title="Správca zariadení - Arduino COM port">	
+</center>
 <div class="alert alert-info">
 <b>Nach erfolgreichem Hochladen des Maschinencodes auf den Arduino ist der Thermostat vollständig betriebsbereit und unter seiner IP-Adresse verfügbar. Das Programm arbeitet auf Basis des Projektschaltplans und der Logik aus der Beschreibung. </b>
 			</div>
