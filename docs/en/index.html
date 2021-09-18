@@ -148,7 +148,7 @@ Using the Refresh meta tag, the web server refreshes the entire page every 30 se
 By this time it is necessary to write the change for the thermostat, otherwise the input windows for numerical inputs to the form will be reset when the page is refreshed. <b> Based on feedback from Android device users, the time for Refresh has been extended from 10 to 30 seconds. </b>
 As the built-in Ethernet library does not include the use of an asynchronous web server (which can be used, for example, with the Espressif ESP8266 / ESP32 microcontrollers), it is necessary to rewrite the entire page.
 The dynamic data that is mainly changing is the current value of the output - <b> <font color = "# 27AE60"> On </font> </b> / <b> <font color = "red"> Off </font> </b>, which informs the operator about the actual state of the output together with the color coding.
-Since the system logic is executed independently of the web server, the output may already be in a different state than currently currently listed in the web application. The change of output is immediately written to the UART monitor, for example.
+Since the system logic is executed independently of the web server, the output may already be in a different state than currently currently listed in the web application. The change of output is immediately written to the UART monitor (115200 baud/s), for example.
 On the thermostat's website, the user will also find information about the device's uptime (how long it has been running), i. time in days, hours, minutes and seconds.
 </p>
 <div class="alert alert-danger">
