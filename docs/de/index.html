@@ -153,7 +153,7 @@ Wenn das Gerät beim ersten Start nichts auf den genannten EEPROM-Offsets gespei
 Mit dem Refresh-Meta-Tag aktualisiert der Webserver alle 30 Sekunden die gesamte Seite und die ungefähre Aktualisierungszeit wird ebenfalls per Javascript in die HTML-Seite geschrieben.
 Zu diesem Zeitpunkt ist es notwendig, die Änderung für den Thermostaten zu schreiben, da sonst die Eingabefenster für numerische Eingaben in das Formular beim Aktualisieren der Seite zurückgesetzt werden. <b> Basierend auf dem Feedback von Nutzern von Android-Geräten wurde die Aktualisierungszeit von 10 auf 30 Sekunden verlängert. </b>
 Da die eingebaute Ethernet-Bibliothek die Verwendung eines asynchronen Webservers (der beispielsweise mit den Espressif ESP8266 / ESP32 Mikrocontrollern verwendet werden kann) nicht beinhaltet, ist es notwendig die gesamte Seite neu zu schreiben.
-Die sich hauptsächlich ändernden dynamischen Daten sind der aktuelle Wert der Ausgabe - <b> <font color = "#27AE60"> Zapnutý (ON) </font> </b> / <b> <font color = "red"> Vypnutý (OFF) </font> </b>, die den Bediener über den aktuellen Zustand der Ausgabe zusammen mit der Farbcodierung informiert.
+Die sich hauptsächlich ändernden dynamischen Daten sind der aktuelle Wert der Ausgabe - <b> <font color = "#27AE60"> EIN </font> </b> / <b> <font color = "red"> AUS </font> </b>, die den Bediener über den aktuellen Zustand der Ausgabe zusammen mit der Farbcodierung informiert.
 Da die Logik des Systems unabhängig vom Webserver ausgeführt wird, kann sich die Ausgabe bereits in einem anderen Zustand befinden als aktuell in der Webanwendung aufgelistet. Die Ausgabeänderung wird z. B. sofort auf den UART-Monitor (115200 baud/s) geschrieben.
 Auf der Website des Thermostats findet der Benutzer auch Informationen zur Betriebszeit des Geräts (wie lange es in Betrieb war), d. Zeit in Tagen, Stunden, Minuten und Sekunden.
 </p>
@@ -166,7 +166,7 @@ Auf der Website des Thermostats findet der Benutzer auch Informationen zur Betri
 <li> <b>Zieltemperatur: </b>22,75 °C</li>
 <li> <b> Hysterese: </b> 0,25 ° C </li>
 <li> <b>Messdaten: </b> 21,59 ° C </li>
-<li> <b> Ausgabe: </b> <font color="#27AE60">Zapnutý (ON)</font></li>
+<li> <b> Ausgang: </b> <font color="#27AE60">EIN</font></li>
 	<hr>
 	<p style="text-align: justify;">
 		Der Thermostat heizt ab einer gemessenen Temperatur von 22,49°C und darunter.
