@@ -1,16 +1,16 @@
 # Termostat - Arduino + Ethernet Wiznet W5100 / W5500
-* Termostat postavený na platforme Arduino s Ethernetom
+* Termostat postavený na platforme Arduino s Ethernetom Wiznet
 * Rozšírený popis k projektu, schéma zapojenia, dokumentácia: https://martinius96.github.io/termostat-ethernet/
 * Arduino funguje v režime HTTP webservera, kde ponúka na HTML stránkach komplexný prehľad aktuálne nameraných a platných údajov
-* Umožňuje zmeniť údaje o cieľovej - referenčnej teplote a hysteréze, ktorá sa používa pre riadenie vykurovania
-* Údaje sú zapísané do EEPROM pamäte, ktorá má životnosť až 100-tisíc prepisov
-* Webserver je prístupný z domácej LAN siete
+* Umožňuje zmeniť údaje o cieľovej (referenčnej) teplote a hysteréze, ktorá sa používa pre riadenie vykurovania
+* Tieto údaje sú zapísané do EEPROM pamäte, ktorá má životnosť až 100-tisíc prepisov
+* Webserver je prístupný z domácej LAN siete na statickej, alebo dynamickej IP adrese pridelenej z DHCP servera
 * Arduino riadi na základe navolenej hysterézy a cieľovej teploty výstup - relé, ktoré spína signál pre kotol
 * Programová logika sa vykonáva nezávisle na webserveri (nevyžaduje sa keep-alive spojenie, alebo pozornosť používateľa)
 * **Projekt nerieši výkonovú reguláciu kotla!**
 * Pre meranie teploty Arduino využíva senzor Dallas DS18B20 na OneWire zbernici v parazitnom / normálnom zapojení (použité v schéme zapojenia)
-* **Arduino na UART vypíše pridelenú (respektíve statickú) IP adresu**
-* **Pri Ethernet module W5500 je nutné pripojiť aj vývod D2 Arduina na INT vývod Ethernet modulu** 
+* **Arduino na UART pravidelne vypíše pridelenú (respektíve statickú) IP adresu, na ktorú sa môže používateľ pripojiť**
+* **Pri Ethernet module W5200 až W5500 je nutné pripojiť aj vývod D2 Arduina na INT vývod Ethernet modulu okrem SPI vývodov** 
 * Projekt môže fungovať celoročne, aj ako Ethernet teplomer v prípade, že je odpojený výstup ku riadeniu kotla.
 
 | Názov súboru        | Shield           | IPv4           |
