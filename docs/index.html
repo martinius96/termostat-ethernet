@@ -230,16 +230,30 @@ Na webovej stránke termostatu nájde používateľ aj informácie o uptime zari
 	  DOCTYPE
 	  HTML
 	  HEAD
-	  client.println(F("&lt;meta charset='utf-8'>"));
+          client.println(F("&lt;meta charset='utf-8'>"));
           client.println(F("&lt;meta name='author' content='Martin Chlebovec'>"));
-          client.println(F("&lt;meta http-equiv='Refresh' content='10'; />"));
+          client.println(F("&lt;meta http-equiv='Refresh' content='30'; />"));
+          client.println(F("&lt;meta name='viewport' content='width=device-width, initial-scale=1'>"));
+          client.println(F("&lt;link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css'>"));
+          client.println(F("&lt;script type='text/javascript'>"));
+          client.println(F("var timeleft = 30;"));
+          client.println(F("var downloadTimer = setInterval(function(){"));
+          client.println(F("if(timeleft &lt;= 0){"));
+          client.println(F("clearInterval(downloadTimer);"));
+          client.println(F("document.getElementById(\"countdown\").innerHTML = \"Reštart...\";"));
+          client.println(F("} else {"));
+          client.println(F("document.getElementById(\"countdown\").innerHTML = timeleft + \" sekúnd do reštartu\";"));
+          client.println(F("}"));
+          client.println(F("timeleft -= 1;"));
+          client.println(F("}, 1000);"));
+          client.println(F("&lt;/script>"));
           client.println(F("&lt;title>HTTP webserver - Arduino + Ethernet&lt;/title>"));
           client.println(F("&lt;/head>"));
           client.println(F("&lt;body>"));
           client.println(F("&lt;center>&lt;h3>Zadajte dáta pre webserver (budú uložené do EEPROM):&lt;/h3>"));
           client.println(F("&lt;form action='/action.html' method='get'>"));
-          client.println("&lt;b>Referenčná teplota:&lt;/b>&lt;br>&lt;input type='number' id='fname' name='fname' min='5' max='50' step='0.25' value=" + read_String(10) + ">&lt;br>");
-          client.println("&lt;b>Hysteréza:&lt;/b>&lt;br>&lt;input type='number' id='fname2' name='fname2' min='0' max='10' step='0.25' value=" + read_String(100) + ">&lt;br>");
+          client.println("&lt;b>Referenčná teplota:&lt;/b>&lt;br>&lt;input type='text' id='fname' name='fname' value=" + read_String(10) + ">&lt;br>");
+          client.println("&lt;b>Hysteréza:&lt;/b>&lt;br>&lt;input type='text' id='fname2' name='fname2' value=" + read_String(100) + ">&lt;br>");
           client.println(F("&lt;input type='submit' class='btn btn-success' value='Zapísať'>"));
           client.println(F("&lt;/form>&lt;hr>"));
           if (stav == "ZAP") {
@@ -253,8 +267,20 @@ Na webovej stránke termostatu nájde používateľ aj informácie o uptime zari
           client.print(teplota);
           client.println(F(" °C"));
           client.print(F("&lt;hr>"));
+          client.print(F("&lt;b>Uptime: &lt;/b>"));
+          client.print(days);
+          client.print(F("d"));
+          client.print(F(" "));
+          client.print(hours);
+          client.print(F("h"));
+          client.print(F(" "));
+          client.print(minutes);
+          client.print(F("m"));
+          client.print(F(" "));
+          client.print(seconds);
+          client.print(F("s"));
           client.println(F("&lt;h3>Autor: Martin Chlebovec - martinius96@gmail.com - https://martinius96.github.io/termostat-ethernet/&lt;/h3>"));
-          client.println(F("&lt;h4>Verzia free - 1.0.2.1 build: 12. Jan 2021&lt;/h4>"));
+          client.println(F("&lt;h4>Verzia free - 1.0.4 build: 18. Sep. 2021&lt;/h4>"));
           client.println(F("&lt;/center>"));
           client.println(F("&lt;/body>"));
           client.println(F("&lt;/html>"));
@@ -264,7 +290,7 @@ Na webovej stránke termostatu nájde používateľ aj informácie o uptime zari
 <h3><font color="#D35400">Fragment zdrojového kódu s výpisom nastavených riadiacich dát po odoslaní HTML formuláru</font></h3>
 <li>S následným presmerovaním používateľa späť na hlavnú stránku po 5-tich sekundách od spracovania - tzv. lazy loading... (Spracovanie neobsiahnuté vo fragmente)</li>
 <pre style="background-color:#D35400;">
-	    backend_spracovanie dát z HTML formuláru (NEDOSTUPNÉ)
+	    backend_spracovanie dát z HTML formuláru (NEDOSTUPNÉ), scraping, orezanie kľúčov a hodnôt z requestu
 	    .
 	    .
 	    .
@@ -278,8 +304,12 @@ Na webovej stránke termostatu nájde používateľ aj informácie o uptime zari
             client.println(F("&lt;/head>"));
             client.println(F("&lt;body>"));
             client.println(F("&lt;center>&lt;h3>Server prijal data z formulára:&lt;/h3>"));
-            client.println("&lt;li>&lt;b>Referenčná teplota: &lt;/b>" + String(H_1) + "&lt;/li>");
-            client.println("&lt;li>&lt;b>Hysteréza: &lt;/b>" + String(H_2) + "&lt;/li>");
+            if (!isFloat(second_param) || !isFloat(second_param)) {
+              client.println(F("&lt;h3>&lt;font color='red'>Zadane udaje nie su cisla!!! Opakujte pokus po presmerovaní.&lt;/font>&lt;/h3>"));
+            } else {
+              client.println("&lt;li>&lt;b>Referenčná teplota: &lt;/b>" + String(H_1) + "&lt;/li>");
+              client.println("&lt;li>&lt;b>Hysteréza: &lt;/b>" + String(H_2) + "&lt;/li>");
+            }
             client.println(F("&lt;b>Presmerovanie... Prosim cakajte&lt;/b>&lt;/center>"));
             client.println(F("&lt;/body>"));
             client.println(F("&lt;/html>"));
