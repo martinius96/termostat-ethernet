@@ -223,31 +223,57 @@ Das Aufheizen und Abkühlen des Raumes, in dem die Messungen durchgeführt werde
 	  DOCTYPE
 	  HTML
 	  HEAD
-	  client.println(F("&lt;meta charset='utf-8'>"));
+          client.println(F("&lt;meta charset='utf-8'>"));
           client.println(F("&lt;meta name='author' content='Martin Chlebovec'>"));
-          client.println(F("&lt;meta http-equiv='Refresh' content='10'; />"));
+          client.println(F("&lt;meta http-equiv='Refresh' content='30'; />"));
+          client.println(F("&lt;meta name='viewport' content='width=device-width, initial-scale=1'>"));
+          client.println(F("&lt;link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css'>"));
+          client.println(F("&lt;script type='text/javascript'>"));
+          client.println(F("var timeleft = 30;"));
+          client.println(F("var downloadTimer = setInterval(function(){"));
+          client.println(F("if(timeleft &lt;= 0){"));
+          client.println(F("clearInterval(downloadTimer);"));
+          client.println(F("document.getElementById(\"countdown\").innerHTML = \"Aktualisierung...\";"));
+          client.println(F("} else {"));
+          client.println(F("document.getElementById(\"countdown\").innerHTML = timeleft + \" Sekunden zum Aktualisieren\";"));
+          client.println(F("}"));
+          client.println(F("timeleft -= 1;"));
+          client.println(F("}, 1000);"));
+          client.println(F("&lt;/script>"));
           client.println(F("&lt;title>HTTP webserver - Arduino + Ethernet&lt;/title>"));
           client.println(F("&lt;/head>"));
           client.println(F("&lt;body>"));
-          client.println(F("&lt;center>&lt;h3>Zadajte dáta pre webserver (budú uložené do EEPROM):&lt;/h3>"));
+          client.println(F("&lt;center>&lt;h3>Daten für Webserver eingeben (wird im EEPROM gespeichert):&lt;/h3>"));
           client.println(F("&lt;form action='/action.html' method='get'>"));
-          client.println("&lt;b>Referenčná teplota:&lt;/b>&lt;br>&lt;input type='number' id='fname' name='fname' min='5' max='50' step='0.25' value=" + read_String(10) + ">&lt;br>");
-          client.println("&lt;b>Hysteréza:&lt;/b>&lt;br>&lt;input type='number' id='fname2' name='fname2' min='0' max='10' step='0.25' value=" + read_String(100) + ">&lt;br>");
-          client.println(F("&lt;input type='submit' class='btn btn-success' value='Zapísať'>"));
+          client.println("&lt;b>Zieltemperatur:&lt;/b>&lt;br>&lt;input type='text' id='fname' name='fname' value=" + read_String(10) + ">&lt;br>");
+          client.println("&lt;b>Hysterese:&lt;/b>&lt;br>&lt;input type='text' id='fname2' name='fname2' value=" + read_String(100) + ">&lt;br>");
+          client.println(F("&lt;input type='submit' class='btn btn-success' value='Schreiben'>"));
           client.println(F("&lt;/form>&lt;hr>"));
-          if (stav == "ZAP") {
-            client.println(F("&lt;b>&lt;font color='green'>Výstup: Zapnutý&lt;/font>&lt;/b>"));
+          if (stav == "EIN") {
+            client.println(F("&lt;b>&lt;font color='green'>Ausgang: Ein&lt;/font>&lt;/b>"));
           }
-          if (stav == "VYP") {
-            client.println(F("&lt;b>&lt;font color='red'>Výstup: Vypnutý&lt;/font>&lt;/b>"));
+          if (stav == "AUS") {
+            client.println(F("&lt;b>&lt;font color='red'>Ausgang: Aus&lt;/font>&lt;/b>"));
           }
           client.println(F("&lt;div id=\"countdown\">&lt;/div>"));
-          client.print(F("&lt;b>Aktuálna teplota senzora DS18B20:&lt;/b> "));
+          client.print(F("&lt;b>Aktuelle Temperatur des DS18B20-Sensors:&lt;/b> "));
           client.print(teplota);
           client.println(F(" °C"));
           client.print(F("&lt;hr>"));
-          client.println(F("&lt;h3>Autor: Martin Chlebovec - martinius96@gmail.com - https://martinius96.github.io/termostat-ethernet/&lt;/h3>"));
-          client.println(F("&lt;h4>Verzia free - 1.0.2.1 build: 12. Jan 2021&lt;/h4>"));
+          client.print(F("&lt;b>Uptime: &lt;/b>"));
+          client.print(days);
+          client.print(F("d"));
+          client.print(F(" "));
+          client.print(hours);
+          client.print(F("h"));
+          client.print(F(" "));
+          client.print(minutes);
+          client.print(F("m"));
+          client.print(F(" "));
+          client.print(seconds);
+          client.print(F("s"));
+          client.println(F("&lt;h3>Autor: Martin Chlebovec - martinius96@gmail.com - https://martinius96.github.io/termostat-ethernet/de/&lt;/h3>"));
+          client.println(F("&lt;h4>Freie Version - 1.0.4 build: 18. Sep. 2021&lt;/h4>"));
           client.println(F("&lt;/center>"));
           client.println(F("&lt;/body>"));
           client.println(F("&lt;/html>"));
@@ -270,10 +296,14 @@ Das Aufheizen und Abkühlen des Raumes, in dem die Messungen durchgeführt werde
             client.println(F("&lt;title>HTTP webserver - Arduino + Ethernet&lt;/title>"));
             client.println(F("&lt;/head>"));
             client.println(F("&lt;body>"));
-            client.println(F("&lt;center>&lt;h3>Server prijal data z formulára:&lt;/h3>"));
-            client.println("&lt;li>&lt;b>Referenčná teplota: &lt;/b>" + String(H_1) + "&lt;/li>");
-            client.println("&lt;li>&lt;b>Hysteréza: &lt;/b>" + String(H_2) + "&lt;/li>");
-            client.println(F("&lt;b>Presmerovanie... Prosim cakajte&lt;/b>&lt;/center>"));
+            client.println(F("&lt;center>&lt;h3>Der Server hat Daten vom Formular erhalten:&lt;/h3>"));
+            if (!isFloat(second_param) || !isFloat(second_param)) {
+              client.println(F("&lt;h3>&lt;font color='red'>Eingegebene Daten sind keine Zahlen !!! Bitte versuchen Sie es nach der Umleitung erneut.&lt;/font>&lt;/h3>"));
+            } else {
+              client.println("&lt;li>&lt;b>Referenčná teplota: &lt;/b>" + String(H_1) + "&lt;/li>");
+              client.println("&lt;li>&lt;b>Hysteréza: &lt;/b>" + String(H_2) + "&lt;/li>");
+            }
+            client.println(F("&lt;b>Umleitung ... Bitte warten&lt;/b>&lt;/center>"));
             client.println(F("&lt;/body>"));
             client.println(F("&lt;/html>"));
 	    FLUSH CLIENT
