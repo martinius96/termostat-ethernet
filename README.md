@@ -34,15 +34,6 @@
 * **/action.html** - spracúvava hodnoty z formulára, zapisuje ich do EEPROM pamäte, presmeruje používateľa späť na root stránku
 * **/get_data.json** - distribuuje dáta o aktuálnej teplote, referenčnej teplote a hysteréze v JSON formáte
 
-**Rozšírená verzia tohto projektu obsahuje:**
-* Manuálny režim pre relé (neobmedzená doba, natvrdo ZAP/VYP)
-* Watchdog timer
-* Dostupné senzory SHT21, SHT31, DHT22, BME280, BMP280 a iné
-* Režim chladenia
-* Ovládanie a konfigurácia po RS232 / UART nezávisle na Ethernete
-* PID regulácia teploty pre termostat
-* Možnosť využitia platforiem ESP8266, ESP32 pre termostat
-
 **Rozšírené informácie k projektu v článku:**
 * http://deadawp.blog.sector.sk/blogclanok/13223/izbovy-termostat-arduino-ethernet.htm
 
