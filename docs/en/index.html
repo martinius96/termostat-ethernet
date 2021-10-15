@@ -125,8 +125,8 @@ Maximum switching power 460W (230V, 2A). <b> The thermostat can be used all year
 
 <b> The web interface for the Ethernet thermostat allows you to: </b>
 <li> View in real time the temperature from the DS18B20 sensor, the device uptime, the output value with dynamic change, the currently set configuration data for the thermostat, i. target temperature and hysteresis </li>
-<li> Modify the target (reference) temperature from 5 to 50 ° C in 0.25 ° C increments </li>
-<li> Modify hysteresis from 0 to 10 ° C in 0.25 ° C increments </li>
+<li> Modify the target (reference) temperature <del>from 5 to 50 °C with 0.25 °C step</del> <img src="https://image.flaticon.com/icons/svg/788/788893.svg" width="20px" height="20px" data-toggle="tooltip2" data-placement="right" title="Scope removed in version 1.0.2 due to non-decimal point support for input type number on Android OS"></li>
+<li> Modify hysteresis <del>from 0 to 10 °C with 0.25 °C step</del> <img src="https://image.flaticon.com/icons/svg/788/788893.svg" width="20px" height="20px" data-toggle="tooltip2" data-placement="right" title="Scope removed in version 1.0.2 due to non-decimal point support for input type number on Android OS"></li>
 
 <b> Boiler ON / OFF control: </b>
 <li> Example of ON / OFF of heating control - <font color="red"> VISUALIZATION IS NOT PART OF THE PROJECT </font> </li>
@@ -331,4 +331,9 @@ The thermostat can replace the existing room thermostat, it is possible to tempo
 		</div>
 </div>
 </body>
+        <script>
+$(document).ready(function(){
+  $('[data-toggle="tooltip2"]').tooltip();   
+});
+</script>
 </html>
