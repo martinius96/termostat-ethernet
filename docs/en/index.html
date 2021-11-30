@@ -124,8 +124,8 @@ Maximum switching power 460W (230V, 2A). <b> The thermostat can be used all year
 
 <b> The web interface for the Ethernet thermostat allows you to: </b>
 <li> View in real time the temperature from the DS18B20 sensor, the device uptime, the output value with dynamic change, the currently set configuration data for the thermostat, i. target temperature and hysteresis </li>
-<li> Modify the target (reference) temperature <del>from 5 to 50 °C with 0.25 °C step</del> <img src="https://image.flaticon.com/icons/svg/788/788893.svg" width="20px" height="20px" data-toggle="tooltip2" data-placement="right" title="Scope removed in version 1.0.2 due to non-decimal point support for input type number on Android OS"></li>
-<li> Modify hysteresis <del>from 0 to 10 °C with 0.25 °C step</del> <img src="https://image.flaticon.com/icons/svg/788/788893.svg" width="20px" height="20px" data-toggle="tooltip2" data-placement="right" title="Scope removed in version 1.0.2 due to non-decimal point support for input type number on Android OS"></li>
+<li> Modify the target (reference) temperature <del>from 5 to 50 °C with 0.25 °C step</del> <img src="https://i.imgur.com/zMsp0cr.png" width="20px" height="20px" data-toggle="tooltip2" data-placement="right" title="Scope removed in version 1.0.2 due to non-decimal point support for input type number on Android OS"></li>
+<li> Modify hysteresis <del>from 0 to 10 °C with 0.25 °C step</del> <img src="https://i.imgur.com/zMsp0cr.png" width="20px" height="20px" data-toggle="tooltip2" data-placement="right" title="Scope removed in version 1.0.2 due to non-decimal point support for input type number on Android OS"></li>
 
 <b> Boiler ON / OFF control: </b>
 <li> Example of ON / OFF of heating control - <font color="red"> VISUALIZATION IS NOT PART OF THE PROJECT </font> </li>
@@ -151,7 +151,7 @@ If the device has nothing stored on the mentioned EEPROM offsets at the first st
 Using the Refresh meta tag, the web server refreshes the entire page every 30 seconds, and the approximate time to refresh is also written to the HTML page via Javascript.
 By this time it is necessary to write the change for the thermostat, otherwise the input windows for numerical inputs to the form will be reset when the page is refreshed. <b> Based on feedback from Android device users, the time for Refresh has been extended from 10 to 30 seconds. </b>
 As the built-in Ethernet library does not include the use of an asynchronous web server (which can be used, for example, with the Espressif ESP8266 / ESP32 microcontrollers), it is necessary to rewrite the entire page.
-The dynamic data that is mainly changing is the current value of the output - <b> <font color = "# 27AE60"> On </font> </b> / <b> <font color = "red"> Off </font> </b>, which informs the operator about the actual state of the output together with the color coding.
+The dynamic data that is mainly changing is the current value of the output - <b> <font color = "#27AE60"> On </font> </b> / <b> <font color = "red"> Off </font> </b>, which informs the operator about the actual state of the output together with the color coding.
 Since the system logic is executed independently of the web server, the output may already be in a different state than currently currently listed in the web application. The change of output is immediately written to the UART monitor (115200 baud/s), for example.
 On the thermostat's website, the user will also find information about the device's uptime (how long it has been running), i. time in days, hours, minutes and seconds.
 </p>
