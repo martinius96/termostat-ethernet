@@ -19,5 +19,5 @@
 * Basierend auf der Firmware wird die IP-Adresse aus einem DHCP-Pool zugewiesen oder auf statisch gesetzt
 * IP-Adresse wird immer auf HW UART angezeigt -> 115200 Baud/s
 <p align="center">
-  <img src="https://i.imgur.com/yufSKiq.png" />
+  <img src="https://i.imgur.com/6CYuMZZ.png" />
 </p>
