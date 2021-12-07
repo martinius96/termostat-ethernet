@@ -16,10 +16,12 @@
   <img src="https://i.imgur.com/N1CHBoL.png" />
 </p>
 
-# Konfigurácia Ethernet termostatu
+# Konfigurácia a používanie Ethernet termostatu
 * Termostat nemá konfiguračné rozhranie pre sieť a jej nastavenie
 * Na základe firmvéru je IP adresa priradená z DHCP poolu, alebo je nastavená statická
 * Aktuálna IP adresa je v pravidelných intervaloch spolu s logikou termostatu vypísaná na UART rozhranie
+* V prípade zmeny riadiach údajov je podstránka action.html vypísaná na UART, čo informuje používateľa o zmene
+* Riadiace dáta sú dostupné aj v JSON formáte na podstránke get_data.json
 <p align="center">
   <img src="https://i.imgur.com/DAL1iCe.png" />
 </p>
