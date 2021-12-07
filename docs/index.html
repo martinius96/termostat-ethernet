@@ -219,6 +219,9 @@ Na webovej stránke termostatu nájde používateľ aj informácie o uptime zari
     sensorsA.requestTemperatures();
 </pre>	
 <h3><font color="#3498DB">Fragment zdrojového kódu pre stránku Hlavného prehľadu - bez spracovania údajov z HTML formuláru</font></h3>
+<div class="alert alert-info">
+  <strong>Časť zdrojového kódu je iba komponent a nie je ho možné samostatne použiť!</strong>
+</div>
 <pre style="background-color:#3498DB;">
           HTTP header
 	  DOCTYPE
@@ -283,6 +286,9 @@ Na webovej stránke termostatu nájde používateľ aj informácie o uptime zari
 </pre>
 <h3><font color="#D35400">Fragment zdrojového kódu s výpisom nastavených riadiacich dát po odoslaní HTML formuláru</font></h3>
 <li>S následným presmerovaním používateľa späť na hlavnú stránku po 5-tich sekundách od spracovania - tzv. lazy loading... (Spracovanie neobsiahnuté vo fragmente)</li>
+<div class="alert alert-warning">
+  <strong>Časť zdrojového kódu je iba komponent a nie je ho možné samostatne použiť!</strong>
+</div>
 <pre style="background-color:#D35400;">
 	    backend_spracovanie dát z HTML formuláru (NEDOSTUPNÉ), scraping, orezanie kľúčov a hodnôt z requestu
 	    .
