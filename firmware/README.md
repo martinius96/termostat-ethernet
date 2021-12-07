@@ -21,5 +21,5 @@
 * Na základe firmvéru je IP adresa priradená z DHCP poolu, alebo je nastavená statická
 * Aktuálna IP adresa je v pravidelných intervaloch spolu s logikou termostatu vypísaná na UART rozhranie
 <p align="center">
-  <img src="https://i.imgur.com/r5jNZf5.png" />
+  <img src="https://i.imgur.com/DAL1iCe.png" />
 </p>
