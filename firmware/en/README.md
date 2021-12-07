@@ -19,5 +19,5 @@
 * Based on the firmware, the IP address is assigned from a DHCP pool or is set to static
 * IP address is always displayed on HW UART -> 115200 baud / s
 <p align="center">
-  <img src="https://i.imgur.com/yufSKiq.png" />
+  <img src="https://i.imgur.com/KQYrn4R.png" />
 </p>
