@@ -27,7 +27,7 @@
 ![Termostat - Ethernet - Arduino](https://i.imgur.com/GgJrAOj.png)
 **Dôležité informácie:**
 * Serial monitor: 115200 baud/s
-* Údaje o hysteréze a referenčnej teplote uložené v EEPROM pamäti
+* Údaje o hysteréze a referenčnej teplote uložené v EEPROM pamäti permanentne
 
 **HTML stránky bežiace na Arduine:**
 * **/** - root stránka obsahujúca formulár, aktuálny výpis logického výstupu pre relé, teplotu
@@ -41,7 +41,7 @@
 ![Ethernet termostat vypnutý - webserver - Arduino](https://i.imgur.com/9EOOqlW.png)
 ![Ethernet termostat zapnutý - webserver - Arduino](https://i.imgur.com/bnm7EAj.png)
 ![Ethernet termostat- presmerovanie používateľa po odoslaní dát do formulára](https://i.imgur.com/k9J9DFG.png)
-![UART - RS232 výstup termostatu - Arduino](https://i.imgur.com/qQ74dpi.png)
+![UART - RS232 výstup konfigurácie termostatu a stavu výstupu - Arduino](https://i.imgur.com/DAL1iCe.png)
 ![JSON output - Ethernet termostat - Arduino](https://chiptron.cz/images/articles/IzbovyTermostat/json.jpg)
 
 # JSON klienti - sťahovanie dát z termostatu
