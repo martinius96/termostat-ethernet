@@ -124,6 +124,16 @@ Umožňuje deserializovať reťazec v JSON štruktúre, dokáže vyparsovať hod
 </tbody>
 </table>
 	</div>
+<hr>
+<h4><font color="#C0392B">Ukážkový výpis vo formáte JSON - Ethernet termostat</font></h4>
+<hr>
+<div class="alert alert-danger">
+	{<br>
+		"Hysteresis":0.25,<br>
+		"Target_Temperature":21.75,<br>
+		"Actual_Temperature":21.43<br>
+	}
+</div>
 <div class="alert alert-info">
 <strong>Implementácia pre MQTTS je dostupná iba pre platformy ESP8266, ESP32.</strong> ESP8266 využíva pre možnosť vytvorenia šifrované spojenia fingerprint (odtlačok certifikátu MQTT servera). 
 ESP32 využíva Root CA certifikát pre možnosť vytvorenia šifrovaného spojenia s MQTT serverom. <b>Šifrovaný port MQTT servera je štandardne 8883, nešifrovaný 1883.</b> 
