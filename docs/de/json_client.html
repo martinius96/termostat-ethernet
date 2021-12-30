@@ -124,6 +124,16 @@ Es ermöglicht Ihnen, einen String in einer JSON-Struktur zu deserialisieren, es
 </tbody>
 </table>
 	</div>
+<hr>
+<h4><font color="#C0392B">Beispieldatenliste im JSON-Format - Ethernet-Thermostat</font></h4>
+<hr>
+<div class="alert alert-danger">
+	{<br>
+		"Hysteresis":0.25,<br>
+		"Target_Temperature":21.75,<br>
+		"Actual_Temperature":21.43<br>
+	}
+</div>
 <div class="alert alert-info">
 <strong> Die Implementierung für MQTTS ist nur für die Plattformen ESP8266 und ESP32 verfügbar. </strong> ESP8266 verwendet eine verschlüsselte Fingerabdruckverbindung (MQTT-Serverzertifikat-Fingerabdruck), um eine verschlüsselte Verbindung herzustellen.
 ESP32 verwendet ein Root-CA-Zertifikat, um eine verschlüsselte Verbindung zum MQTT-Server aufbauen zu können. <b> Der verschlüsselte Port des MQTT-Servers ist standardmäßig 8883, unverschlüsselt 1883. </b>
