@@ -72,7 +72,7 @@
 <hr><center><h2>JSON clients - Ethernet thermostat</h2></center><hr>
 <p style="text-align: justify;">
 JSON client built on Arduino platform, ESP8266, ESP32 allows connection via websocket to Ethernet thermostat.
-<b> The client performs a cyclic HTTP GET request every 15 seconds to retrieve the content of the /get_data.json subpage, where the web server distributes target temperature, hysteresis, and currently measured temperature data to the DS18B20 sensor on the OneWire bus in JSON format. </b>
+<b> The client performs a cyclic HTTP GET request every 15 seconds to retrieve the content of the <a href="../get_data.json">/get_data.json</a> subpage, where the web server distributes target temperature, hysteresis, and currently measured temperature data to the DS18B20 sensor on the OneWire bus in JSON format. </b>
 The loaded JSON payload can parse the JSON client from the HTTP response and then deserialize this string.
 After deserialization, it is possible to access the individual keys to which the values are assigned and obtain them -> parse.
 The matched data is written to the UART - Serial line - 115200 baud / s.
