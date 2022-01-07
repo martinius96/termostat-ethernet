@@ -73,7 +73,7 @@
 <hr><center><h2>JSON-Clients - Ethernet-Thermostat</h2></center><hr>
 <p style="text-align: justify;">
 Der auf der Arduino-Plattform ESP8266, ESP32 basierende JSON-Client ermöglicht die Verbindung über einen Websocket mit einem Ethernet-Thermostat.
-<b> Der Client führt alle 15 Sekunden eine zyklische HTTP-GET-Anfrage aus, um den Inhalt der Unterseite /get_data.json abzurufen, auf der der Webserver Zieltemperatur-, Hysterese- und aktuelle Temperaturdaten an den DS18B20-Sensor auf dem OneWire-Bus im JSON-Format verteilt . </b>
+<b> Der Client führt alle 15 Sekunden eine zyklische HTTP-GET-Anfrage aus, um den Inhalt der Unterseite <a href="../get_data.json">/get_data.json</a> abzurufen, auf der der Webserver Zieltemperatur-, Hysterese- und aktuelle Temperaturdaten an den DS18B20-Sensor auf dem OneWire-Bus im JSON-Format verteilt . </b>
 Die geladene JSON-Nutzlast kann den JSON-Client aus der HTTP-Antwort parsen und dann diese Zeichenfolge deserialisieren.
 Nach der Deserialisierung ist es möglich, auf die einzelnen Schlüssel zuzugreifen, denen die Werte zugeordnet sind und diese zu erhalten -> parsen.
 Die übereinstimmenden Daten werden auf den UART geschrieben - Serielle Leitung - 115200 Baud / s.
