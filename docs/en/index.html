@@ -184,12 +184,124 @@ The heating and cooling of the room in which the measurements are performed take
 <b>Output to UART monitor - system logic + Ethernet adapter settings:</b>
 <center><img src="https://i.imgur.com/KQYrn4R.png" style="display: block; max-width: 100%; height: auto;" alt="Ethernet thermostat - UART" title="Ethernet thermostat - UART"></center>        		
 <hr>
-<center><h2>Source code snippets (without backend)</h2></center>
-<hr>		
-<li><b><font color="red">SOURCE CODES ARE FRAGMENTS ONLY AND CANNOT BE USED WITHOUT OTHER (NOT AVAILABLE) PARTS THEREOF. CONTAIN VARIABLES, FUNCTIONS WHICH DEFINITIONS, RESP. DECLARATIONS ARE NOT AVAILABLE.</font></b></li>
-<h3><font color="#2ECC71">Source code fragment for thermostat logic - Decision threshold</font></h3>
-<li>It is performed every 10 seconds regardless of the web server or client connection</li>
+<h3><font color="#2ECC71">Source code - Ethernet thermostat - automatic</font></h3>	
 <pre style="background-color:#2ECC71;">
+/*|----------------------------------------------------------|*/
+/*|HTTP webserver - Ethernet thermostat, Wiznet W5100 / W5500|*/
+/*|Arduino Uno / Nano / Mega compatible (R3)                 |*/
+/*|AUTHOR: Martin Chlebovec                                  |*/
+/*|EMAIL: martinius96@gmail.com                              |*/
+/*|DONATE: paypal.me/chlebovec                               |*/
+/*|----------------------------------------------------------|*/
+
+#include &lt;avr\wdt.h>
+#include &lt;SPI.h>
+#include &lt;Ethernet.h> //FOR Wiznet W5100
+//#include &lt;Ethernet2.h> //FOR Wiznet W5500
+#include &lt;EEPROM.h>
+#include &lt;OneWire.h>
+#include &lt;DallasTemperature.h>
+
+#define ONE_WIRE_BUS 5
+OneWire oneWire(ONE_WIRE_BUS);
+DallasTemperature sensorsA(&oneWire);
+const int rele = 6;
+byte mac[] = { 0xDE, 0xAD, 0xBB, 0xEF, 0xFE, 0xAE }; //physical mac address
+byte ip[] = { 192, 168, 4, 1 };
+EthernetServer server(80); //server port
+const char terminator1[2] = " ";
+const char terminator3[2] = "?";
+const char terminator4[2] = "&";
+const char terminator5[2] = "=";
+unsigned long cas = 0;
+
+long day = 86400000; // 86400000 milliseconds in a day
+long hour = 3600000; // 3600000 milliseconds in an hour
+long minute = 60000; // 60000 milliseconds in a minute
+long second =  1000; // 1000 milliseconds in a second
+
+float teplota;
+String stav;
+
+boolean isFloat(String tString) {
+  String tBuf;
+  boolean decPt = false;
+
+  if (tString.charAt(0) == '+' || tString.charAt(0) == '-') tBuf = &tString[1];
+  else tBuf = tString;
+
+  for (int x = 0; x &lt; tBuf.length(); x++)
+  {
+    if (tBuf.charAt(x) == '.') {
+      if (decPt) return false;
+      else decPt = true;
+    }
+    else if (tBuf.charAt(x) &lt; '0' || tBuf.charAt(x) > '9') return false;
+  }
+  return true;
+}
+
+
+void writeString(char add, String data)
+{
+  int _size = data.length();
+  int i;
+  for (i = 0; i &lt; _size; i++)
+  {
+    EEPROM.write(add + i, data[i]);
+  }
+  EEPROM.write(add + _size, '\0'); //Add termination null character for String Data
+}
+
+
+String read_String(char add)
+{
+  int i;
+  char data[100]; //Max 100 Bytes
+  int len = 0;
+  unsigned char k;
+  k = EEPROM.read(add);
+  while (k != '\0' && len &lt; 500) //Read until null character
+  {
+    k = EEPROM.read(add + len);
+    data[len] = k;
+    len++;
+  }
+  data[len] = '\0';
+  return String(data);
+}
+
+void setup() {
+  String a = read_String(10);
+  String b = read_String(100);
+  if (a == "" || a == NULL) {
+    writeString(100, "20.25");
+  }
+  if (b == "" || b == NULL) {
+    writeString(10, "0.25");
+  }
+  sensorsA.begin();
+  pinMode(rele, OUTPUT);
+  digitalWrite(rele, HIGH);
+  Serial.begin(115200);
+  sensorsA.requestTemperatures();
+  delay(2000);
+  // Ethernet.begin(mac); //FOR DHCP
+  Ethernet.begin(mac, ip); //FOR STATIC IPv4
+  server.begin();
+  Serial.println(F("Webapp created by: Martin Chlebovec"));
+  Serial.println(F("Build 1.0.4 from 18. Sep 2021"));
+  Serial.println(F("Ethernet thermostat IP address:"));
+  Serial.println(Ethernet.localIP());
+  wdt_enable(WDTO_8S);
+}
+
+void loop() {
+  wdt_reset();
+  if ((millis() - cas) >= 10000 || cas == 0) {
+    cas = millis();
+    Serial.println(F("Ethernet thermostat IP address:"));
+    Serial.println(Ethernet.localIP());
     teplota = sensorsA.getTempCByIndex(0);
     String referencia = read_String(10);
     String hystereza = read_String(100);
@@ -198,25 +310,51 @@ The heating and cooling of the room in which the measurements are performed take
     float minus_hystereza_teplota = (-1 * hystereza_teplota);
     float rozdiel = referencia_teplota - teplota;
     if (rozdiel > hystereza_teplota) {
-      Serial.println("RELE ZAP");
-      stav = "ZAP";
+      Serial.println(F("Output on"));
+      stav = "ON";
       digitalWrite(rele, LOW);
-    } else if (rozdiel < minus_hystereza_teplota) {
-      Serial.println("RELE VYP");
-      stav = "VYP";
+    } else if (rozdiel &lt; minus_hystereza_teplota) {
+      Serial.println(F("Output off"));
+      stav = "OFF";
       digitalWrite(rele, HIGH);
+    } else {
+      Serial.println(F("Difference between target and actual temp is not above or below the hysteresis. The output state does not change."));
+      Serial.print(F("Actual state of output: "));
+      Serial.println(stav);
     }
     sensorsA.requestTemperatures();
-</pre>	
-<h3><font color="#3498DB">Source code snippet for the General Report page - without processing the data from the HTML form</font></h3>
-<div class="alert alert-info">
-  <strong>Part of the source code is only a component and cannot be used as standalone!</strong>
-</div>
-<pre style="background-color:#3498DB;">
-          HTTP header
-	  DOCTYPE
-	  HTML
-	  HEAD
+  }
+  EthernetClient client = server.available();
+  if (client) {
+    while (client.connected()) {
+      if (client.available()) {
+        String line = client.readStringUntil('\n');
+        char str[line.length() + 1];
+        line.toCharArray(str, line.length());
+        char *method;
+        char *request;
+        method = strtok(str, terminator1);
+        request = strtok(NULL, terminator1);
+        if (String(request) == "/") {
+          int days = millis() / day ;                                //number of days
+          unsigned int hours = (millis() % day) / hour;                       //the remainder from days division (in milliseconds) divided by hours, this gives the full hours
+          unsigned int minutes = ((millis() % day) % hour) / minute ;         //and so on...
+          unsigned int seconds = (((millis() % day) % hour) % minute) / second;
+          //HLAVNA ROOT HTTP STRANKA
+          client.println(F("HTTP/1.1 200 OK"));
+          client.println(F("Content-Type: text/html"));
+          client.println();
+          client.println(F("&lt;!DOCTYPE html>"));
+          client.println(F("&lt;html>"));
+          client.println(F("&lt;head>"));
+          client.println(F("&lt;script type='text/javascript'>"));
+          client.println(F("window.smartlook||(function(d) {"));
+          client.println(F("var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];"));
+          client.println(F("var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';"));
+          client.println(F("c.charset='utf-8';c.src='https://rec.smartlook.com/recorder.js';h.appendChild(c);"));
+          client.println(F("})(document);"));
+          client.println(F("smartlook('init', 'db50efe9fff280a17db52b82be221240cbbd3dbe');"));
+          client.println(F("&lt;/script>"));
           client.println(F("&lt;meta charset='utf-8'>"));
           client.println(F("&lt;meta name='author' content='Martin Chlebovec'>"));
           client.println(F("&lt;meta http-equiv='Refresh' content='30'; />"));
@@ -271,23 +409,65 @@ The heating and cooling of the room in which the measurements are performed take
           client.println(F("&lt;/center>"));
           client.println(F("&lt;/body>"));
           client.println(F("&lt;/html>"));
-	  FLUSH CLIENT
-	  STOP CLIENT
-</pre>
-<h3><font color="#D35400">Fragment of the source code with a listing of the set control data after submitting the HTML form</font></h3>
-<li>With the subsequent redirection of the user back to the main page after 5 seconds from processing - the so-called lazy loading ... (Processing not included in the fragment)</li>
-<div class="alert alert-warning">
-  <strong>Part of the source code is only a component and cannot be used as standalone!</strong>
-</div>
-<pre style="background-color:#D35400;">
-	    backend_processing of data from HTML form (NOT AVAILABLE FOR FREE)
-	    .
-	    .
-	    .
-      	    HTTP header
-	    DOCTYPE
-	    HTML
-	    HEAD
+          delay(1);
+          client.stop();
+          client.flush();
+        } else if (String(request) == "/get_data.json") {
+          //PODSTRANKA PRE VYCITANIE DAT (INYM MIKROKONTROLEROM)
+          client.println(F("HTTP/1.1 200 OK"));
+          client.println(F("Content-Type: application/json"));
+          client.println();
+          client.println(F("{"));
+          client.print(F("\"Hysteresis\":"));
+          client.print(read_String(100));
+          client.println(F(","));
+          client.print(F("\"Target_Temperature\":"));
+          client.print(read_String(10));
+          client.println(F(","));
+          client.print(F("\"Actual_Temperature\":"));
+          client.println(String(teplota));
+          client.println(F("}"));
+          delay(1);
+          client.stop();
+          client.flush();
+        } else if (String(request) == "/favicon.ico") { //fix chybajuceho faviconu
+          client.stop();
+        } else {
+          String myString = String(request);
+          if (myString.startsWith("/action.html")) {
+            char* parameter;
+            char* value;
+            char* hodnota1;
+            char* hodnota2;
+            parameter = strtok(request, terminator3);
+            Serial.println(parameter);
+            value = strtok(NULL, terminator3);
+            hodnota1 = strtok(value, terminator4);
+            hodnota2 = strtok(NULL, terminator4);
+            char* H_1;
+            char* H_2;
+            strtok(hodnota1, terminator5);
+            H_1 = strtok(NULL, terminator5);
+            strtok(hodnota2, terminator5);
+            H_2 = strtok(NULL, terminator5);
+            String first_param = String(H_1);
+            String second_param = String(H_2);
+            if (isFloat(first_param)) {
+              writeString(10, String(H_1));
+            } else {
+              Serial.println(F("User input for key fname (Target temperature) is not a number!"));
+            }
+            if (isFloat(second_param)) {
+              writeString(100, String(H_2));
+            } else {
+              Serial.println(F("User input for key fname2 (Hysteresis) is not a number!"));
+            }
+            client.println(F("HTTP/1.1 200 OK"));
+            client.println(F("Content-Type: text/html"));
+            client.println();
+            client.println(F("&lt;!DOCTYPE html>"));
+            client.println(F("&lt;html>"));
+            client.println(F("&lt;head>"));
             client.println(F("&lt;meta charset='utf-8'>"));
             client.println(F("&lt;meta http-equiv='Refresh' content='5; url=/' />"));
             client.println(F("&lt;title>HTTP webserver - Arduino + Ethernet&lt;/title>"));
@@ -303,11 +483,23 @@ The heating and cooling of the room in which the measurements are performed take
             client.println(F("&lt;b>Redirecting ... Please wait&lt;/b>&lt;/center>"));
             client.println(F("&lt;/body>"));
             client.println(F("&lt;/html>"));
-	    FLUSH CLIENT
-	    STOP CLIENT
+            delay(1);
+            client.stop();
+            client.flush();
+          } else {
+            client.println(F("HTTP/1.1 404 Not Found"));
+            client.println();
+            delay(1);
+            client.stop();
+            client.flush();
+          }
+        }
+      }
+    }
+  }
+}
 </pre>
 <p style="text-align: justify;">
-The software implementation in machine codes for the room (Ethernet) thermostat can be found at: <a href="https://github.com/martinius96/termostat-ethernet/"> https://github.com/martinius96/termostat-ethernet / </a>.
 The implementation contains programs for the static / dynamic IPv4 address assigned to the Ethernet shield.
 <b> The thermostat is only intended for indoor temperatures! </b> (above 0 ° C), to which the system logic is adapted!
 The thermostat can replace the existing room thermostat, it is possible to temporarily replace the heater in the aquarium / terrarium to maintain a constant temperature.
