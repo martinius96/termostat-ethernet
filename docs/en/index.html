@@ -185,10 +185,7 @@ The heating and cooling of the room in which the measurements are performed take
 <center><img src="https://i.imgur.com/KQYrn4R.png" style="display: block; max-width: 100%; height: auto;" alt="Ethernet thermostat - UART" title="Ethernet thermostat - UART"></center>        		
 <hr>
 <h3><font color="#2ECC71">Source code - Ethernet thermostat - automatic</font></h3>	
-<div class="alert alert-danger">
-	As several French people have decided to pretend to be the "authors" of the Ethernet thermostat project and sell the project online, the source codes for the Ethernet thermostat will no longer be available. Use .hex machine code without modifying it.
-</div>
-<pre style="background-color:#2ECC71; display: none;">
+<pre style="background-color:#2ECC71;">
 /*|----------------------------------------------------------|*/
 /*|HTTP webserver - Ethernet thermostat, Wiznet W5100 / W5500|*/
 /*|Arduino Uno / Nano / Mega compatible (R3)                 |*/
@@ -501,27 +498,13 @@ void loop() {
     }
   }
 }
+
 </pre>
 <p style="text-align: justify;">
 The implementation contains programs for the static / dynamic IPv4 address assigned to the Ethernet shield.
 <b> The thermostat is only intended for indoor temperatures! </b> (above 0 ° C), to which the system logic is adapted!
 The thermostat can replace the existing room thermostat, it is possible to temporarily replace the heater in the aquarium / terrarium to maintain a constant temperature.
-</p>
-<div class="alert alert-danger">
-	<b> Ethernet thermostat version 1.0.3 changelog: </b>
-<li> Web application optimization, increased response speed for low-latency response </li>
-<li> For HTML form, input number numbers had to be removed due to incompatibility with Google Chrome for Android. </li>
-<li> Modified backend, to compare input data type with (non) acceptance of input. </li>
-<li> Fixed JSON output (reversed control temperatures) to opposite entities </li>
-<li> Fixed Content-type for JSON output from text / html to application / json </li>
-<li> All static parts of HTML pages moved to ROM via the F() macro </li>
-<li> Maximum lightweight RAM for trouble-free running of a low-latency web server. </li>
-<li> For the DHCP example, the Ethernet.maintain() function is used to renew the DHCP pool time. </li>
-<li> (renew the same IP address / request a new one - depending on your DHCP service configuration) </li>
-<li> Rename a JSON file from get_data to get_data.json </li>
-<li> Device uptime displayed - days, hours, minutes, seconds </li>
-<li> HTTP 404 - Not Found when viewing a location to which the web server has no callback </li>
-</div>	
+</p>	
  </div>
 		</div>
 </div>
