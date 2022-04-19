@@ -218,21 +218,15 @@ Na webovej stránke termostatu nájde používateľ aj informácie o uptime zari
 <center><img src="https://i.imgur.com/DAL1iCe.png" style="display: block; max-width: 100%; height: auto;" alt="Ethernet termostat - UART výstup - IP adresa termostatu, logika, stav výstupu" title="Ethernet termostat - UART výstup - IP adresa termostatu, logika, stav výstupu"></center>        		
 <hr>
 <h3><font color="#2ECC71">Zdrojový kód - Ethernet termostat - automatický režim</font></h3>	
-<div class="alert alert-danger">
-	Nakoľko sa niekoľko Francúzov rozhodlo, že sa začnú vydávať za "autorov" projektu Ethernet termostat a predávajú tento projekt online, zdrojové kódy Ethernet termostatu už nebudú dostupné. Použite strojový kód .hex bez možnosti jeho úpravy.
-</div>	
-<pre style="background-color:#2ECC71; display: none;">
+<pre style="background-color:#2ECC71;">
 /*|----------------------------------------------------------|*/
-/*|HTTP webserver - Ethernet termostat, Wiznet W5100 / W5500 |*/
-/*|Arduino Uno / Nano / Mega compatible (R3)                 |*/
+/*|HTTP webserver - FORM - HTML - PROCESSING - EEPROM        |*/
 /*|AUTHOR: Martin Chlebovec                                  |*/
 /*|EMAIL: martinius96@gmail.com                              |*/
-/*|DONATE: paypal.me/chlebovec                               |*/
 /*|----------------------------------------------------------|*/
 #include &lt;avr\wdt.h>
 #include &lt;SPI.h>
-#include &lt;Ethernet.h> //Wiznet W5100
-//#include &lt;Ethernet2.h> //Wiznet W5500
+#include &lt;Ethernet.h>
 #include &lt;EEPROM.h>
 #include &lt;OneWire.h>
 #include &lt;DallasTemperature.h>
@@ -241,8 +235,7 @@ Na webovej stránke termostatu nájde používateľ aj informácie o uptime zari
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensorsA(&oneWire);
 const int rele = 6;
-byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xAA }; //physical mac address
-byte ip[] = { 192, 168, 4, 1 };
+byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED }; //physical mac address
 EthernetServer server(80); //server port
 const char terminator1[2] = " ";
 const char terminator3[2] = "?";
@@ -321,8 +314,7 @@ void setup() {
   Serial.begin(115200);
   sensorsA.requestTemperatures();
   delay(2000);
-  //Ethernet.begin(mac); //FOR DHCP
-  Ethernet.begin(mac, ip); //FOR STATIC IP
+  Ethernet.begin(mac);
   server.begin();
   Serial.println(F("Webaplikaciu vytvoril: Martin Chlebovec"));
   Serial.println(F("Build 1.0.4 z 18. Sep 2021"));
@@ -334,6 +326,7 @@ void setup() {
 void loop() {
   wdt_reset();
   if ((millis() - cas) >= 10000 || cas == 0) {
+    Ethernet.maintain();
     cas = millis();
     Serial.println(F("Ethernet shield na IP:"));
     Serial.println(Ethernet.localIP());
@@ -400,9 +393,9 @@ void loop() {
           client.println(F("var downloadTimer = setInterval(function(){"));
           client.println(F("if(timeleft &lt;= 0){"));
           client.println(F("clearInterval(downloadTimer);"));
-          client.println(F("document.getElementById(\"countdown\").innerHTML = \"Reštart...\";"));
+          client.println(F("document.getElementById(\"countdown\").innerHTML = \"Refresh...\";"));
           client.println(F("} else {"));
-          client.println(F("document.getElementById(\"countdown\").innerHTML = timeleft + \" sekúnd do reštartu\";"));
+          client.println(F("document.getElementById(\"countdown\").innerHTML = timeleft + \" sekúnd do refreshu\";"));
           client.println(F("}"));
           client.println(F("timeleft -= 1;"));
           client.println(F("}, 1000);"));
@@ -539,22 +532,7 @@ void loop() {
 Implementácia obsahuje programy pre statickú / dynamickú IPv4 adresu priradenú k Ethernet shieldu. 
 <b>Termostat je určený iba pre interiérové teploty!</b> (nad 0°C), čomu je prispôsobená aj logika systému! 
 Termostatom je možné nahradiť už existujúci izbový termostat, možno dočasne nahradiť ohrievač v akváriu / teráriu pre udržiavanie stálej teploty.
-</p>
-<div class="alert alert-danger">
-	<b>Changelog verzie 1.0.4 Ethernet termostatu:</b>
-	<li>Optimalizácia webaplikácie, zvýšená rýchlosť odozvy pre low-latency response</li>	
-	<li>Pre HTML form museli byť pre nekompatibilitu prehliadača Google Chrome pre Android odstránené typy number pre input.</li>
-	<li>Upravený backend, pre porovnanie dátového typu vstupu s (ne)akceptáciou vstupu.</li>
-	<li>Opravený JSON output (prehodené riadiace teploty) k opačným entitám</li>
-	<li>Opravený Content-type pre JSON output z text/html na application/json</li>
-	<li>Všetky statické časti HTML stránok presunuté do ROM pamäte cez F() makro</li>
-	<li>Maximálne ohľahčená RAM pamäť pre bezproblémový beh low-latency webservera.</li>
-	<li>Pre DHCP príklad použitá funkcia Ethernet.maintain() pre renew času DHCP poolu.</li>
-	<li>(predĺženie rovnakej IP adresy / vyžiadanie novej - v závislosti od konfigurácie DHCP služby)</li>
-	<li>Zmena názvu JSON súboru z get_data na get_data.json</li>
-	<li>Zobrazený uptime zariadenia - dni, hodiny, minúty, sekundy</li>
-	<li>HTTP 404 - Not Found pri zobrazení umiestnenia, na ktoré nemá webserver callback</li>
-</div>	
+</p>	
  </div>
 		</div>
 </div>
