@@ -192,22 +192,16 @@ Der Thermostat wird erst wieder aktiviert, wenn die Temperatur 22.49 °C oder ni
 <center><img src="https://i.imgur.com/6CYuMZZ.png" style="display: block; max-width: 100%; height: auto;" alt="Ethernet thermostat - UART" title="Ethernet thermostat - UART"></center>        		
 <hr>
 <h3><font color="#2ECC71">Quellcode - Ethernet-Thermostat - Automatikmodus</font></h3>	
-<div class="alert alert-danger">
-	Da mehrere Franzosen beschlossen haben, sich als „Autoren“ des Ethernet-Thermostat-Projekts auszugeben und das Projekt online zu verkaufen, werden die Quellcodes für das Ethernet-Thermostat nicht mehr verfügbar sein. Verwenden Sie .hex-Maschinencode, ohne ihn zu ändern.
-</div>
-<pre style="background-color:#2ECC71; display: none;">
+<pre style="background-color:#2ECC71;">
 /*|----------------------------------------------------------|*/
-/*|HTTP webserver - Ethernet thermostat, Wiznet W5100 / W5500|*/
-/*|Arduino Uno / Nano / Mega compatible (R3)                 |*/
+/*|HTTP webserver - FORM - HTML - PROCESSING - EEPROM        |*/
 /*|AUTHOR: Martin Chlebovec                                  |*/
 /*|EMAIL: martinius96@gmail.com                              |*/
 /*|DONATE: paypal.me/chlebovec                               |*/
 /*|----------------------------------------------------------|*/
-
 #include &lt;avr\wdt.h>
 #include &lt;SPI.h>
-#include &lt;Ethernet.h> //Wiznet W5100
-//#include &lt;Ethernet2.h> //Wiznet W5500
+#include &lt;Ethernet.h>
 #include &lt;EEPROM.h>
 #include &lt;OneWire.h>
 #include &lt;DallasTemperature.h>
@@ -216,7 +210,7 @@ Der Thermostat wird erst wieder aktiviert, wenn die Temperatur 22.49 °C oder ni
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensorsA(&oneWire);
 const int rele = 6;
-byte mac[] = { 0xAA, 0xAB, 0xBE, 0xEF, 0xFE, 0xED }; //physical mac address
+byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED }; //physical mac address
 EthernetServer server(80); //server port
 const char terminator1[2] = " ";
 const char terminator3[2] = "?";
@@ -295,8 +289,7 @@ void setup() {
   Serial.begin(115200);
   sensorsA.requestTemperatures();
   delay(2000);
-  // Ethernet.begin(mac); //DHCP
-  Ethernet.begin(mac, ip); //STATIC IPv4
+  Ethernet.begin(mac);
   server.begin();
   Serial.println(F("Webanwendung erstellt: Martin Chlebovec"));
   Serial.println(F("Build 1.0.4 z 18. Sep 2021"));
@@ -331,6 +324,7 @@ void loop() {
       Serial.print(F("Aktuelle Leistung des Kessels: "));
       Serial.println(stav);
     }
+    Ethernet.maintain();
     sensorsA.requestTemperatures();
   }
   EthernetClient client = server.available();
@@ -486,8 +480,8 @@ void loop() {
             if (!isFloat(second_param) || !isFloat(second_param)) {
               client.println(F("&lt;h3>&lt;font color='red'>Eingegebene Daten sind keine Zahlen !!! Bitte versuchen Sie es nach der Umleitung erneut.&lt;/font>&lt;/h3>"));
             } else {
-              client.println("&lt;li>&lt;b>Referenztemperatur: &lt;/b>" + String(H_1) + "&lt;/li>");
-              client.println("&lt;li>&lt;b>Hysterese: &lt;/b>" + String(H_2) + "&lt;/li>");
+              client.println("&lt;li>&lt;b>Referenčná teplota: &lt;/b>" + String(H_1) + "&lt;/li>");
+              client.println("&lt;li>&lt;b>Hysteréza: &lt;/b>" + String(H_2) + "&lt;/li>");
             }
             client.println(F("&lt;b>Umleitung ... Bitte warten&lt;/b>&lt;/center>"));
             client.println(F("&lt;/body>"));
@@ -507,27 +501,14 @@ void loop() {
     }
   }
 }
+
+
 </pre>
 <p style="text-align: justify;">
 Die Implementierung enthält Programme für die dem Ethernet-Shield zugewiesene statische / dynamische IPv4-Adresse.
 <b>Der Thermostat ist nur für Innentemperaturen gedacht!</b> (über 0°C), an die die Systemlogik angepasst ist!
 Der Thermostat kann verwendet werden, um einen vorhandenen Raumthermostat zu ersetzen, die Heizung im Aquarium / Terrarium kann vorübergehend ersetzt werden, um eine konstante Temperatur zu halten.
-</p>
-<div class="alert alert-danger">
-<b> Änderungsprotokoll Ethernet-Thermostat Version 1.0.4: </b>
-<li> Optimierung der Webanwendung, erhöhte Reaktionsgeschwindigkeit für eine Reaktion mit geringer Latenz </li>
-<li> Für HTML-Formulare mussten eingegebene Zahlen aufgrund von Inkompatibilität mit Google Chrome für Android entfernt werden. </li>
-<li> Modifiziertes Backend, um den Eingabedatentyp mit der (Nicht-) Akzeptanz der Eingabe zu vergleichen. </li>
-<li> JSON-Ausgabe (umgekehrte Kontrolltemperaturen) an gegenüberliegende Entitäten korrigiert </li>
-<li> Inhaltstyp für die JSON-Ausgabe von Text / HTML an Anwendung / Json korrigiert </li>
-<li> Alle statischen Teile von HTML-Seiten wurden über das F()-Makro ins ROM verschoben </li>
-<li> Maximaler leichter RAM für den problemlosen Betrieb eines Webservers mit geringer Latenz. </li>
-<li> Für das DHCP-Beispiel wird die Funktion Ethernet.maintain() verwendet, um die DHCP-Poolzeit zu erneuern. </li>
-<li> (die gleiche IP-Adresse erneuern / eine neue anfordern - abhängig von Ihrer DHCP-Dienstkonfiguration) </li>
-<li> Benennen Sie eine JSON-Datei von get_data in get_data.json um </li>
-<li>Anzeige der Gerätebetriebszeit - Tage, Stunden, Minuten, Sekunden </li>
-<li> HTTP 404 - Nicht gefunden, wenn ein Standort angezeigt wird, zu dem der Webserver keinen Rückruf hat </li>
-</div>	
+</p>	
  </div>
 		</div>
 </div>
