@@ -263,6 +263,7 @@ OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensorsA(&oneWire);
 const int rele = 6;
 byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED }; //physical mac address
+byte ip[] = { 192, 168, 4, 1 };
 EthernetServer server(80); //server port
 const char terminator1[2] = " ";
 const char terminator3[2] = "?";
@@ -341,7 +342,8 @@ void setup() {
   Serial.begin(115200);
   sensorsA.requestTemperatures();
   delay(2000);
-  Ethernet.begin(mac);
+  //Ethernet.begin(mac); //DHCP
+  Ethernet.begin(mac, ip); //STATIC IP
   server.begin();
   Serial.println(F("Webaplikaciu vytvoril: Martin Chlebovec"));
   Serial.println(F("Build 1.0.4 z 18. Sep 2021"));
@@ -353,7 +355,7 @@ void setup() {
 void loop() {
   wdt_reset();
   if ((millis() - cas) >= 10000 || cas == 0) {
-    Ethernet.maintain();
+    //Ethernet.maintain(); //odkomentovat iba ak sa pouziva Ethernet.begin(mac);
     cas = millis();
     Serial.println(F("Ethernet shield na IP:"));
     Serial.println(Ethernet.localIP());
