@@ -29,7 +29,7 @@
 * **termostat/target_temp** - pre cieľovú (referenčnú) teplotu
 * Klient má prihlásený odber na topic termostat/#, ktorý mu vráti všetky dáta, ktoré na MQTT Broker publishoval (overuje zapísanie informácie na MQTT Broker)
 * MQTT klient komunikuje s MQTT brokrom cez port 1883 - nezbezpečený MQTT port, MQTTS klient cez port 8883 - šifrovaný MQTTS port.
-* ESP32 využíva pre šifrované spojenie Root CA certifikát, ESP32 odtlačok certifikátu MQTT Brokra (vyžaduje častejší RENEW)
+* ESP32 a ESP8266 využíva pre šifrované spojenie Root CA certifikát
 * **UPOZORNENIE: MQTT Broker IoT Industries Slovakia, ktorý sa vo vzorovej implementácii používa je verejný a tak môžu byť dáta zmenené, prepísané, čítané akýmkoľvek používateľom! Ak do svojho mikrokontroléru nahrá firmvér JSON klienta bez zmeny akýkoľvek iný používateľ, bude vám dané dáta v preddefinovanom topicu prepisovať a rovnako aj vy jemu. Je tak vhodné pri vlastnej implementácii zvoliť iný topic, kam budú dáta odosielané.**
 
 # Bloková schéma MQTT klienta
