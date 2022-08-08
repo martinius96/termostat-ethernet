@@ -1,5 +1,5 @@
-# Termostat - Arduino + Ethernet Wiznet W5100 / W5500
-* Termostat postavený na platforme Arduino s Ethernetom Wiznet
+# Termostat - Arduino + Ethernet  / ESP32 + PHY Ethernet
+* Termostat postavený na platforme Arduino s Ethernetom Wiznet, alebo na ESP32 s PHY Ethernetom LAN8720
 * Rozšírený popis k projektu, schéma zapojenia, dokumentácia: https://martinius96.github.io/termostat-ethernet/
 * Arduino funguje v režime HTTP webservera, kde ponúka na HTML stránkach komplexný prehľad aktuálne nameraných a platných údajov
 * Umožňuje zmeniť údaje o cieľovej (referenčnej) teplote a hysteréze, ktorá sa používa pre riadenie vykurovania
