@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+	<!-- Primary Meta Tags -->
+	<title>Raumthermostat - ESP32 + PHY LAN8720</title>
+	<meta name="description" content="Ein Raumthermostat, der auf der ESP32-Plattform zum Heizen entwickelt wurde. Kommunikation über Ethernet">
+	<meta name="keywords" content="thermostat, esp32, lan8720, rmii, phy, ethernet, webserver, ds18b20, temperatur, kessel">
+	<link rel="icon" type="image/png" href="favicon.png">
+	<link rel="sitemap" type="application/xml" title="Sitemap" href="../../sitemap.xml" />
+	<meta name="google-site-verification" content="UwZZh2EXv3iWUAi_1Z0hLxVCz6ySJ4UdY_BPoLtejwo" />    	
+	<meta property='fb:admins' content='100001242570317'>
+    	<meta charset="utf-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+    		window.smartlook||(function(d) {
+    			var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];
+    			var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';
+    			c.charset='utf-8';c.src='https://rec.smartlook.com/recorder.js';h.appendChild(c);
+    		})(document);
+    		smartlook('init', 'db50efe9fff280a17db52b82be221240cbbd3dbe');
+	</script>    
+			<style>
+	#right {
+  position: absolute;
+  right: 0px;
+}
+	</style>
+</head>
+<body>
+	<div class="container">
+  		<div class="row">
+    			<div class="col-sm-12">
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="index.html">Termostat - Ethernet</a>
+    </div>
+    <ul class="nav navbar-nav">
+      	<li><a href="index.html">Prehľad</a></li>
+	<li><a href="zapojenie.html">Zapojenie</a></li>      
+	<li class=""><a href="spustenie.html">Firmvér</a></li>
+  <li><a href="json_client.html">JSON client</a></li>
+      	<li><a href="kontakt.html">Kontakt</a></li>
+<li class="active"><a href="phy_ethernet.html">ESP32 + PHY</a></li>
+<a href="de/index.html"><img src="https://futbalovysen.sk/wp-content/uploads/germany.png" alt="Germany.png, 2,2kB" title="Germany" height="32" width="32"></a>	
+<a href="en/index.html"><img src="https://i2.wp.com/facsusa.com/wp-content/uploads/2017/05/Flag-of-England.png?ssl=1" alt="English.png, 2,2kB" title="English" height="32" width="32"></a>
+	 <li style="float: right; "><a href="https://martinius96.github.io/WiFi-termostat/" class="btn btn-success" role="button" title="Zmeniť projekt na WiFi termostat"><img src="https://www.flaticon.com/premium-icon/icons/svg/3686/3686730.svg" width=16px height=16px> <font color="white">WiFi termostat</font></a></li>
+</ul>
+  </div>
+</nav>  				
+<div class="alert alert-danger">
+ 	<strong>Unterstützen Sie das Ethernet-Thermostat-Projekt über PayPal. Der Support ermöglicht das Hinzufügen neuer Funktionalitäten in der Zukunft und das Öffnen des Quellcodes der Anwendung: </strong><a href="https://www.paypal.com/paypalme/chlebovec" class="btn btn-primary" role="button">PayPal donate</a>
+</div>	
+<span class="label label-default">ESP32</span>
+<span class="label label-primary">Ethernet</span>
+<span class="label label-success">LAN8720</span>
+<span class="label label-info">DS18B20</span>
+<span class="label label-warning">OneWire</span>
+<span class="label label-danger">Dallas</span>
+<span class="label label-default">HTML</span>
+<span class="label label-primary">Webserver</span>
+<span class="label label-success">WebSocket</span>
+<hr><h4>Kompatible Steuerungshardware für Ethernet-Thermostat:</h4><hr>
+<div class="row">
+<div class="col-sm-6"><center><img src="https://i.imgur.com/FV9xi6K.png" width="128px" height="128px" style="border-radius: 50%;" alt="Riadiaci mikrokontróler Wemos D1 Mini - ESP8266-12E / ESP8266-12F" title="Riadiaci mikrokontróler Wemos D1 Mini - ESP8266-12E / ESP8266-12F"><br><b>Wemos D1 / D1 Mini (ESP8266)</b></center></div>
+<div class="col-sm-6"><center><img src="https://i.imgur.com/BczG03b.png" width="128px" height="128px" style="border-radius: 50%;" alt="Riadiaci mikrokontróler ESP32 Devkit V1 - ESP-WROOM-32 / ESP32-S" title="Riadiaci mikrokontróler ESP32 Devkit V1 - ESP-WROOM-32 / ESP32-S"><br><b>ESP32 DevKit</b></center></div></div>	
+</div>				
+<hr><center><h1>Raumthermostat - ESP32 + LAN8720</h1></center><hr>
+<p style="text-align: justify;">
+Der ESP32-Mikrocontroller ist über die RMII-Schnittstelle mit dem LAN8720 PHY-Ethernet-Modul verbunden. Der ESP32 stellt über den WiFi-Controller die MAC-Schicht für das PHY-Ethernet bereit.
+Der in Arduino Core implementierte Webserver ermöglicht die Steuerung des Thermostats über einen Browser im LAN-Netzwerk, wobei der ESP32 auf einer zugewiesenen IP-Adresse innerhalb des DHCP-Bereichs verfügbar ist.
+Die Thermostatlogik wird unabhängig davon ausgeführt, ob die Webserver-Webseite für den Client geöffnet ist.
+Das Ändern der Logik- und Schwellentemperaturen erfolgt über HTTP-Anforderungen von Clients im Netzwerk über ein HTML-Formular, oder die Anforderung kann direkt über eine HTTP-POST-Anforderung mit den Standardargumenten fname und fname2 gesendet werden.
+Basierend auf der Anforderung einer bestimmten Unterseite kann die Ausgabe gesteuert werden, z. B. manuell / automatisch, oder es ist möglich, die Steuerdaten mit einem auf einen bestimmten Wert gesetzten Argument zu überschreiben.
+Sie werden im emulierten EEPROM-Speicher im Flash-Speicher gespeichert, während die Lebensdauer dieses Sektors bei 10.000 Neuschreibungen liegt.
+Es ist möglich, die (angeforderte) Referenztemperatur und Hysterese zu steuern.
+Der Webserver läuft auf dem Standard-HTTP-Port - 80.
+</p>
+<hr>
+<p style="text-align: justify;">
+Über den GPIO-Ausgang kann der Thermostat automatisch das Melderelais zum Ein-/Ausschalten des Boilers ansteuern.
+Damit kann es das vorhandene Raumthermostat ersetzen und allen Clients im Netzwerk zur Verfügung stellen.
+Der Thermostat kann jedes Gerät mit einem Browser bedienen - Computer / Smartphone / Tablet / Smart TV und dergleichen.
+Als Entscheidungsalgorithmus wird eine Zieltemperatur mit Hysterese verwendet, die mit der gemessenen Temperatur des digitalen Temperatursensors Dallas DS18B20 verglichen wird.
+Solltemperatur und Hysterese werden aus dem EEPROM-Speicher ausgelesen, dort auch bei Stromausfall dauerhaft gespeichert und beim Schreiben neuer Daten überschrieben.
+<b>Die Auflösung des DS18B20-Sensors während der Messung beträgt 12 Bit, was durch die Temperaturauflösung von 0,0625 °C erklärt wird, was der minimale Auflösungsschritt zwischen verschiedenen Messungen ist.
+Daten über den OneWire-Bus können auf Anfrage in 500 bis 1000 ms beim Mikrocontroller ankommen, abhängig von der Anzahl der Sensoren am OneWire-Bus, der Länge des Busses usw.</b>
+Die Entscheidungslogik des Thermostats wird alle 10 Sekunden unabhängig von der Webanwendung ausgeführt, eine Keep-Alive-Verbindung ist zur Ausführung der Logik nicht erforderlich, das System arbeitet somit autonom und erfordert keine Aufmerksamkeit des Benutzers.
+</p>
+<b>In Bezug auf die Hardware verwendet das Projekt:</b>
+<li>ESP32</li>
+<li>Ethernet Modul LAN8720</li>
+<li>Temperatursensor DS18B20 am OneWire-Bus im TO-92-Gehäuse oder in wasserdichter Ausführung im Aluminiumrohr</li>
+<li>Elektromagnetisches Relais SRD-5VDC-SL-C / SSR-Relais OMRON G3MB-202P zum Schalten des Kessels (Active-LOW-Signal)</li>
+<p style="text-align: justify;">
+<b>HTML-Seiten, die auf ESP32 ausgeführt werden:</b>
+<li><b>/</b> - Startseite mit dem Formular, der aktuellen Auflistung des Logikausgangs für das Relais, der aktuellen und der Zieltemperatur, der Temperatur, der Hysterese</li>
+<li><b>/action.html</b> - verarbeitet die Werte aus dem Formular, schreibt sie in den emulierten EEPROM-Speicher, leitet den Benutzer zurück zur Stammseite</li>
+<li><b>/get_data.json</b> - verteilt Daten über aktuelle Temperatur, Referenztemperatur und Hysterese an einen Dritten (Computer, Mikrocontroller, anderer Client ...) im JSON-Format - kann mit einem Beispiel-JSON-Client verwendet werden, der Daten an MQTT Broker senden kann, beispielsweise an die Hausautomation</li>
+<li><b>/zap.html</b> - dauerhafte Aktivierung des Ausgangs im Handbetrieb</li>
+<li><b>/vyp.html</b> - dauerhaftes Abschalten des Ausgangs im Handbetrieb</li>
+<li><b>/automat.html</b> - Modus auf automatisch ändern (verwendet Hysterese und Zieltemperatur)</li>
+<li><b>/manual.html</b> - Wechselmodus auf manuell (permanente Steuerung des Ausgangs EIN / AUS hart)</li>
+<hr>				
+Das im Projekt verwendete elektromagnetische Relais SRD-5VDC-SL-C ermöglicht das Schalten von bis zu 10 A bei 230 V - maximale Leistung 2300 W.
+Beim Schalten eines Gleichstromkreises (Last) können 300 W (10 A bei 30 V DC max) geschaltet werden.
+Für den Schaltplan ist auch das OMRON G3MB-202P SSR-Relais voll kompatibel, das nur für nicht induktive Lasten und ausschließlich für Wechselspannungslasten geeignet ist (der Gleichstromkreis kann nach dem Schalten nicht öffnen).
+Maximale Schaltleistung 460 W (230 V, 2 A). <b>Der Thermostat kann das ganze Jahr über verwendet werden. Im Falle einer unnötigen Steuerung kann der Ausgang physisch getrennt und der Thermostat als Ethernet-Thermometer verwendet werden, um Daten aus dem Raum zu erhalten, in dem er sich befindet.</b>
+</p>
+
+<b>Das Webinterface für den Ethernet-Thermostat ermöglicht:</b>
+<li>Zeigen Sie in Echtzeit die Temperatur des DS18B20-Sensors auf dem OneWire-Bus, die Betriebszeit des Geräts, den Ausgangsstatus mit dynamischer Änderung, die aktuell eingestellten Konfigurationsdaten für den Thermostat an, d.h. Zieltemperatur und Hysterese aus EEPROM</li>
+<li>Ändern Sie die Zieltemperatur (Referenztemperatur) <del> im Bereich von 5 bis 50 °C in Schritten von 0,25 °C</del><img src="https://i.imgur.com/zMsp0cr.png" width="20px" height="20px" data-toggle="tooltip2" data-placement="right" title="Der Bereich wurde in Version 1.0.2 entfernt, da der Dezimalpunkt für die Eingabetypnummer unter Android OS nicht unterstützt wird"></li>
+<li>Hysterese ändern <del> im Bereich 0 bis 10 °C in 0,25 °C-Schritten</del><img src="https://i.imgur.com/zMsp0cr.png" width="20px" height="20px" data-toggle="tooltip2" data-placement="right" title="Der Bereich wurde in Version 1.0.2 entfernt, da der Dezimalpunkt für die Eingabetypnummer unter Android OS nicht unterstützt wird"></li>
+
+<b>Kesselregelung ON/OFF:</b>
+<li>Beispiel EIN/AUS-Heizungssteuerung - <font color="red">VISUALISIERUNG IST NICHT TEIL DES PROJEKTS</font></li>
+<li>Der Boiler ist aktiv, bis die Zieltemperatur + Hysterese erreicht ist</li>
+<li>Die Visualisierung von Wassertemperaturen zeigt die sog Heizungshochlauf und anschließende Abkühlung des Wassers bis zur Wiederaktivierung der Heizung, wenn die gemessene Temperatur unter der eingestellten Solltemperatur liegt - Hysterese</li>
+<img src="https://i.imgur.com/IDWLuOr.png" style="display: block; max-width: 100%; height: auto;" alt="ZAP/VYP regulácia kotla s hysterézou" title="ZAP/VYP regulácia kotla s hysterézou">        			    
+<p style="text-align: justify;">
+Die Weboberfläche ist so konzipiert, dass sie sich an größere und kleinere Bildschirme anpasst. Es ist responsiv, unterstützt hochauflösende Widescreens, aber auch mobile Endgeräte.
+Die Schnittstelle verwendet importierte Bootstrap-Framework-CSS-Stile von einem externen CDN-Server, der das clientseitige Gerät lädt, wenn eine Seite geöffnet wird, die auf ESP32 ausgeführt wird.
+Damit die eingestellten Werte des Thermostats auch nach einem Stromausfall erhalten bleiben, werden diese im EEPROM-Speicher des ESP gespeichert, der im Flash-Speicher emuliert wird, da die Plattform physikalisch keinen EEPROM-Chip (Speicher) besitzt.
+Referenztemperatur bei Offset 10, Hysterese bei Offset 100. Jeder Wert belegt maximal 5B im EEPROM-Speicher + Abschlusszeichen.
+Erst beim Absenden des HTML-Formulars werden die Daten überschrieben, der Betrieb des Thermostaten ist somit maximal schonend für den EEPROM-Speicher für dessen maximale Lebensdauer.
+Der Zustand des Ausgangs existiert nur im RAM-Speicher, wo er bei Änderung überschrieben wird. Der Wert wird nicht im emulierten EEPROM-Speicher im Flash-Speicher gespeichert.
+</p>
+<hr>
+<p style="text-align: justify;">
+Mittels Refresh-Meta-Tag aktualisiert der Webserver alle 30 Sekunden die gesamte Seite, zusätzlich wird per Javascript eine ungefähre Refresh-Zeit in die HTML-Seite geschrieben.
+Bis zu diesem Zeitpunkt muss die Änderung für das Thermostat notiert werden, da sonst die Eingabefenster für numerische Eingaben in das Formular beim Aktualisieren der Seite zurückgesetzt werden. <b>Basierend auf dem Feedback von Benutzern von Android-Geräten wurde die Aktualisierungszeit von 10 auf 30 Sekunden verlängert.</b>
+Die dynamischen Daten, die sich hauptsächlich ändern, sind der aktuelle Wert der Ausgabe - <b><font color="#27AE60">Ein</font></b> / <b><font color="red">Aus</ font> </b>, die zusammen mit der Farbmarkierung den Bediener über den aktuellen Zustand der Ausgabe informiert.
+Da die Logik des Systems unabhängig vom Webserver ausgeführt wird, kann die Ausgabe bereits vor dem Refresh in einem anderen Zustand sein, als aktuell in der Webanwendung angezeigt wird. Die Ausgangsänderung wird sofort zB auf dem UART-Monitor ausgedruckt (115200 Baud/s).
+Auf der Website des Thermostats kann der Benutzer auch Informationen über die Betriebszeit des Geräts (wie lange es läuft) finden, d.h. Zeit in Tagen, Stunden, Minuten und Sekunden.
+</p>
+<div class="alert alert-danger">
+	<strong>Der Autor des Ethernet-Thermostats ist nicht verantwortlich für die Funktionalität des Thermostats, Kesselausfall, Stromschlag aufgrund unsachgemäßer Installation des Thermostats im Netzwerk.</strong> Der Thermostat wird unter der MIT-Lizenz vertrieben.
+</div>	
+<b>Hauptseite zur Änderung von Zieltemperatur und Hysterese - Vorschau des eingeschalteten Ausgangs:</b>
+<div class="alert alert-info">
+	<strong>Beispieldaten</strong>
+<li><b>Zieltemperatur:</b> 22,75 °C</li>
+<li><b>Hysterese:</b> 0,25 °C</li>
+<li><b>Messdaten:</b> 22,49 °C</li>
+<li><b>Ausgabe:</b> <font color="#27AE60">Ein</font></li>
+	<hr>
+	<p style="text-align: justify;">
+Der Thermostat heizt ab einer gemessenen Temperatur von 22,49 °C und darunter.
+Erreicht die Temperatur 23,01 °C und mehr, wird der Ausgang abgeschaltet, das Melderelais abgeschaltet und der Gaskessel heizt nicht mehr.
+Die Beheizung und Kühlung des Raumes, in dem die Messungen durchgeführt werden, erfolgt.
+Der Thermostat wird erst wieder aktiviert, wenn die Temperatur 22,49 °C oder weniger erreicht.
+	</p>	
+</div>
+<center>
+<hr>
+<h4>Voll funktionsfähiger Ethernet-Thermostat mit der Möglichkeit, Datenkontrollen einzustellen:</h4>
+<hr>
+</center>
+<div class="alert alert-info">
+	<strong>Aktualisieren Sie die Weboberfläche automatisch alle 30 Sekunden</strong>
+</div>	
+<b>Hauptseite zur Änderung von Zieltemperatur und Hysterese / Auswahl des manuellen Modus mit EIN/AUS-Steuerungsoption:</b>
+<img src="https://i.imgur.com/jzG6t0W.png" style="display: block; max-width: 100%; height: auto;" alt="PHY Ethernet termostat ESP32 - Hlavný prehľad s modifikáciou cieľovej teploty a hysterézy - Vypnutý" title="PHY Ethernet termostat ESP32 - Hlavný prehľad s modifikáciou cieľovej teploty a hysterézy - Vypnutý">        			
+
+<b>Bearbeitungsfortschritt der eingegebenen Daten (Nutzerumleitung):</b>
+<img src="https://i.imgur.com/TtmdPOl.png" style="display: block; max-width: 100%; height: auto;" alt="PHY Ethernet termostat ESP32 - spracovanie údajov z HTML formulára" title="PHY Ethernet termostat ESP32 - spracovanie údajov z HTML formulára">        			
+
+<b>JSON-Ausgabe des Webservers im Browser / Client via Websocket:</b>
+<center><img src="https://i.imgur.com/MLtjjBD.png" style="display: block; max-width: 100%; height: auto;" alt="PHY Ethernet termostat ESP32 - JSON output" title="PHY Ethernet termostat ESP32 - JSON output"></center>        		
+
+<b>Ausgabe an UART-Monitor - Systemlogik + eingestellte IP-Adresse:</b>
+<center>
+<img src="https://i.imgur.com/ZMZc4zs.png" style="display: block; max-width: 100%; height: auto;" alt="PHY Ethernet termostat ESP32 - zmena výstupu po zmene riadiacich dát termostatu" title="PHY Ethernet termostat ESP32 - zmena výstupu po zmene riadiacich dát termostatu">
+</center>        		
+<hr><center><h4>Verfügbare Bibliotheken für Mikrocontroller (ESP32)</h4></center><hr>
+<div class="alert alert-danger">
+	Entpacken Sie das Bibliotheksarchiv (.zip) nach <strong>C:/Benutzer/[Benutzer]/Unterlagen/Arduino/libraries</strong>
+</div>
+<div class="table-responsive">   
+<table class="table" style="border: 1px solid black;">
+<thead>
+<tr>
+<th style="width: 25%">Name der Bibliothek</th>
+<th style="width: 50%">Bibliotheksfunktion</th>
+<th style="width: 25%">Download</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="width: 25%"><b>Dallas</b></td>
+<td style="width: 50%">
+<p style="text-align: justify;">
+Bibliothek für Mikrocontroller von Espressif Systems (ESP32).
+Es ermöglicht die Kommunikation mit dem Dallas DS18B20-Sensor auf dem OneWire-Bus. Kommunikationsmöglichkeit nach normaler oder parasitärer Verbindung.
+</p>
+</td>
+<td style="width: 25%"><a href="https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/martinius96/termostat-ethernet/tree/master/src/dallas" class="btn btn-success" role="button">Download</a></td>
+</tr>
+</tbody>
+</table>
+	</div>
+<hr>
+<h3><font color="#2ECC71">Quellcode - Ethernet-Thermostat - ESP32 + PHY Ethernet</font></h3>	
+<pre style="background-color:#2ECC71;">
+/*|-----------------------------------------------------------|*/
+/*|HTTP webserver - Ethernet thermostat - ESP32 + PHY LAN8720 |*/
+/*|Project webpage:                                           |*/
+/*|https://martinius96.github.io/termostat-ethernet/          |*/
+/*|AUTHOR: Martin Chlebovec                                   |*/
+/*|EMAIL: martinius96@gmail.com                               |*/
+/*|DONATE: paypal.me/chlebovec                                |*/
+/*|-----------------------------------------------------------|*/
+
+#include &lt;ETH.h>
+#include &lt;WebServer.h>
+WebServer server(80);
+
+#include &lt;EEPROM.h>
+#include &lt;OneWire.h>
+#include &lt;DallasTemperature.h>
+
+#define ONE_WIRE_BUS 5 //D5
+OneWire oneWire(ONE_WIRE_BUS);
+DallasTemperature sensorsA(&oneWire);
+const int rele = 4; //D4
+unsigned long cas = 0;
+String stav = "VYP";
+float teplota;
+long day = 86400000; // 86400000 milliseconds in a day
+long hour = 3600000; // 3600000 milliseconds in an hour
+long minute = 60000; // 60000 milliseconds in a minute
+long second =  1000; // 1000 milliseconds in a second
+float rezim;
+
+#ifdef ETH_CLK_MODE
+#undef ETH_CLK_MODE
+#endif
+#define ETH_CLK_MODE    ETH_CLOCK_GPIO17_OUT
+
+// Pin# of the enable signal for the external crystal oscillator (-1 to disable for internal APLL source)
+#define ETH_POWER_PIN   -1
+
+// Type of the Ethernet PHY (LAN8720 or TLK110)
+#define ETH_TYPE        ETH_PHY_LAN8720
+
+// I²C-address of Ethernet PHY (0 or 1 for LAN8720, 31 for TLK110)
+#define ETH_ADDR        1
+
+// Pin# of the I²C clock signal for the Ethernet PHY, DONT USE THIS PIN FOR ultrasonic sensor in this sketch
+#define ETH_MDC_PIN     23
+
+// Pin# of the I²C IO signal for the Ethernet PHY
+#define ETH_MDIO_PIN    18
+
+void WiFiEvent(WiFiEvent_t event)
+{
+  switch (event) {
+    case ARDUINO_EVENT_ETH_START:
+      Serial.println("ETH Started");
+      //set eth hostname here
+      ETH.setHostname("esp32-ethernet");
+      break;
+    case ARDUINO_EVENT_ETH_CONNECTED:
+      Serial.println("ETH Connected");
+      break;
+    case ARDUINO_EVENT_ETH_GOT_IP:
+      Serial.print("ETH MAC: ");
+      Serial.print(ETH.macAddress());
+      Serial.print(", IPv4: ");
+      Serial.print(ETH.localIP());
+      if (ETH.fullDuplex()) {
+        Serial.print(", FULL_DUPLEX");
+      }
+      Serial.print(", ");
+      Serial.print(ETH.linkSpeed());
+      Serial.println("Mbps");
+      break;
+    case ARDUINO_EVENT_ETH_DISCONNECTED:
+      Serial.println("ETH Disconnected");
+      break;
+    case ARDUINO_EVENT_ETH_STOP:
+      Serial.println("ETH Stopped");
+      break;
+    default:
+      break;
+  }
+}
+
+boolean isFloat(String tString) {
+  String tBuf;
+  boolean decPt = false;
+
+  if (tString.charAt(0) == '+' || tString.charAt(0) == '-') tBuf = &tString[1];
+  else tBuf = tString;
+
+  for (int x = 0; x &lt; tBuf.length(); x++)
+  {
+    if (tBuf.charAt(x) == '.' || tBuf.charAt(x) == ',') {
+      if (decPt) return false;
+      else decPt = true;
+    }
+    else if (tBuf.charAt(x) &lt; '0' || tBuf.charAt(x) > '9') return false;
+  }
+  return true;
+}
+
+void writeString(char add, float data)
+{
+  EEPROM.put(add, (data * 1000));
+  EEPROM.commit();
+}
+
+
+float read_String(char add)
+{
+  float payload = 0;
+  float data = EEPROM.get(add, payload);
+  return (data / 1000);
+}
+
+void handleRoot() {
+  int days = millis() / day ;                                //number of days
+  unsigned int hours = (millis() % day) / hour;                       //the remainder from days division (in milliseconds) divided by hours, this gives the full hours
+  unsigned int minutes = ((millis() % day) % hour) / minute ;         //and so on...
+  unsigned int seconds = (((millis() % day) % hour) % minute) / second;
+  String stranka = F("&lt;!DOCTYPE html>");
+  stranka += F("&lt;html>");
+  stranka += F("&lt;head>");
+  stranka += F("&lt;meta charset='utf-8'>");
+  stranka += F("&lt;meta name='author' content='Martin Chlebovec'>");
+  stranka += F("&lt;meta http-equiv='Refresh' content='30'; />");
+  stranka += F("&lt;meta name='viewport' content='width=device-width, initial-scale=1'>");
+  stranka += F("&lt;link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css'>");
+  stranka += F("&lt;script type='text/javascript'> window.smartlook||(function(d) {"); 
+  stranka += F("var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];");
+  stranka += F("var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';");
+  stranka += F("c.charset='utf-8';c.src='https://rec.smartlook.com/recorder.js';h.appendChild(c); })(document);"); 
+  stranka += F("smartlook('init', '63ff3bf4db2f85029b19856425a4f2086533c9e6');"); 
+  stranka += F("&lt;/script>"); 
+  stranka += F("&lt;script type='text/javascript'>");
+  stranka += F("var timeleft = 30;");
+  stranka += F("var downloadTimer = setInterval(function(){");
+  stranka += F("if(timeleft &lt;= 0){");
+  stranka += F("clearInterval(downloadTimer);");
+  stranka += F("document.getElementById(\"countdown\").innerHTML = \"Reštart...\";");
+  stranka += F("} else {");
+  stranka += F("document.getElementById(\"countdown\").innerHTML = timeleft + \" sekúnd do reštartu\";");
+  stranka += F("}");
+  stranka += F("timeleft -= 1;");
+  stranka += F("}, 1000);");
+  stranka += F("&lt;/script>");
+  stranka += F("&lt;title>Ethernet termostat - ESP32&lt;/title>");
+  stranka += F("&lt;/head>");
+  stranka += F("&lt;body>");
+  stranka += F("&lt;center>&lt;h3>Ethernet termostat - ESP32:&lt;/h3>");
+  if (rezim == 0.00) {
+    stranka += F("&lt;form action='/action.html' method='post'>");
+    stranka += "&lt;b>Referenčná teplota:&lt;/b>&lt;br>&lt;input type='text' id='fname' name='fname' min='5' max='50' step='0.25' value=" + String(read_String(10)) + ">&lt;br>";
+    stranka += "&lt;b>Hysteréza:&lt;/b>&lt;br>&lt;input type='text' id='fname2' name='fname2' min='0' max='10' step='0.25' value=" + String(read_String(100)) + ">&lt;br>";
+    stranka += F("&lt;input type='submit' class='btn btn-success' value='Zapísať'>");
+    stranka += F("&lt;/form>");
+    stranka += F("&lt;a href='manual.html' class='btn btn-primary' role='button'>Manuálny režim&lt;/a>&lt;hr>");
+  } else if (rezim == 1.00) {
+    if (stav == "ZAP") {
+      stranka += F("&lt;a href='vyp.html' class='btn btn-danger' role='button'>Vypnúť&lt;/a>&lt;br>");
+    }
+    if (stav == "VYP") {
+      stranka += F("&lt;a href='zap.html' class='btn btn-success' role='button'>Zapnúť&lt;/a>&lt;br>");
+    }
+    stranka += F("&lt;a href='automat.html' class='btn btn-primary' role='button'>Automatický režim&lt;/a>&lt;hr>");
+  }
+  if (stav == "ZAP") {
+    stranka += F("&lt;b>&lt;font color='green'>Výstup: Zapnutý&lt;/font>&lt;/b>");
+  }
+  if (stav == "VYP") {
+    stranka += F("&lt;b>&lt;font color='red'>Výstup: Vypnutý&lt;/font>&lt;/b>");
+  }
+  stranka += F("&lt;div id=\"countdown\">&lt;/div>");
+  stranka += F("&lt;b>Aktuálna teplota senzora DS18B20:&lt;/b> ");
+  stranka += String(teplota);
+  stranka += F(" °C");
+  stranka += F("&lt;hr>");
+  stranka += F("&lt;b>Uptime: &lt;/b>");
+  stranka += String(days);
+  stranka += F("d");
+  stranka += F(" ");
+  stranka += String(hours);
+  stranka += F("h");
+  stranka += F(" ");
+  stranka += String(minutes);
+  stranka += F("m");
+  stranka += F(" ");
+  stranka += String(seconds);
+  stranka += F("s");
+  stranka += F("&lt;h3>Autor: Martin Chlebovec - martinius96@gmail.com - https://martinius96.github.io/termostat-ethernet/phy_ethernet.html&lt;/h3>");
+  stranka += F("&lt;h4>Verzia free - 1.0.4 build: 07. Aug. 2022&lt;/h4>");
+  stranka += F("&lt;/center>");
+  stranka += F("&lt;div class='alert alert-info'>");
+  stranka += F("Finálny build projektu Ethernet termostat. Ďakujem za vyskúšanie webaplikácie.&lt;br>&lt;strong>Rozšírenie o platený obsah:&lt;/strong>&lt;li>Async Webserver - AJAX update&lt;/li>&lt;li>Režim chladenia&lt;/li>&lt;li>mDNS záznam&lt;/li>&lt;li>OTA aktualizácie&lt;/li>&lt;li>Ovládanie hlasom cez Amazon Alexa&lt;/li>&lt;li>Ovládanie cez UDP callbacky&lt;/li>&lt;li>Možnosť publikácie dát na MQTT Broker (Loxone, IoT Industries Slovakia, Blynk...),&lt;/li>&lt;li>Dostupné senzory Bosch, Sensirion, DHT&lt;/li>&lt;li>Watchdog Timer&lt;/li>&lt;li>Zdrojový kód (.ino) pre aplikáciu.&lt;/li>&lt;li>Auto-test periférii, fail-safe riešenie&lt;/li>&lt;li>JSON output rozšírený o systémové dáta (Ethernet sieť, RSSI, uptime, napájacie napätie...)&lt;/li>");
+  stranka += F("&lt;/div>");
+  stranka += F("&lt;/body>");
+  stranka += F("&lt;/html>");
+  server.send(200, "text/html", stranka);
+}
+
+void handleBody() {
+  if (server.hasArg("fname")) {
+    String target_temp = server.arg("fname");
+    // float cielova_teplota = target_temp.toFloat();
+
+    if (isFloat(target_temp)) {
+      float cielova_teplota = target_temp.toFloat();
+      writeString(10, cielova_teplota);
+    } else {
+      Serial.println(F("Do input pola cielovej teploty nebolo vlozene cislo!"));
+      Serial.println(F("Zapis zakazany!"));
+    }
+  }
+  if (server.hasArg("fname2")) {
+    String hysteresis = server.arg("fname2");
+    if (isFloat(hysteresis)) {
+      float hystereza = hysteresis.toFloat();
+      writeString(100, hystereza);
+    } else {
+      Serial.println(F("Do input pola hysterezy nebolo vlozene cislo!"));
+      Serial.println(F("Zapis zakazany!"));
+    }
+  }
+  String stranka = F("&lt;!DOCTYPE html>");
+  stranka += F("&lt;html>");
+  stranka += F("&lt;head>");
+  stranka += F("&lt;meta charset='utf-8'>");
+  stranka += F("&lt;meta http-equiv='Refresh' content='5; url=/' />");
+  stranka += F("&lt;title>Ethernet termostat - ESP32 - spracovanie riadiach dát&lt;/title>");
+  stranka += F("&lt;/head>");
+  stranka += F("&lt;body>");
+  stranka += F("&lt;center>&lt;h3>Server prijal data z formulára:&lt;/h3>");
+  stranka += "&lt;li>&lt;b>Referenčná teplota: &lt;/b>" + String(read_String(10)) + " °C&lt;/li>";
+  stranka += "&lt;li>&lt;b>Hysteréza: &lt;/b>" + String(read_String(100)) + " °C&lt;/li>";
+  stranka += F("&lt;b>Presmerovanie... Prosím čakajte&lt;/b>&lt;/center>");
+  stranka += F("&lt;/body>");
+  stranka += F("&lt;/html>");
+  server.send(200, "text/html", stranka);
+}
+
+void handleGet() {
+  String stranka = "{\n";
+  stranka += F("\"Hysteresis\":");
+  stranka += String(read_String(100));
+  stranka += F(",\n");
+  stranka += F("\"Target_Temperature\":");
+  stranka += String(read_String(10));
+  stranka += F(",\n");
+  stranka += F("\"Actual_Temperature\":");
+  stranka += String(teplota) + "\n";
+  stranka += F("}\n");
+  server.send(200, "application/json", stranka);
+}
+
+void handleZAP() {
+  stav = "ZAP";
+  digitalWrite(rele, LOW);
+  String stranka = F("&lt;!DOCTYPE html>");
+  stranka += F("&lt;html>");
+  stranka += F("&lt;head>");
+  stranka += F("&lt;meta charset='utf-8'>");
+  stranka += F("&lt;meta http-equiv='Refresh' content='0; url=/' />");
+  stranka += F("&lt;/head>");
+  stranka += F("&lt;/html>");
+  server.send(200, "text/html", stranka);
+}
+
+void handleAuto() {
+  writeString(150, 0.00);
+  rezim = read_String(150);
+  String stranka = F("&lt;!DOCTYPE html>");
+  stranka += F("&lt;html>");
+  stranka += F("&lt;head>");
+  stranka += F("&lt;meta charset='utf-8'>");
+  stranka += F("&lt;meta http-equiv='Refresh' content='0; url=/' />");
+  stranka += F("&lt;/head>");
+  stranka += F("&lt;/html>");
+  server.send(200, "text/html", stranka);
+}
+void handleManual() {
+  writeString(150, 1.00);
+  rezim = read_String(150);
+  String stranka = F("&lt;!DOCTYPE html>");
+  stranka += F("&lt;html>");
+  stranka += F("&lt;head>");
+  stranka += F("&lt;meta charset='utf-8'>");
+  stranka += F("&lt;meta http-equiv='Refresh' content='0; url=/' />");
+  stranka += F("&lt;/head>");
+  stranka += F("&lt;/html>");
+  server.send(200, "text/html", stranka);
+}
+void handleVYP() {
+  stav = "VYP";
+  digitalWrite(rele, HIGH);
+  String stranka = F("&lt;!DOCTYPE html>");
+  stranka += F("&lt;html>");
+  stranka += F("&lt;head>");
+  stranka += F("&lt;meta charset='utf-8'>");
+  stranka += F("&lt;meta http-equiv='Refresh' content='0; url=/' />");
+  stranka += F("&lt;/head>");
+  stranka += F("&lt;/html>");
+  server.send(200, "text/html", stranka);
+}
+void setup() {
+  Serial.begin(115200);
+  WiFi.onEvent(WiFiEvent);
+  ETH.begin(ETH_ADDR, ETH_POWER_PIN, ETH_MDC_PIN, ETH_MDIO_PIN, ETH_TYPE, ETH_CLK_MODE);
+  EEPROM.begin(512);  //Initialize EEPROM
+  float a = read_String(10);
+  float b = read_String(100);
+  float c = read_String(150);
+  if (isnan(a)) {
+    writeString(10, 20.25);
+  }
+  if (isnan(b)) {
+    writeString(100, 0.25);
+  }
+  if (isnan(c)) {
+    writeString(150, 0.00);
+  }
+  sensorsA.begin();
+  pinMode(rele, OUTPUT);
+  digitalWrite(rele, HIGH);
+  sensorsA.requestTemperatures();
+  delay(750);
+  Serial.println(F("Ethernet termostat - Author: Martin Chlebovec"));
+  server.on("/", handleRoot);
+  server.on("/get_data.json", handleGet);
+  server.on("/automat.html", handleAuto);
+  server.on("/manual.html", handleManual);
+  server.on("/zap.html", handleZAP);
+  server.on("/vyp.html", handleVYP);
+  server.on("/action.html", HTTP_POST, handleBody);
+  server.begin();
+}
+
+void loop() {
+  if ((millis() - cas) >= 10000 || cas == 0) {
+    cas = millis();
+    teplota = sensorsA.getTempCByIndex(0);
+    Serial.println();
+    Serial.println(F("----------------------------------------------"));
+    Serial.print(F("IP addresa ESP32 termostat: "));
+    Serial.print(ETH.localIP());
+    Serial.print(F(", pre pristup k termostatu navstivte http://"));
+    Serial.print(ETH.localIP());
+    Serial.println(F("/"));
+    Serial.print(F("Free HEAP: "));
+    Serial.print(ESP.getFreeHeap());
+    Serial.println(F(" B"));
+    Serial.print(F("Aktuálna teplota: "));
+    Serial.print(String(teplota));
+    Serial.println(F(" °C"));
+    sensorsA.requestTemperatures();
+    rezim = read_String(150);
+    if (rezim == 0.00) {
+      float cielova_teplota = read_String(10);
+      float  hystereza = read_String(100);
+      float minus_hystereza_teplota = (-1 * hystereza);
+      float rozdiel = cielova_teplota - teplota; //21 - 20
+      if (rozdiel > hystereza) {
+        Serial.println(F("Kotol zapnuty"));
+        stav = "ZAP";
+        digitalWrite(rele, LOW);
+      } else if (rozdiel &lt; minus_hystereza_teplota) {
+        Serial.println(F("Kotol vypnuty"));
+        stav = "VYP";
+        digitalWrite(rele, HIGH);
+      } else {
+        Serial.println(F("Rozdiel cielovej a aktuálnej teploty nie je nad, ani pod hysterezou. Stav vystupu sa nemeni."));
+        Serial.print(F("Aktualny stav vystupu pre kotol: "));
+        Serial.println(stav);
+      }
+    } else {
+      Serial.print(F("Manualny rezim, stav vystupu: "));
+      Serial.println(stav);
+    }
+  }
+  server.handleClient();
+  yield();
+}
+</pre>
+<p style="text-align: justify;"> 
+Die Implementierung enthält Programme für eine statische / dynamische IPv4-Adresse, die dem Ethernet-Shield zugewiesen wird.
+<b>Der Thermostat ist nur für Innentemperaturen gedacht!</b> (über 0°C), an die auch die Logik des Systems angepasst ist!
+Das Thermostat kann verwendet werden, um ein vorhandenes Raumthermostat zu ersetzen oder vorübergehend eine Heizung in einem Aquarium / Terrarium zu ersetzen, um eine konstante Temperatur aufrechtzuerhalten.
+</p>	
+ </div>
+		</div>
+</div>
+</body>
+        <script>
+$(document).ready(function(){
+  $('[data-toggle="tooltip2"]').tooltip();   
+});
+</script>
+</html>
