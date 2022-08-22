@@ -221,7 +221,7 @@ OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensorsA(&oneWire);
 const int rele = 4; //D4
 unsigned long cas = 0;
-String stav = OFF;
+String stav = "OFF";
 float teplota;
 long day = 86400000; // 86400000 milliseconds in a day
 long hour = 3600000; // 3600000 milliseconds in an hour
