@@ -65,8 +65,7 @@
 <span class="label label-success">WebSocket</span>
 <hr><h4>Kompatibilný riadiaci hardvér pre Ethernet termostat:</h4><hr>
 <div class="row">
-<div class="col-sm-6"><center><img src="https://i.imgur.com/FV9xi6K.png" width="128px" height="128px" style="border-radius: 50%;" alt="Riadiaci mikrokontróler Wemos D1 Mini - ESP8266-12E / ESP8266-12F" title="Riadiaci mikrokontróler Wemos D1 Mini - ESP8266-12E / ESP8266-12F"><br><b>Wemos D1 / D1 Mini (ESP8266)</b><br><a href="https://www.gme.sk/esp8266-esp-12e-wemos-d1-wifi-arduino-ide-uno-ch340" class="btn btn-success" role="button">Kúpiť GME.sk</a><br><a href="https://techfun.sk/produkt/vyvojova-doska-esp12-f-wemos-d1-mini/" class="btn btn-primary" role="button">Kúpiť Techfun.sk</a></center></div>
-<div class="col-sm-6"><center><img src="https://i.imgur.com/BczG03b.png" width="128px" height="128px" style="border-radius: 50%;" alt="Riadiaci mikrokontróler ESP32 Devkit V1 - ESP-WROOM-32 / ESP32-S" title="Riadiaci mikrokontróler ESP32 Devkit V1 - ESP-WROOM-32 / ESP32-S"><br><b>ESP32 DevKit</b><br><a href="https://www.gme.sk/esp32-esp-32s-2-4ghz-dual-mode-wifi-bluetooth" class="btn btn-success" role="button">Kúpiť GME.sk</a><br><a href="https://rlx.sk/sk/esp32/7196-nodemcu-32s-esp32-wifibluetooth-development-board-ws-16611.html" class="btn btn-danger" role="button">Kúpiť RLX.sk</a><br><a href="https://techfun.sk/produkt/vyvojova-doska-node-mcu-esp32-wifi-bluetooth/" class="btn btn-primary" role="button">Kúpiť Techfun.sk</a></center></div></div>	
+<div class="col-sm-12"><center><img src="https://i.imgur.com/BczG03b.png" width="128px" height="128px" style="border-radius: 50%;" alt="Riadiaci mikrokontróler ESP32 Devkit V1 - ESP-WROOM-32 / ESP32-S" title="Riadiaci mikrokontróler ESP32 Devkit V1 - ESP-WROOM-32 / ESP32-S"><br><b>ESP32 DevKit</b><br><a href="https://www.gme.sk/esp32-esp-32s-2-4ghz-dual-mode-wifi-bluetooth" class="btn btn-success" role="button">Kúpiť GME.sk</a><br><a href="https://rlx.sk/sk/esp32/7196-nodemcu-32s-esp32-wifibluetooth-development-board-ws-16611.html" class="btn btn-danger" role="button">Kúpiť RLX.sk</a><br><a href="https://techfun.sk/produkt/vyvojova-doska-node-mcu-esp32-wifi-bluetooth/" class="btn btn-primary" role="button">Kúpiť Techfun.sk</a></center></div></div>	
 </div>				
 <hr><center><h1>Izbový termostat - ESP32 + LAN8720</h1></center><hr>
 <p style="text-align: justify;">
@@ -115,7 +114,8 @@ Maximálny spínaný výkon 460W (230V, 2A). <b>Termostat je možné používať
 <li>Prehliadať v reálnom čase teplotu zo senzora DS18B20 na OneWire zbernici, uptime zariadenia, stav výstupu s dynamickou zmenou, aktuálne nastavené konfiguračné údaje pre termostat t.j. cieľovú teplotu a hysterézu z EEPROM</li>
 <li>Modifikovať cieľovú (referenčnú) teplotu <del>v rozsahu 5 až 50 °C s 0,25 °C krokom</del><img src="https://i.imgur.com/zMsp0cr.png" width="20px" height="20px" data-toggle="tooltip2" data-placement="right" title="Rozsah odobratý vo verzii 1.0.2 z dôvodu nepodpory desatinnej čiarky pre input type number na OS Android"></li>
 <li>Modifikovať hysterézu <del>v rozsahu 0 až 10 °C s 0,25 °C krokom</del><img src="https://i.imgur.com/zMsp0cr.png" width="20px" height="20px" data-toggle="tooltip2" data-placement="right" title="Rozsah odobratý vo verzii 1.0.2 z dôvodu nepodpory desatinnej čiarky pre input type number na OS Android"></li>
-
+<li>Voliť prevádzkový režim termostatu - automatický / manuálny režim</li>
+<li>V manuálnom režime prepínať výstup na neurčitú dobu</li>
 <b>ZAP/VYP regulácia kotla:</b> 
 <li>Príklad ZAP/VYP regulácie vykurovania - <font color="red">VIZUALIZÁCIA NIE JE SÚČASŤOU PROJEKTU</font></li>	
 <li>Kotol je aktívny po dobu dostiahnutia cieľovej teploty + hysterézy</li>
