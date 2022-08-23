@@ -209,7 +209,7 @@ Es ermöglicht die Kommunikation mit dem Dallas DS18B20-Sensor auf dem OneWire-B
 /*|-----------------------------------------------------------|*/
 /*|HTTP webserver - Ethernet thermostat - ESP32 + PHY LAN8720 |*/
 /*|Project webpage:                                           |*/
-/*|https://martinius96.github.io/termostat-ethernet/          |*/
+/*|https://martinius96.github.io/termostat-ethernet/en        |*/
 /*|AUTHOR: Martin Chlebovec                                   |*/
 /*|EMAIL: martinius96@gmail.com                               |*/
 /*|DONATE: paypal.me/chlebovec                                |*/
@@ -228,13 +228,12 @@ OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensorsA(&oneWire);
 const int rele = 4; //D4
 unsigned long cas = 0;
-String stav = "VYP";
+String stav = "OFF";
 float teplota;
 long day = 86400000; // 86400000 milliseconds in a day
 long hour = 3600000; // 3600000 milliseconds in an hour
 long minute = 60000; // 60000 milliseconds in a minute
 long second =  1000; // 1000 milliseconds in a second
-float rezim = 0.0;
 
 #ifdef ETH_CLK_MODE
 #undef ETH_CLK_MODE
@@ -335,52 +334,41 @@ void handleRoot() {
   stranka += F("&lt;meta http-equiv='Refresh' content='30'; />");
   stranka += F("&lt;meta name='viewport' content='width=device-width, initial-scale=1'>");
   stranka += F("&lt;link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css'>");
-  stranka += F("&lt;script type='text/javascript'> window.smartlook||(function(d) {"); 
+  stranka += F("&lt;script type='text/javascript'> window.smartlook||(function(d) {");
   stranka += F("var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];");
   stranka += F("var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';");
-  stranka += F("c.charset='utf-8';c.src='https://rec.smartlook.com/recorder.js';h.appendChild(c); })(document);"); 
-  stranka += F("smartlook('init', '6beae97f98b9844b761672af23f38fc60b962338');"); 
-  stranka += F("&lt;/script>"); 
+  stranka += F("c.charset='utf-8';c.src='https://rec.smartlook.com/recorder.js';h.appendChild(c); })(document);");
+  stranka += F("smartlook('init', '6beae97f98b9844b761672af23f38fc60b962338');");
+  stranka += F("&lt;/script>");
   stranka += F("&lt;script type='text/javascript'>");
   stranka += F("var timeleft = 30;");
   stranka += F("var downloadTimer = setInterval(function(){");
   stranka += F("if(timeleft &lt;= 0){");
   stranka += F("clearInterval(downloadTimer);");
-  stranka += F("document.getElementById(\"countdown\").innerHTML = \"Reštart...\";");
+  stranka += F("document.getElementById(\"countdown\").innerHTML = \"Refreshing...\";");
   stranka += F("} else {");
-  stranka += F("document.getElementById(\"countdown\").innerHTML = timeleft + \" sekúnd do reštartu\";");
+  stranka += F("document.getElementById(\"countdown\").innerHTML = timeleft + \" seconds to refresh\";");
   stranka += F("}");
   stranka += F("timeleft -= 1;");
   stranka += F("}, 1000);");
   stranka += F("&lt;/script>");
-  stranka += F("&lt;title>Ethernet termostat - ESP32&lt;/title>");
+  stranka += F("&lt;title>Ethernet thermostat - ESP32 + PHY Ethernet&lt;/title>");
   stranka += F("&lt;/head>");
   stranka += F("&lt;body>");
-  stranka += F("&lt;center>&lt;h3>Ethernet termostat - ESP32:&lt;/h3>");
-  if (rezim == 0.00) {
-    stranka += F("&lt;form action='/action.html' method='post'>");
-    stranka += "&lt;b>Referenčná teplota:&lt;/b>&lt;br>&lt;input type='text' id='fname' name='fname' min='5' max='50' step='0.25' value=" + String(read_String(10)) + ">&lt;br>";
-    stranka += "&lt;b>Hysteréza:&lt;/b>&lt;br>&lt;input type='text' id='fname2' name='fname2' min='0' max='10' step='0.25' value=" + String(read_String(100)) + ">&lt;br>";
-    stranka += F("&lt;input type='submit' class='btn btn-success' value='Zapísať'>");
-    stranka += F("&lt;/form>");
-    stranka += F("&lt;a href='manual.html' class='btn btn-primary' role='button'>Manuálny režim&lt;/a>&lt;hr>");
-  } else if (rezim == 1.00) {
-    if (stav == "ZAP") {
-      stranka += F("&lt;a href='vyp.html' class='btn btn-danger' role='button'>Vypnúť&lt;/a>&lt;br>");
-    }
-    if (stav == "VYP") {
-      stranka += F("&lt;a href='zap.html' class='btn btn-success' role='button'>Zapnúť&lt;/a>&lt;br>");
-    }
-    stranka += F("&lt;a href='automat.html' class='btn btn-primary' role='button'>Automatický režim&lt;/a>&lt;hr>");
+  stranka += F("&lt;center>&lt;h3>Enter datas for web server:&lt;/h3>");
+  stranka += F("&lt;form action='/action.html' method='post'>");
+  stranka += "&lt;b>Target temperature:&lt;/b>&lt;br>&lt;input type='text' id='fname' name='fname' min='5' max='50' step='0.25' value=" + String(read_String(10)) + ">&lt;br>";
+  stranka += "&lt;b>Hysteresis:&lt;/b>&lt;br>&lt;input type='text' id='fname2' name='fname2' min='0' max='10' step='0.25' value=" + String(read_String(100)) + ">&lt;br>";
+  stranka += F("&lt;input type='submit' class='btn btn-success' value='Send'>");
+  stranka += F("&lt;/form>&lt;hr>");
+  if (stav == "ON") {
+    stranka += F("&lt;b>&lt;font color='green'>Output: ON&lt;/font>&lt;/b>");
   }
-  if (stav == "ZAP") {
-    stranka += F("&lt;b>&lt;font color='green'>Výstup: Zapnutý&lt;/font>&lt;/b>");
-  }
-  if (stav == "VYP") {
-    stranka += F("&lt;b>&lt;font color='red'>Výstup: Vypnutý&lt;/font>&lt;/b>");
+  if (stav == "OFF") {
+    stranka += F("&lt;b>&lt;font color='red'>Output: OFF&lt;/font>&lt;/b>");
   }
   stranka += F("&lt;div id=\"countdown\">&lt;/div>");
-  stranka += F("&lt;b>Aktuálna teplota senzora DS18B20:&lt;/b> ");
+  stranka += F("&lt;b>Current sensor DS18B20 temperature:&lt;/b> ");
   stranka += String(teplota);
   stranka += F(" °C");
   stranka += F("&lt;hr>");
@@ -396,12 +384,9 @@ void handleRoot() {
   stranka += F(" ");
   stranka += String(seconds);
   stranka += F("s");
-  stranka += F("&lt;h3>Autor: Martin Chlebovec - martinius96@gmail.com - https://martinius96.github.io/termostat-ethernet/phy_ethernet.html&lt;/h3>");
-  stranka += F("&lt;h4>Verzia free - 1.0.4 build: 07. Aug. 2022&lt;/h4>");
+  stranka += F("&lt;h3>Author: Martin Chlebovec - martinius96@gmail.com - https://martinius96.github.io/termostat-ethernet/en/&lt;/h3>");
+  stranka += F("&lt;h4>Free version - 1.0.4 build: 22. Aug. 2021&lt;/h4>");
   stranka += F("&lt;/center>");
-  stranka += F("&lt;div class='alert alert-info'>");
-  stranka += F("Finálny build projektu Ethernet termostat. Ďakujem za vyskúšanie webaplikácie.&lt;br>&lt;strong>Rozšírenie o platený obsah:&lt;/strong>&lt;li>Async Webserver - AJAX update&lt;/li>&lt;li>Režim chladenia&lt;/li>&lt;li>mDNS záznam&lt;/li>&lt;li>OTA aktualizácie&lt;/li>&lt;li>Ovládanie hlasom cez Amazon Alexa&lt;/li>&lt;li>Ovládanie cez UDP callbacky&lt;/li>&lt;li>Možnosť publikácie dát na MQTT Broker (Loxone, IoT Industries Slovakia, Blynk...),&lt;/li>&lt;li>Dostupné senzory Bosch, Sensirion, DHT&lt;/li>&lt;li>Watchdog Timer&lt;/li>&lt;li>Zdrojový kód (.ino) pre aplikáciu.&lt;/li>&lt;li>Auto-test periférii, fail-safe riešenie&lt;/li>&lt;li>JSON output rozšírený o systémové dáta (Ethernet sieť, RSSI, uptime, napájacie napätie...)&lt;/li>");
-  stranka += F("&lt;/div>");
   stranka += F("&lt;/body>");
   stranka += F("&lt;/html>");
   server.send(200, "text/html", stranka);
@@ -416,8 +401,8 @@ void handleBody() {
       float cielova_teplota = target_temp.toFloat();
       writeString(10, cielova_teplota);
     } else {
-      Serial.println(F("Do input pola cielovej teploty nebolo vlozene cislo!"));
-      Serial.println(F("Zapis zakazany!"));
+      Serial.println(F("No number was entered in the target temperature input field!"));
+      Serial.println(F("Datas will be not stored in EEPROM!"));
     }
   }
   if (server.hasArg("fname2")) {
@@ -426,8 +411,8 @@ void handleBody() {
       float hystereza = hysteresis.toFloat();
       writeString(100, hystereza);
     } else {
-      Serial.println(F("Do input pola hysterezy nebolo vlozene cislo!"));
-      Serial.println(F("Zapis zakazany!"));
+      Serial.println(F("No number was entered in the hysteresis input field!"));
+      Serial.println(F("Datas will be not stored in EEPROM!"));
     }
   }
   String stranka = F("&lt;!DOCTYPE html>");
@@ -435,13 +420,13 @@ void handleBody() {
   stranka += F("&lt;head>");
   stranka += F("&lt;meta charset='utf-8'>");
   stranka += F("&lt;meta http-equiv='Refresh' content='5; url=/' />");
-  stranka += F("&lt;title>Ethernet termostat - ESP32 - spracovanie riadiach dát&lt;/title>");
+  stranka += F("&lt;title>Ethernet thermostat - ESP32 - data processing&lt;/title>");
   stranka += F("&lt;/head>");
   stranka += F("&lt;body>");
-  stranka += F("&lt;center>&lt;h3>Server prijal data z formulára:&lt;/h3>");
-  stranka += "&lt;li>&lt;b>Referenčná teplota: &lt;/b>" + String(read_String(10)) + " °C&lt;/li>";
-  stranka += "&lt;li>&lt;b>Hysteréza: &lt;/b>" + String(read_String(100)) + " °C&lt;/li>";
-  stranka += F("&lt;b>Presmerovanie... Prosím čakajte&lt;/b>&lt;/center>");
+  stranka += F("&lt;center>&lt;h3>Server received datas from HTML form:&lt;/h3>");
+  stranka += "&lt;li>&lt;b>Target temperature: &lt;/b>" + String(read_String(10)) + " °C&lt;/li>";
+  stranka += "&lt;li>&lt;b>Hysteresis: &lt;/b>" + String(read_String(100)) + " °C&lt;/li>";
+  stranka += F("&lt;b>Redirecting... Please wait&lt;/b>&lt;/center>");
   stranka += F("&lt;/body>");
   stranka += F("&lt;/html>");
   server.send(200, "text/html", stranka);
@@ -461,55 +446,6 @@ void handleGet() {
   server.send(200, "application/json", stranka);
 }
 
-void handleZAP() {
-  stav = "ZAP";
-  digitalWrite(rele, LOW);
-  String stranka = F("&lt;!DOCTYPE html>");
-  stranka += F("&lt;html>");
-  stranka += F("&lt;head>");
-  stranka += F("&lt;meta charset='utf-8'>");
-  stranka += F("&lt;meta http-equiv='Refresh' content='0; url=/' />");
-  stranka += F("&lt;/head>");
-  stranka += F("&lt;/html>");
-  server.send(200, "text/html", stranka);
-}
-
-void handleAuto() {
-  writeString(150, 0.00);
-  rezim = read_String(150);
-  String stranka = F("&lt;!DOCTYPE html>");
-  stranka += F("&lt;html>");
-  stranka += F("&lt;head>");
-  stranka += F("&lt;meta charset='utf-8'>");
-  stranka += F("&lt;meta http-equiv='Refresh' content='0; url=/' />");
-  stranka += F("&lt;/head>");
-  stranka += F("&lt;/html>");
-  server.send(200, "text/html", stranka);
-}
-void handleManual() {
-  writeString(150, 1.00);
-  rezim = read_String(150);
-  String stranka = F("&lt;!DOCTYPE html>");
-  stranka += F("&lt;html>");
-  stranka += F("&lt;head>");
-  stranka += F("&lt;meta charset='utf-8'>");
-  stranka += F("&lt;meta http-equiv='Refresh' content='0; url=/' />");
-  stranka += F("&lt;/head>");
-  stranka += F("&lt;/html>");
-  server.send(200, "text/html", stranka);
-}
-void handleVYP() {
-  stav = "VYP";
-  digitalWrite(rele, HIGH);
-  String stranka = F("&lt;!DOCTYPE html>");
-  stranka += F("&lt;html>");
-  stranka += F("&lt;head>");
-  stranka += F("&lt;meta charset='utf-8'>");
-  stranka += F("&lt;meta http-equiv='Refresh' content='0; url=/' />");
-  stranka += F("&lt;/head>");
-  stranka += F("&lt;/html>");
-  server.send(200, "text/html", stranka);
-}
 void setup() {
   Serial.begin(115200);
   WiFi.onEvent(WiFiEvent);
@@ -517,28 +453,23 @@ void setup() {
   EEPROM.begin(512);  //Initialize EEPROM
   float a = read_String(10);
   float b = read_String(100);
-  float c = read_String(150);
   if (isnan(a)) {
     writeString(10, 20.25);
   }
   if (isnan(b)) {
     writeString(100, 0.25);
   }
-  if (isnan(c)) {
-    writeString(150, 0.00);
-  }
   sensorsA.begin();
   pinMode(rele, OUTPUT);
   digitalWrite(rele, HIGH);
   sensorsA.requestTemperatures();
   delay(750);
-  Serial.println(F("Ethernet termostat - Author: Martin Chlebovec"));
+  Serial.println(F("Webapp created by: Martin Chlebovec"));
+  Serial.println(F("Build 1.0.4 from 22. Aug. 2021"));
+  Serial.println(F("IP address of Ethernet thermostat: "));
+  Serial.print(ETH.localIP());
   server.on("/", handleRoot);
   server.on("/get_data.json", handleGet);
-  server.on("/automat.html", handleAuto);
-  server.on("/manual.html", handleManual);
-  server.on("/zap.html", handleZAP);
-  server.on("/vyp.html", handleVYP);
   server.on("/action.html", HTTP_POST, handleBody);
   server.begin();
 }
@@ -549,39 +480,33 @@ void loop() {
     teplota = sensorsA.getTempCByIndex(0);
     Serial.println();
     Serial.println(F("----------------------------------------------"));
-    Serial.print(F("IP addresa ESP32 termostat: "));
+    Serial.println(F("IP address of Ethernet thermostat: "));
     Serial.print(ETH.localIP());
-    Serial.print(F(", pre pristup k termostatu navstivte http://"));
+    Serial.print(F(", to access Ethernet thermostat, visit http://"));
     Serial.print(ETH.localIP());
     Serial.println(F("/"));
     Serial.print(F("Free HEAP: "));
     Serial.print(ESP.getFreeHeap());
     Serial.println(F(" B"));
-    Serial.print(F("Aktuálna teplota: "));
+    Serial.print(F("Current temperature: "));
     Serial.print(String(teplota));
     Serial.println(F(" °C"));
     sensorsA.requestTemperatures();
-    rezim = read_String(150);
-    if (rezim == 0.00) {
-      float cielova_teplota = read_String(10);
-      float  hystereza = read_String(100);
-      float minus_hystereza_teplota = (-1 * hystereza);
-      float rozdiel = cielova_teplota - teplota; //21 - 20
-      if (rozdiel > hystereza) {
-        Serial.println(F("Kotol zapnuty"));
-        stav = "ZAP";
-        digitalWrite(rele, LOW);
-      } else if (rozdiel &lt; minus_hystereza_teplota) {
-        Serial.println(F("Kotol vypnuty"));
-        stav = "VYP";
-        digitalWrite(rele, HIGH);
-      } else {
-        Serial.println(F("Rozdiel cielovej a aktuálnej teploty nie je nad, ani pod hysterezou. Stav vystupu sa nemeni."));
-        Serial.print(F("Aktualny stav vystupu pre kotol: "));
-        Serial.println(stav);
-      }
+    float cielova_teplota = read_String(10);
+    float  hystereza = read_String(100);
+    float minus_hystereza_teplota = (-1 * hystereza);
+    float rozdiel = cielova_teplota - teplota; //21 - 20
+    if (rozdiel > hystereza) {
+      Serial.println(F("Output on"));
+      stav = "ON";
+      digitalWrite(rele, LOW);
+    } else if (rozdiel &lt; minus_hystereza_teplota) {
+      Serial.println(F("Output off"));
+      stav = "OFF";
+      digitalWrite(rele, HIGH);
     } else {
-      Serial.print(F("Manualny rezim, stav vystupu: "));
+      Serial.println(F("Difference between target and actual temp is not above or below the hysteresis. The output state does not change."));
+      Serial.print(F("Actual state of output: "));
       Serial.println(stav);
     }
   }
