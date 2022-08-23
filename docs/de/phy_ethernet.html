@@ -384,7 +384,7 @@ void handleRoot() {
   stranka += String(seconds);
   stranka += F("s");
   stranka += F("&lt;h3>Author: Martin Chlebovec - martinius96@gmail.com - https://martinius96.github.io/termostat-ethernet/en/&lt;/h3>");
-  stranka += F("&lt;h4>Free version - 1.0.4 build: 22. Aug. 2021&lt;/h4>");
+  stranka += F("&lt;h4>Free version - 1.0.4 build: 22. Aug. 2022&lt;/h4>");
   stranka += F("&lt;/center>");
   stranka += F("&lt;/body>");
   stranka += F("&lt;/html>");
@@ -464,7 +464,7 @@ void setup() {
   sensorsA.requestTemperatures();
   delay(750);
   Serial.println(F("Webapp created by: Martin Chlebovec"));
-  Serial.println(F("Build 1.0.4 from 22. Aug. 2021"));
+  Serial.println(F("Build 1.0.4 from 22. Aug. 2022"));
   Serial.println(F("IP address of Ethernet thermostat: "));
   Serial.print(ETH.localIP());
   server.on("/", handleRoot);
