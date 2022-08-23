@@ -65,8 +65,7 @@
 <span class="label label-success">WebSocket</span>
 <hr><h4>Kompatible Steuerungshardware für Ethernet-Thermostat:</h4><hr>
 <div class="row">
-<div class="col-sm-6"><center><img src="https://i.imgur.com/FV9xi6K.png" width="128px" height="128px" style="border-radius: 50%;" alt="Riadiaci mikrokontróler Wemos D1 Mini - ESP8266-12E / ESP8266-12F" title="Riadiaci mikrokontróler Wemos D1 Mini - ESP8266-12E / ESP8266-12F"><br><b>Wemos D1 / D1 Mini (ESP8266)</b></center></div>
-<div class="col-sm-6"><center><img src="https://i.imgur.com/BczG03b.png" width="128px" height="128px" style="border-radius: 50%;" alt="Riadiaci mikrokontróler ESP32 Devkit V1 - ESP-WROOM-32 / ESP32-S" title="Riadiaci mikrokontróler ESP32 Devkit V1 - ESP-WROOM-32 / ESP32-S"><br><b>ESP32 DevKit</b></center></div></div>	
+<div class="col-sm-12"><center><img src="https://i.imgur.com/BczG03b.png" width="128px" height="128px" style="border-radius: 50%;" alt="Riadiaci mikrokontróler ESP32 Devkit V1 - ESP-WROOM-32 / ESP32-S" title="Riadiaci mikrokontróler ESP32 Devkit V1 - ESP-WROOM-32 / ESP32-S"><br><b>ESP32 DevKit</b></center></div></div>	
 </div>				
 <hr><center><h1>Raumthermostat - ESP32 + LAN8720</h1></center><hr>
 <p style="text-align: justify;">
@@ -164,13 +163,13 @@ Der Thermostat wird erst wieder aktiviert, wenn die Temperatur 22,49 °C oder we
 	<strong>Aktualisieren Sie die Weboberfläche automatisch alle 30 Sekunden</strong>
 </div>	
 <b>Hauptseite zur Änderung von Zieltemperatur und Hysterese / Auswahl des manuellen Modus mit EIN/AUS-Steuerungsoption:</b>
-<img src="https://i.imgur.com/jzG6t0W.png" style="display: block; max-width: 100%; height: auto;" alt="PHY Ethernet termostat ESP32 - Hlavný prehľad s modifikáciou cieľovej teploty a hysterézy - Vypnutý" title="PHY Ethernet termostat ESP32 - Hlavný prehľad s modifikáciou cieľovej teploty a hysterézy - Vypnutý">        			
+<img src="https://i.imgur.com/MFYjguV.png" style="display: block; max-width: 100%; height: auto;" alt="PHY Ethernet termostat ESP32 - Hlavný prehľad s modifikáciou cieľovej teploty a hysterézy - Vypnutý" title="PHY Ethernet termostat ESP32 - Hlavný prehľad s modifikáciou cieľovej teploty a hysterézy - Vypnutý">        			
 
 <b>Bearbeitungsfortschritt der eingegebenen Daten (Nutzerumleitung):</b>
-<img src="https://i.imgur.com/TtmdPOl.png" style="display: block; max-width: 100%; height: auto;" alt="PHY Ethernet termostat ESP32 - spracovanie údajov z HTML formulára" title="PHY Ethernet termostat ESP32 - spracovanie údajov z HTML formulára">        			
+<img src="https://i.imgur.com/hVVGnXP.png" style="display: block; max-width: 100%; height: auto;" alt="PHY Ethernet termostat ESP32 - spracovanie údajov z HTML formulára" title="PHY Ethernet termostat ESP32 - spracovanie údajov z HTML formulára">        			
 
 <b>JSON-Ausgabe des Webservers im Browser / Client via Websocket:</b>
-<center><img src="https://i.imgur.com/MLtjjBD.png" style="display: block; max-width: 100%; height: auto;" alt="PHY Ethernet termostat ESP32 - JSON output" title="PHY Ethernet termostat ESP32 - JSON output"></center>        		
+<center><img src="https://i.imgur.com/tRcuvnr.png" style="display: block; max-width: 100%; height: auto;" alt="PHY Ethernet termostat ESP32 - JSON output" title="PHY Ethernet termostat ESP32 - JSON output"></center>        		
 
 <b>Ausgabe an UART-Monitor - Systemlogik + eingestellte IP-Adresse:</b>
 <center>
@@ -515,7 +514,7 @@ void loop() {
 }
 </pre>
 <p style="text-align: justify;"> 
-Die Implementierung enthält Programme für eine statische / dynamische IPv4-Adresse, die dem Ethernet-Shield zugewiesen wird.
+Die Implementierung enthält Programme für eine dynamische IPv4-Adresse, die dem Ethernet-Shield zugewiesen wird.
 <b>Der Thermostat ist nur für Innentemperaturen gedacht!</b> (über 0°C), an die auch die Logik des Systems angepasst ist!
 Das Thermostat kann verwendet werden, um ein vorhandenes Raumthermostat zu ersetzen oder vorübergehend eine Heizung in einem Aquarium / Terrarium zu ersetzen, um eine konstante Temperatur aufrechtzuerhalten.
 </p>	
