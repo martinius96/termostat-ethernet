@@ -74,18 +74,18 @@
 </div>				
 <hr><center><h1>Izbový termostat - ESP32 + LAN8720</h1></center><hr>
 <p style="text-align: justify;">
-Mikrokontróler ESP32 je prepojený s PHY Ethernet modulom LAN8720 cez rozhranie RMII. ESP32 cez WiFi kontróler zabezpečuje MAC vrstvu pre PHY Ethernet.
-Webserver implementovaný v Arduino Core a umožňuje riadiť termostat cez prehliadač v LAN sieti, kde je ESP32 dostupné na pridelenej IP adrese v rámci DHCP rozsahu.
-Logika termostatu sa vykonáva nezávisle na tom, či je webstránka webservera otvorená klientom. 
+Mikrokontróler ESP32 je prepojený s PHY Ethernet modulom LAN8720 cez rozhranie RMII (Reduced Media Independent Interface). 
+ESP32 cez WiFi kontróler zabezpečuje MAC vrstvu pre PHY Ethernet.
+Webserver implementovaný v Arduino Core a umožňuje riadiť termostat cez prehliadač v LAN sieti, kde je ESP32 dostupné na pridelenej IPv4 adrese z DHCP servera v LAN sieti.
+Logika termostatu sa vykonáva nezávisle na otvorenej webaplikácii termostatu.
 Zmena logiky, prahových teplôt sa vykonáva prostredníctom HTTP požiadaviek od klientov v sieti cez HTML formulár, prípadne je možné požiadavku zaslať aj priamo prostredníctvom HTTP POST požiadavky s predvolenými argumentami fname a fname2.
-Na základe požiadavky na konkrétnu podstránku je možné ovládať výstup, napríklad manuálne / automaticky, alebo je možné argumentom nastaveným na určitú hodnotu prepísať riadiace dáta., 
-Tie sú uložené do emulovanej EEPROM pamäte vo flash pamäti, pričom je životnosť tohto sektora na úrovni 10-tisíc prepisov.
-Riadiť je možné teplotu referenčnú (požadovanú) a hysterézu. 
+Na základe požiadavky na konkrétnu podstránku je možné ovládať výstup, napríklad manuálne / automaticky, alebo je možné argumentom nastaveným na určitú hodnotu prepísať riadiace dáta (cieľová teplota, hysteréza - dátový typ float).
+Riadiace dáta sú uložené v emulovanej EEPROM pamäti na ofsete flash pamäte, pričom je životnosť tohto sektora na úrovni 10-tisíc prepisov. 
 Webserver beží na štandardnom HTTP porte - 80. 
 </p>
 <hr>
 <p style="text-align: justify;">
-Termostat dokáže automatizovane prostredníctvom GPIO výstupu ovládať signalizačné relé pre zapnutie / vypnutie kotla. 
+Termostat dokáže automatizovane prostredníctvom GPIO výstupu (invertovaná logika) ovládať signalizačné relé pre zapnutie / vypnutie kotla. 
 Dokáže tak nahradiť existujúci izbový termostat a sprístupniť ho v sieti všetkým klientom.
 Termostat dokáže obsluhovať akékoľvek zariadenie s prehliadačom - počítač / smartfón / tablet / Smart TV a podobne. 
 Ako rozhodovací algoritmus sa využíva cieľová teplota s hysterézou, ktorá sa porovnáva s nameranou teplotou z digitálneho senzora teploty Dallas DS18B20.
