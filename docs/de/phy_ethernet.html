@@ -28,6 +28,98 @@
   right: 0px;
 }
 	</style>
+	<style>
+	#right {
+  position: absolute;
+  right: 0px;
+}
+	</style>
+<style>
+
+.aa_h2{
+  font:100 5rem/1 Roboto;
+  text-transform: uppercase;
+}
+table{
+   background: #fff;
+}
+table,thead,tbody,tfoot,tr, td,th{
+  text-align: center;
+  margin: auto;
+  border:1px solid #dedede;
+  padding: 1rem;
+  width: 50%;
+}
+.table    { display: table; width: 100%; }
+.tr       { display: table-row;  }
+.thead    { display: table-header-group }
+.tbody    { display: table-row-group }
+.tfoot    { display: table-footer-group }
+.col      { display: table-column }
+.colgroup { display: table-column-group }
+.td, .th   { display: table-cell; width: 50%; }
+.caption  { display: table-caption }
+
+.table,
+.thead,
+.tbody,
+.tfoot,
+.tr,
+.td,
+.th{
+  text-align: center;
+  margin: auto;
+  padding: 1rem;
+}
+.table{
+  background: #fff;
+  margin: auto;
+  border:none;
+  padding: 0;
+  margin-bottom: 5rem;
+}
+
+.th{
+  font-weight: 700;
+  border:1px solid #dedede;
+  &:nth-child(odd){
+    border-right:none;
+  }
+}
+.td{
+  font-weight: 300;
+  border:1px solid #dedede;
+  border-top:none;
+  &:nth-child(odd){
+    border-right:none;
+  }
+}
+
+.aa_htmlTable{
+  background: tomato;
+  padding: 5rem;
+  display: table;
+  width: 100%;
+  height: 100vh;
+  vertical-align: middle;
+}
+.aa_css{
+  background: skyblue;
+  padding: 5rem;
+  display: table;
+  width: 100%;
+  height: 100vh;
+  vertical-align: middle;
+}
+
+.aa_ahmadawais{
+  display: table;
+  width: 100%;
+  font: 100 1.2rem/2 Roboto;
+  margin: 5rem auto;
+}
+    
+  </style>
 </head>
 <body>
 	<div class="container">
@@ -100,6 +192,96 @@ Die Entscheidungslogik des Thermostats wird alle ausgeführt 10 Sekunden unabhä
 <li>PHY Ethernet Modul LAN8720</li>
 <li>Temperatursensor DS18B20 am OneWire-Bus im TO-92-Gehäuse oder in wasserdichter Ausführung im Aluminiumrohr</li>
 <li>Elektromagnetisches Relais SRD-5VDC-SL-C / SSR-Relais OMRON G3MB-202P zum Schalten des Kessels (Active-LOW-Signal)</li>
+<hr>
+<b>Anschluss von Hardwarekomponenten:</b>
+<center>
+<table class="table table-striped flat-table flat-table-3" style="color: black; max-width: 100%;">
+<thead>
+<tr>
+<th style="width: 50%;"><strong>ESP32</strong></th>
+<th style="width: 50%;"><strong>Dallas DS18B20</strong></th>
+</tr>
+<tr>
+<td>3V3</td>
+<td>Vcc</td>
+</tr>
+<tr>
+<td>GND</td>
+<td>GND</td>
+</tr>
+<tr>
+<td>D5</td>
+<td>DATA</td>
+</tr>
+</table>
+<table class="table table-striped flat-table flat-table-3" style="color: black; max-width: 100%;">
+<thead>
+<tr>
+<th style="width: 50%;"><strong>ESP32</strong></th>
+<th style="width: 50%;"><strong>Relais (OMRON G3MB-202P / SRD-05VDC-SL-C)</strong></th>
+</tr>
+<tr>
+<td>5V</td>
+<td>Vcc</td>
+</tr>
+<tr>
+<td>GND</td>
+<td>GND</td>
+</tr>
+<tr>
+<td>D4</td>
+<td>IN</td>
+</tr>
+</table>
+<table class="table table-striped flat-table flat-table-3" style="color: black; max-width: 100%;">
+<thead>
+<tr>
+<th style="width: 50%;"><strong>ESP32</strong></th>
+<th style="width: 50%;"><strong>PHY Ethernet LAN8720</strong></th>
+</tr>
+<tr>
+<td>3V3</td>
+<td>Vcc</td>
+</tr>
+<tr>
+<td>GND</td>
+<td>GND / RBIAS</td>
+</tr>
+<tr>
+<td>D18</td>
+<td>MDIO</td>
+</tr>
+<tr>
+<td>D19</td>
+<td>TXD0</td>
+</tr>
+<tr>
+<td>D21</td>
+<td>TXEN</td>
+</tr>
+<tr>
+<td>D22</td>
+<td>TXD1</td>
+</tr>
+<tr>
+<td>D23</td>
+<td>MDC</td>
+</tr>
+<tr>
+<td>D25</td>
+<td>RXD0</td>
+</tr>
+<tr>
+<td>D26</td>
+<td>RXD1</td>
+</tr>
+<tr>
+<td>D27</td>
+<td>CRS_DV</td>
+</tr>
+</table>
+</center> 
+<hr>
 <p style="text-align: justify;">
 <b>HTML-Seiten, die auf ESP32 ausgeführt werden:</b>
 <li><b>/</b> - Startseite mit dem Formular, der aktuellen Auflistung des Logikausgangs für das Relais, der aktuellen und der Zieltemperatur, der Temperatur, der Hysterese</li>
