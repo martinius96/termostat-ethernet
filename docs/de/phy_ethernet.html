@@ -69,29 +69,30 @@
 </div>				
 <hr><center><h1>Raumthermostat - ESP32 + LAN8720</h1></center><hr>
 <p style="text-align: justify;">
-Der ESP32-Mikrocontroller ist über die RMII-Schnittstelle mit dem LAN8720 PHY-Ethernet-Modul verbunden. Der ESP32 stellt über den WiFi-Controller die MAC-Schicht für das PHY-Ethernet bereit.
-Der in Arduino Core implementierte Webserver ermöglicht die Steuerung des Thermostats über einen Browser im LAN-Netzwerk, wobei der ESP32 auf einer zugewiesenen IP-Adresse innerhalb des DHCP-Bereichs verfügbar ist.
-Die Thermostatlogik wird unabhängig davon ausgeführt, ob die Webserver-Webseite für den Client geöffnet ist.
-Das Ändern der Logik- und Schwellentemperaturen erfolgt über HTTP-Anforderungen von Clients im Netzwerk über ein HTML-Formular, oder die Anforderung kann direkt über eine HTTP-POST-Anforderung mit den Standardargumenten fname und fname2 gesendet werden.
-Basierend auf der Anforderung einer bestimmten Unterseite kann die Ausgabe gesteuert werden, z. B. manuell / automatisch, oder es ist möglich, die Steuerdaten mit einem auf einen bestimmten Wert gesetzten Argument zu überschreiben.
-Sie werden im emulierten EEPROM-Speicher im Flash-Speicher gespeichert, während die Lebensdauer dieses Sektors bei 10.000 Neuschreibungen liegt.
-Es ist möglich, die (angeforderte) Referenztemperatur und Hysterese zu steuern.
+Der ESP32-Mikrocontroller ist über die RMII-Schnittstelle mit dem LAN8720 PHY-Ethernet-Modul verbunden. 
+Der ESP32 stellt über den WiFi-Controller die MAC-Schicht für das PHY-Ethernet bereit. 
+Der in Arduino Core implementierte Webserver ermöglicht die Steuerung des Thermostats über einen Browser im LAN-Netzwerk, wobei der ESP32 unter einer zugewiesenen IP-Adresse im DHCP-Bereich verfügbar ist. 
+Die Thermostatlogik wird unabhängig davon ausgeführt, ob die Webserver-Webseite für den Client geöffnet ist. 
+Das Ändern der Logik- und Schwellentemperaturen erfolgt über HTTP-Anforderungen von Clients im Netzwerk über ein HTML-Formular, oder die Anforderung kann direkt über eine HTTP-POST-Anforderung mit den Standardargumenten fname und fname2 gesendet werden. 
+Basierend auf der Anforderung einer bestimmten Unterseite kann die Ausgabe gesteuert werden, z. B. manuell / automatisch, oder es ist möglich, die Steuerdaten mit einem auf einen bestimmten Wert gesetzten Argument zu überschreiben. 
+Sie werden im emulierten EEPROM-Speicher im Flash-Speicher gespeichert, während die Lebensdauer dieses Sektors bei 10.000 Neuschreibungen liegt. 
+Es ist möglich, die (angeforderte) Referenztemperatur und Hysterese zu steuern. 
 Der Webserver läuft auf dem Standard-HTTP-Port - 80.
 </p>
 <hr>
 <p style="text-align: justify;">
-Über den GPIO-Ausgang kann der Thermostat automatisch das Melderelais zum Ein-/Ausschalten des Boilers ansteuern.
-Damit kann es das vorhandene Raumthermostat ersetzen und allen Clients im Netzwerk zur Verfügung stellen.
-Der Thermostat kann jedes Gerät mit einem Browser bedienen - Computer / Smartphone / Tablet / Smart TV und dergleichen.
-Als Entscheidungsalgorithmus wird eine Zieltemperatur mit Hysterese verwendet, die mit der gemessenen Temperatur des digitalen Temperatursensors Dallas DS18B20 verglichen wird.
-Solltemperatur und Hysterese werden aus dem EEPROM-Speicher ausgelesen, dort auch bei Stromausfall dauerhaft gespeichert und beim Schreiben neuer Daten überschrieben.
-<b>Die Auflösung des DS18B20-Sensors während der Messung beträgt 12 Bit, was durch die Temperaturauflösung von 0,0625 °C erklärt wird, was der minimale Auflösungsschritt zwischen verschiedenen Messungen ist.
-Daten über den OneWire-Bus können auf Anfrage in 500 bis 1000 ms beim Mikrocontroller ankommen, abhängig von der Anzahl der Sensoren am OneWire-Bus, der Länge des Busses usw.</b>
-Die Entscheidungslogik des Thermostats wird alle 10 Sekunden unabhängig von der Webanwendung ausgeführt, eine Keep-Alive-Verbindung ist zur Ausführung der Logik nicht erforderlich, das System arbeitet somit autonom und erfordert keine Aufmerksamkeit des Benutzers.
+Über den GPIO-Ausgang kann der Thermostat automatisch das Melderelais zum Ein-/Ausschalten des Boilers ansteuern. 
+Damit kann es das vorhandene Raumthermostat ersetzen und allen Clients im Netzwerk zur Verfügung stellen. 
+Der Thermostat kann jedes Gerät mit einem Browser bedienen - Computer / Smartphone / Tablet / Smart TV und dergleichen. 
+Als Entscheidungsalgorithmus wird eine Zieltemperatur mit Hysterese verwendet, die mit der gemessenen Temperatur des digitalen Temperatursensors Dallas DS18B20 verglichen wird. 
+Solltemperatur und Hysterese werden aus dem EEPROM-Speicher ausgelesen, dort auch bei Stromausfall dauerhaft gespeichert und beim Schreiben neuer Daten überschrieben. 
+Die Auflösung des DS18B20-Sensors während der Messung beträgt 12 Bit, was durch die Temperaturauflösung von 0,0625 °C erklärt wird, was der minimale Auflösungsschritt zwischen verschiedenen Messungen ist. 
+Daten über den OneWire-Bus können auf Anfrage in 500 bis 1000 ms beim Mikrocontroller ankommen, abhängig von der Anzahl der Sensoren am OneWire-Bus, der Länge des Busses usw. 
+Die Entscheidungslogik des Thermostats wird alle ausgeführt 10 Sekunden unabhängig von der Webanwendung, eine Keep-Alive-Verbindung ist nicht erforderlich, um die Logik auszuführen, das System arbeitet somit autonom und erfordert keine Aufmerksamkeit des Benutzers.
 </p>
 <b>In Bezug auf die Hardware verwendet das Projekt:</b>
 <li>ESP32</li>
-<li>Ethernet Modul LAN8720</li>
+<li>PHY Ethernet Modul LAN8720</li>
 <li>Temperatursensor DS18B20 am OneWire-Bus im TO-92-Gehäuse oder in wasserdichter Ausführung im Aluminiumrohr</li>
 <li>Elektromagnetisches Relais SRD-5VDC-SL-C / SSR-Relais OMRON G3MB-202P zum Schalten des Kessels (Active-LOW-Signal)</li>
 <p style="text-align: justify;">
@@ -99,10 +100,6 @@ Die Entscheidungslogik des Thermostats wird alle 10 Sekunden unabhängig von der
 <li><b>/</b> - Startseite mit dem Formular, der aktuellen Auflistung des Logikausgangs für das Relais, der aktuellen und der Zieltemperatur, der Temperatur, der Hysterese</li>
 <li><b>/action.html</b> - verarbeitet die Werte aus dem Formular, schreibt sie in den emulierten EEPROM-Speicher, leitet den Benutzer zurück zur Stammseite</li>
 <li><b>/get_data.json</b> - verteilt Daten über aktuelle Temperatur, Referenztemperatur und Hysterese an einen Dritten (Computer, Mikrocontroller, anderer Client ...) im JSON-Format - kann mit einem Beispiel-JSON-Client verwendet werden, der Daten an MQTT Broker senden kann, beispielsweise an die Hausautomation</li>
-<li><b>/zap.html</b> - dauerhafte Aktivierung des Ausgangs im Handbetrieb</li>
-<li><b>/vyp.html</b> - dauerhaftes Abschalten des Ausgangs im Handbetrieb</li>
-<li><b>/automat.html</b> - Modus auf automatisch ändern (verwendet Hysterese und Zieltemperatur)</li>
-<li><b>/manual.html</b> - Wechselmodus auf manuell (permanente Steuerung des Ausgangs EIN / AUS hart)</li>
 <hr>				
 Das im Projekt verwendete elektromagnetische Relais SRD-5VDC-SL-C ermöglicht das Schalten von bis zu 10 A bei 230 V - maximale Leistung 2300 W.
 Beim Schalten eines Gleichstromkreises (Last) können 300 W (10 A bei 30 V DC max) geschaltet werden.
@@ -132,7 +129,7 @@ Der Zustand des Ausgangs existiert nur im RAM-Speicher, wo er bei Änderung übe
 <p style="text-align: justify;">
 Mittels Refresh-Meta-Tag aktualisiert der Webserver alle 30 Sekunden die gesamte Seite, zusätzlich wird per Javascript eine ungefähre Refresh-Zeit in die HTML-Seite geschrieben.
 Bis zu diesem Zeitpunkt muss die Änderung für das Thermostat notiert werden, da sonst die Eingabefenster für numerische Eingaben in das Formular beim Aktualisieren der Seite zurückgesetzt werden. <b>Basierend auf dem Feedback von Benutzern von Android-Geräten wurde die Aktualisierungszeit von 10 auf 30 Sekunden verlängert.</b>
-Die dynamischen Daten, die sich hauptsächlich ändern, sind der aktuelle Wert der Ausgabe - <b><font color="#27AE60">Ein</font></b> / <b><font color="red">Aus</ font> </b>, die zusammen mit der Farbmarkierung den Bediener über den aktuellen Zustand der Ausgabe informiert.
+Die dynamischen Daten, die sich hauptsächlich ändern, sind der aktuelle Wert der Ausgabe - <b><font color="#27AE60">Ein</font></b> / <b><font color="red">Aus</font> </b>, die zusammen mit der Farbmarkierung den Bediener über den aktuellen Zustand der Ausgabe informiert.
 Da die Logik des Systems unabhängig vom Webserver ausgeführt wird, kann die Ausgabe bereits vor dem Refresh in einem anderen Zustand sein, als aktuell in der Webanwendung angezeigt wird. Die Ausgangsänderung wird sofort zB auf dem UART-Monitor ausgedruckt (115200 Baud/s).
 Auf der Website des Thermostats kann der Benutzer auch Informationen über die Betriebszeit des Geräts (wie lange es läuft) finden, d.h. Zeit in Tagen, Stunden, Minuten und Sekunden.
 </p>
