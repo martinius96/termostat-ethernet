@@ -30,6 +30,92 @@
   right: 0px;
 }
 	</style>
+<style>
+
+.aa_h2{
+  font:100 5rem/1 Roboto;
+  text-transform: uppercase;
+}
+table{
+   background: #fff;
+}
+table,thead,tbody,tfoot,tr, td,th{
+  text-align: center;
+  margin: auto;
+  border:1px solid #dedede;
+  padding: 1rem;
+  width: 50%;
+}
+.table    { display: table; width: 100%; }
+.tr       { display: table-row;  }
+.thead    { display: table-header-group }
+.tbody    { display: table-row-group }
+.tfoot    { display: table-footer-group }
+.col      { display: table-column }
+.colgroup { display: table-column-group }
+.td, .th   { display: table-cell; width: 50%; }
+.caption  { display: table-caption }
+
+.table,
+.thead,
+.tbody,
+.tfoot,
+.tr,
+.td,
+.th{
+  text-align: center;
+  margin: auto;
+  padding: 1rem;
+}
+.table{
+  background: #fff;
+  margin: auto;
+  border:none;
+  padding: 0;
+  margin-bottom: 5rem;
+}
+
+.th{
+  font-weight: 700;
+  border:1px solid #dedede;
+  &:nth-child(odd){
+    border-right:none;
+  }
+}
+.td{
+  font-weight: 300;
+  border:1px solid #dedede;
+  border-top:none;
+  &:nth-child(odd){
+    border-right:none;
+  }
+}
+
+.aa_htmlTable{
+  background: tomato;
+  padding: 5rem;
+  display: table;
+  width: 100%;
+  height: 100vh;
+  vertical-align: middle;
+}
+.aa_css{
+  background: skyblue;
+  padding: 5rem;
+  display: table;
+  width: 100%;
+  height: 100vh;
+  vertical-align: middle;
+}
+
+.aa_ahmadawais{
+  display: table;
+  width: 100%;
+  font: 100 1.2rem/2 Roboto;
+  margin: 5rem auto;
+}
+    
+  </style>
 </head>
 <body>
 	<div class="container">
@@ -86,10 +172,10 @@ The web server runs on the standard HTTP port - 80.
 </p>
 <hr>
 <p style="text-align: justify;">
-The thermostat can automatically control the signaling relay for switching the boiler on/off via the GPIO output.
+The thermostat can automatically control the signaling relay (with inverted logic) for switching the boiler ON / OFF via the GPIO output state.
 It can thus replace the existing room thermostat and make it available in the network to all clients.
-The thermostat can operate any device with a browser - computer / smartphone / tablet / Smart TV and the like.
-As a decision algorithm, a target temperature with hysteresis is used, which is compared with the measured temperature from the Dallas DS18B20 digital temperature sensor.
+The thermostat can operate any device with a browser - computer / smartphone / tablet / Smart TV and similar.
+<b>As a decision algorithm, a target temperature with hysteresis is used, which is compared with the measured temperature from the Dallas DS18B20 digital temperature sensor.</b>
 The target temperature and hysteresis is read from the EEPROM memory, where it is stored permanently even in the event of a power failure and is overwritten when new data is written.
 <b>The resolution of the DS18B20 sensor during measurement is 12-bit, which is explained by the temperature resolution of 0.0625 °C, which is the minimum resolution step between different measurements.
 Data over the OneWire bus can arrive at the microcontroller upon request in 500 to 1000 ms, depending on the number of sensors on the OneWire bus, the length of the bus, etc...</b>
@@ -100,6 +186,58 @@ The decision-making logic of the thermostat is performed every 10 seconds indepe
 <li>Ethernet module LAN8720</li>
 <li>DS18B20 temperature sensor on the OneWire bus in a TO-92 case, or in a waterproof version in an aluminum tube</li>
 <li>Electromagnetic relay SRD-5VDC-SL-C / SSR relay OMRON G3MB-202P used for switching the boiler (Active-LOW signal)</li>
+<hr>
+<b>Wiring of hardware components:</b>
+<center>
+<table class="table table-striped flat-table flat-table-3" style="color: black; max-width: 100%;">
+<thead>
+<tr>
+<th style="width: 50%;"><strong>ESP32</strong></th>
+<th style="width: 50%;"><strong>PHY Ethernet LAN8720</strong></th>
+</tr>
+<tr>
+<td>3V3</td>
+<td>Vcc</td>
+</tr>
+<tr>
+<td>GND</td>
+<td>GND / RBIAS</td>
+</tr>
+<tr>
+<td>D18</td>
+<td>MDIO</td>
+</tr>
+<tr>
+<td>D19</td>
+<td>TXD0</td>
+</tr>
+<tr>
+<td>D21</td>
+<td>TXEN</td>
+</tr>
+<tr>
+<td>D22</td>
+<td>TXD1</td>
+</tr>
+<tr>
+<td>D23</td>
+<td>MDC</td>
+</tr>
+<tr>
+<td>D25</td>
+<td>RXD0</td>
+</tr>
+<tr>
+<td>D26</td>
+<td>RXD1</td>
+</tr>
+<tr>
+<td>D27</td>
+<td>CRS_DV</td>
+</tr>
+</table>
+<center> 
+<hr>
 <p style="text-align: justify;">
 <b>HTML webpages running on ESP32 webserver:</b>
 <li><b>/</b> - root page containing the form, the current listing of the logic output for the relay, the current and target temperature, the temperature, hysteresis</li>
@@ -134,7 +272,7 @@ The state of the output exists only in the RAM memory, where it is overwritten w
 <p style="text-align: justify;">
 By means of the Refresh meta tag, the web server refreshes the entire page every 30 seconds, and an approximate refresh time is also written to the HTML page via Javascript.
 It is necessary to write down the change for the thermostat by this time, otherwise the input windows for numerical inputs to the form will be reset when the page is refreshed. <b>Based on feedback from Android device users, the Refresh time has been extended from 10 to 30 seconds.</b>
-The dynamic data that primarily changes is the current value of the output - <b><font color="#27AE60">On</font></b> / <b><font color="red">Off</font> </b>, which informs the operator about the actual state of the output together with the color marking.
+The dynamic data that primarily changes is the current value of the output - <b><font color="#27AE60">ON</font></b> / <b><font color="red">OFF</font> </b>, which informs the operator about the actual state of the output together with the color marking.
 As the logic of the system is executed independently of the web server, the output may already be in a different state than the one currently displayed in the web application before the refresh. The output change is immediately printed, for example, on the UART monitor (115200 baud/s).
 On the website of the thermostat, the user can also find information about the uptime of the device (how long it runs), i.e. time in days, hours, minutes and seconds.
 </p>
@@ -144,9 +282,9 @@ On the website of the thermostat, the user can also find information about the u
 <b>Main page for modification of target temperature and hysteresis - preview of switched on output:</b>
 <div class="alert alert-info">
 	<strong>Sample data</strong>
-<li><b>Target temperature:</b> 22.75 °C</li>
-<li><b>Hysteresis:</b> 0.25 °C</li>
-<li><b>Measured data:</b> 22.49 °C</li>
+	<li><b>Target temperature:</b> 22.75 °C</li>
+	<li><b>Hysteresis:</b> 0.25 °C</li>
+	<li><b>Measured data:</b> 22.49 °C</li>
 	<li><b>Output:</b>  <font color="#27AE60">ON</font></li>
 	<hr>
 	<p style="text-align: justify;">
