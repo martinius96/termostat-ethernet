@@ -193,6 +193,44 @@ The decision-making logic of the thermostat is performed every 10 seconds indepe
 <thead>
 <tr>
 <th style="width: 50%;"><strong>ESP32</strong></th>
+<th style="width: 50%;"><strong>Dallas DS18B20</strong></th>
+</tr>
+<tr>
+<td>3V3</td>
+<td>Vcc</td>
+</tr>
+<tr>
+<td>GND</td>
+<td>GND / RBIAS</td>
+</tr>
+<tr>
+<td>D5</td>
+<td>DATA</td>
+</tr>
+</table>
+<table class="table table-striped flat-table flat-table-3" style="color: black; max-width: 100%;">
+<thead>
+<tr>
+<th style="width: 50%;"><strong>ESP32</strong></th>
+<th style="width: 50%;"><strong>Relay (OMRON G3MB-202P / SRD-05VDC-SL-C)</strong></th>
+</tr>
+<tr>
+<td>5V</td>
+<td>Vcc</td>
+</tr>
+<tr>
+<td>GND</td>
+<td>GND / RBIAS</td>
+</tr>
+<tr>
+<td>D4</td>
+<td>IN</td>
+</tr>
+</table>
+<table class="table table-striped flat-table flat-table-3" style="color: black; max-width: 100%;">
+<thead>
+<tr>
+<th style="width: 50%;"><strong>ESP32</strong></th>
 <th style="width: 50%;"><strong>PHY Ethernet LAN8720</strong></th>
 </tr>
 <tr>
@@ -236,7 +274,7 @@ The decision-making logic of the thermostat is performed every 10 seconds indepe
 <td>CRS_DV</td>
 </tr>
 </table>
-<center> 
+</center> 
 <hr>
 <p style="text-align: justify;">
 <b>HTML webpages running on ESP32 webserver:</b>
