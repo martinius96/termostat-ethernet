@@ -53,7 +53,7 @@
   </div>
 </nav>   	
 <div class="alert alert-danger">
- 	<strong>Support Ethernet termostat project via PayPal. Your support will allow me to add new functionalities into firmware that will be distributed to everyone on this webpage: </strong><a href="https://www.paypal.com/paypalme/chlebovec" class="btn btn-primary" role="button">PayPal donate</a>
+ 	<strong>Support Ethernet thermostat project via PayPal. Your support will allow me to add new functionalities (async webserver, manual mode, Over-The-Air firmware upload) into firmware that will be distributed to everyone on this webpage: </strong><a href="https://www.paypal.com/paypalme/chlebovec" class="btn btn-primary" role="button">PayPal donate</a>
 </div>		
 <span class="label label-default">ESP32</span>
 <span class="label label-primary">Ethernet</span>
@@ -64,13 +64,18 @@
 <span class="label label-default">HTML</span>
 <span class="label label-primary">Webserver</span>
 <span class="label label-success">WebSocket</span>
-<hr><h4>Compatible control hardware for Ethernet thermostat:</h4><hr>
+<hr><h4>Compatible hardware for PHY Ethernet thermostat:</h4><hr>
 <div class="row">
-<div class="col-sm-12"><center><img src="https://i.imgur.com/BczG03b.png" width="128px" height="128px" style="border-radius: 50%;" alt="Riadiaci mikrokontróler ESP32 Devkit V1 - ESP-WROOM-32 / ESP32-S" title="Riadiaci mikrokontróler ESP32 Devkit V1 - ESP-WROOM-32 / ESP32-S"><br><b>ESP32 DevKit</b><br></center></div></div>	
-</div>				
+<div class="col-sm-2"><center><img src="https://i.imgur.com/BczG03b.png" width="128px" height="128px" style="border-radius: 50%;" alt="Riadiaci mikrokontróler ESP32 Devkit V1 - ESP-WROOM-32 / ESP32-S" title="Riadiaci mikrokontróler ESP32 Devkit V1 - ESP-WROOM-32 / ESP32-S"><br><b>ESP32 DevKit</b><br></center></div>	
+<div class="col-sm-2"><center><img src="https://i.imgur.com/ppyXzMM.png" width="128px" height="128px" style="border-radius: 50%;" alt="Ethernet modul LAN 8720 PHY Ethernet" title="Ethernet modul LAN 8720 PHY Ethernet"><br><b>Ethernet module PHY LAN8720</b><br></center></div>
+<div class="col-sm-2"><center><img src="https://i.imgur.com/sMrQ8Es.png" width="128px" height="128px" style="border-radius: 50%;" alt="Teplotný senzor DS18B20 v puzdre TO-92" title="Teplotný senzor DS18B20 v puzdre TO-92"><br><b>Dallas DS18B20 - case TO-92</b><br></center></div>
+<div class="col-sm-2"><center><img src="https://i.imgur.com/FNWTjFE.png" width="128px" height="128px" style="border-radius: 50%;" alt="Teplotný senzor DS18B20 - vodotesné vyhotovenie" title="Teplotný senzor DS18B20 - vodotesné vyhotovenie"><br><b>Dallas DS18B20 - for exterior</b><br></center></div>
+<div class="col-sm-2"><center><img src="https://i.imgur.com/eMp0SSr.png" width="128px" height="128px" style="border-radius: 50%;" alt="SSR relé OMRON G3MB-202P" title="SSR relé OMRON G3MB-202P"><br><b>SSR relay OMRON G3MB-202P</b><br></center></div>
+<div class="col-sm-2"><center><img src="https://i.imgur.com/cqaEQJ7.png" width="128px" height="128px" style="border-radius: 50%;" alt="Elektromagnetické relé SRD-05VDC-SL-C" title="Elektromagnetické relé SRD-05VDC-SL-C"><br><b>Elmg. relay SRD-05VDC-SL-C</b><br></center></div>
+</div>			
 <hr><center><h1>Room thermostat - ESP32 + LAN8720</h1></center><hr>
 <p style="text-align: justify;">
-The ESP32 microcontroller is connected to the LAN8720 PHY Ethernet module via the RMII interface. The ESP32 provides the MAC layer for the PHY Ethernet via the WiFi controller.
+The ESP32 microcontroller is connected to the LAN8720 PHY Ethernet module via the RMII interface. ESP32 provides the MAC layer for the PHY Ethernet via the WiFi controller.
 Web server implemented in Arduino Core and allows controlling the thermostat through a browser in the LAN network, where the ESP32 is available at an assigned IP address within the DHCP range.
 The thermostat logic is executed regardless of whether the web server web page is open to the client.
 Changing the logic and threshold temperatures is done through HTTP requests from clients in the network via an HTML form, or the request can be sent directly through an HTTP POST request with default arguments fname and fname2.
