@@ -101,7 +101,7 @@ The decision-making logic of the thermostat is performed every 10 seconds indepe
 <li>DS18B20 temperature sensor on the OneWire bus in a TO-92 case, or in a waterproof version in an aluminum tube</li>
 <li>Electromagnetic relay SRD-5VDC-SL-C / SSR relay OMRON G3MB-202P used for switching the boiler (Active-LOW signal)</li>
 <p style="text-align: justify;">
-<b>HTML stránky bežiace na ESP32:</b>
+<b>HTML webpages running on ESP32 webserver:</b>
 <li><b>/</b> - root page containing the form, the current listing of the logic output for the relay, the current and target temperature, the temperature, hysteresis</li>
 <li><b>/action.html</b> - processes the values from the form, writes them to the emulated EEPROM memory, redirects the user back to the root page</li>
 <li><b>/get_data.json</b> - distributes data about current temperature, reference temperature and hysteresis to a third party (computer, microcontroller, other client...) in JSON format - can be used with an example JSON client that can send data to MQTT Broker, for example to home automation</li>
