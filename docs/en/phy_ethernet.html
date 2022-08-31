@@ -135,7 +135,7 @@ table,thead,tbody,tfoot,tr, td,th{
 <li class="active"><a href="phy_ethernet.html">ESP32 + PHY</a></li>
 <a href="../de/phy_ethernet.html"><img src="https://futbalovysen.sk/wp-content/uploads/germany.png" alt="Germany.png, 2,2kB" title="Germany" height="32" width="32"></a>	
 <a href="../phy_ethernet.html"><img src="https://futbalovysen.sk/wp-content/uploads/slovakia.png" alt="Slovak flag.png, 2,2kB" title="Slovakia" height="32" width="32"></a>
-<li style="float: right; "><a href="https://martinius96.github.io/WiFi-termostat/en/" class="btn btn-success" role="button" title="Zmeniť projekt na WiFi termostat"><img src="https://www.flaticon.com/premium-icon/icons/svg/3686/3686730.svg" width=16px height=16px> <font color="white">WiFi thermostat</font></a></li></ul>
+<li style="float: right; "><a href="https://martinius96.github.io/WiFi-termostat/en/" class="btn btn-success" role="button" title="Change project to WiFi thermostat"><img src="https://www.flaticon.com/premium-icon/icons/svg/3686/3686730.svg" width=16px height=16px> <font color="white">WiFi thermostat</font></a></li></ul>
   </div>
 </nav>   	
 <div class="alert alert-danger">
@@ -281,10 +281,10 @@ The decision-making logic of the thermostat is performed every 10 seconds indepe
 <li><b>/</b> - root page containing the form, the current listing of the logic output for the relay, the current and target temperature, the temperature, hysteresis</li>
 <li><b>/action.html</b> - processes the values from the form, writes them to the emulated EEPROM memory, redirects the user back to the root page</li>
 <li><b>/get_data.json</b> - distributes data about current temperature, reference temperature and hysteresis to a third party (computer, microcontroller, other client...) in JSON format - can be used with an example JSON client that can send data to MQTT Broker, for example to home automation</li>
-<li><del><b>/zap.html</b> - permanent activation of the output in manual mode</del><img src="https://i.imgur.com/zMsp0cr.png" width="20px" height="20px" data-toggle="tooltip3" data-placement="right" title="Not included in free version of PHY Ethernet thermostat"></li>
-<li><del><b>/vyp.html</b> - permanent shutdown of the output in manual mode</del><img src="https://i.imgur.com/zMsp0cr.png" width="20px" height="20px" data-toggle="tooltip3" data-placement="right" title="Not included in free version of PHY Ethernet thermostat"></li>
-<li><del><b>/automat.html</b> - changing the thermostat mode to automatic (uses hysteresis and target temperature)</del><img src="https://i.imgur.com/zMsp0cr.png" width="20px" height="20px" data-toggle="tooltip3" data-placement="right" title="Not included in free version of PHY Ethernet thermostat"></li>
-<li><del><b>/manual.html</b> - changing the thermostat mode to manual (permanent control of the GPIO output for boiler status ON / OFF)</del><img src="https://i.imgur.com/zMsp0cr.png" width="20px" height="20px" data-toggle="tooltip3" data-placement="right" title="Not included in free version of PHY Ethernet thermostat"></li>
+<li><del><b>/zap.html</b> - permanent activation of the output in manual mode</del><img src="https://i.imgur.com/zMsp0cr.png" width="20px" height="20px" data-toggle="tooltip3" data-placement="right" title="Manual control is NOT included in free version of PHY Ethernet thermostat"></li>
+<li><del><b>/vyp.html</b> - permanent shutdown of the output in manual mode</del><img src="https://i.imgur.com/zMsp0cr.png" width="20px" height="20px" data-toggle="tooltip3" data-placement="right" title="Manual control is NOT included in free version of PHY Ethernet thermostat"></li>
+<li><del><b>/automat.html</b> - changing the thermostat mode to automatic (uses hysteresis and target temperature)</del><img src="https://i.imgur.com/zMsp0cr.png" width="20px" height="20px" data-toggle="tooltip3" data-placement="right" title="Manual control is NOT included in free version of PHY Ethernet thermostat"></li>
+<li><del><b>/manual.html</b> - changing the thermostat mode to manual (permanent control of the GPIO output for boiler status ON / OFF)</del><img src="https://i.imgur.com/zMsp0cr.png" width="20px" height="20px" data-toggle="tooltip3" data-placement="right" title="Manual control is NOT included in free version of PHY Ethernet thermostat"></li>
 <hr>				
 Electromagnetic relay SRD-5VDC-SL-C, which is used in the project, allows to switch up to 10A at 230V - maximum power 2300W.
 In the case of switching a DC circuit (load), it is possible to switch 300W (10A at 30V DC max).
