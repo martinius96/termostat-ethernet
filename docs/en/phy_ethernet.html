@@ -172,9 +172,9 @@ The web server runs on the standard HTTP port - 80.
 </p>
 <hr>
 <p style="text-align: justify;">
-The thermostat can automatically control the signaling relay (with inverted logic) for switching the boiler ON / OFF via the GPIO output state.
-It can thus replace the existing room thermostat and make it available in the network to all clients.
-The thermostat can operate any device with a browser - computer / smartphone / tablet / Smart TV and similar.
+Thermostat can automatically control the signaling relay (with inverted logic) for switching the gas boiler ON / OFF via the GPIO output state.
+It can thus replace the existing room thermostat and make it available in the LAN network to all clients.
+Thermostat can operate on any device with a browser - computer / smartphone / tablet / Smart TV and similar.
 <b>As a decision algorithm, a target temperature with hysteresis is used, which is compared with the measured temperature from the Dallas DS18B20 digital temperature sensor.</b>
 The target temperature and hysteresis is read from the EEPROM memory, where it is stored permanently even in the event of a power failure and is overwritten when new data is written.
 <b>The resolution of the DS18B20 sensor during measurement is 12-bit, which is explained by the temperature resolution of 0.0625 °C, which is the minimum resolution step between different measurements.
@@ -281,6 +281,10 @@ The decision-making logic of the thermostat is performed every 10 seconds indepe
 <li><b>/</b> - root page containing the form, the current listing of the logic output for the relay, the current and target temperature, the temperature, hysteresis</li>
 <li><b>/action.html</b> - processes the values from the form, writes them to the emulated EEPROM memory, redirects the user back to the root page</li>
 <li><b>/get_data.json</b> - distributes data about current temperature, reference temperature and hysteresis to a third party (computer, microcontroller, other client...) in JSON format - can be used with an example JSON client that can send data to MQTT Broker, for example to home automation</li>
+<li><del><b>/zap.html</b> - permanent activation of the output in manual mode</del><img src="https://i.imgur.com/zMsp0cr.png" width="20px" height="20px" data-toggle="tooltip3" data-placement="right" title="Not included in free version of PHY Ethernet thermostat"></li>
+<li><del><b>/vyp.html</b> - permanent shutdown of the output in manual mode</del><img src="https://i.imgur.com/zMsp0cr.png" width="20px" height="20px" data-toggle="tooltip3" data-placement="right" title="Not included in free version of PHY Ethernet thermostat"></li>
+<li><del><b>/automat.html</b> - changing the thermostat mode to automatic (uses hysteresis and target temperature)</del><img src="https://i.imgur.com/zMsp0cr.png" width="20px" height="20px" data-toggle="tooltip3" data-placement="right" title="Not included in free version of PHY Ethernet thermostat"></li>
+<li><del><b>/manual.html</b> - changing the thermostat mode to manual (permanent control of the GPIO output for boiler status ON / OFF)</del><img src="https://i.imgur.com/zMsp0cr.png" width="20px" height="20px" data-toggle="tooltip3" data-placement="right" title="Not included in free version of PHY Ethernet thermostat"></li>
 <hr>				
 Electromagnetic relay SRD-5VDC-SL-C, which is used in the project, allows to switch up to 10A at 230V - maximum power 2300W.
 In the case of switching a DC circuit (load), it is possible to switch 300W (10A at 30V DC max).
