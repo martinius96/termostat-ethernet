@@ -389,14 +389,13 @@ It enables communication with the Dallas DS18B20 sensor on the OneWire bus. Poss
 	</div>
 <hr>
 <h3 style="display: none;"><font color="#2ECC71">Source code - Ethernet thermostat - ESP32 + PHY LAN8720 - DHCP</font></h3>	
-<pre style="background-color:#2ECC71; display: none;">
+<pre style="background-color:#2ECC71;">
 /*|-----------------------------------------------------------|*/
 /*|HTTP webserver - Ethernet thermostat - ESP32 + PHY LAN8720 |*/
 /*|Project webpage:                                           |*/
 /*|https://martinius96.github.io/termostat-ethernet/en        |*/
 /*|AUTHOR: Martin Chlebovec                                   |*/
 /*|EMAIL: martinius96@gmail.com                               |*/
-/*|DONATE: paypal.me/chlebovec                                |*/
 /*|-----------------------------------------------------------|*/
 
 #include &lt;ETH.h>
@@ -411,9 +410,9 @@ WebServer server(80);
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensorsA(&oneWire);
 const int rele = 4; //D4
-unsigned long cas = 0;
-String stav = "OFF";
-float teplota;
+unsigned long time_running = 0;
+String state = "OFF";
+float temperature;
 long day = 86400000; // 86400000 milliseconds in a day
 long hour = 3600000; // 3600000 milliseconds in an hour
 long minute = 60000; // 60000 milliseconds in a minute
@@ -510,80 +509,74 @@ void handleRoot() {
   unsigned int hours = (millis() % day) / hour;                       //the remainder from days division (in milliseconds) divided by hours, this gives the full hours
   unsigned int minutes = ((millis() % day) % hour) / minute ;         //and so on...
   unsigned int seconds = (((millis() % day) % hour) % minute) / second;
-  String stranka = F("&lt;!DOCTYPE html>");
-  stranka += F("&lt;html>");
-  stranka += F("&lt;head>");
-  stranka += F("&lt;meta charset='utf-8'>");
-  stranka += F("&lt;meta name='author' content='Martin Chlebovec'>");
-  stranka += F("&lt;meta http-equiv='Refresh' content='30'; />");
-  stranka += F("&lt;meta name='viewport' content='width=device-width, initial-scale=1'>");
-  stranka += F("&lt;link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css'>");
-  stranka += F("&lt;script type='text/javascript'> window.smartlook||(function(d) {");
-  stranka += F("var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];");
-  stranka += F("var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';");
-  stranka += F("c.charset='utf-8';c.src='https://rec.smartlook.com/recorder.js';h.appendChild(c); })(document);");
-  stranka += F("smartlook('init', '6beae97f98b9844b761672af23f38fc60b962338');");
-  stranka += F("&lt;/script>");
-  stranka += F("&lt;script type='text/javascript'>");
-  stranka += F("var timeleft = 30;");
-  stranka += F("var downloadTimer = setInterval(function(){");
-  stranka += F("if(timeleft &lt;= 0){");
-  stranka += F("clearInterval(downloadTimer);");
-  stranka += F("document.getElementById(\"countdown\").innerHTML = \"Refreshing...\";");
-  stranka += F("} else {");
-  stranka += F("document.getElementById(\"countdown\").innerHTML = timeleft + \" seconds to refresh\";");
-  stranka += F("}");
-  stranka += F("timeleft -= 1;");
-  stranka += F("}, 1000);");
-  stranka += F("&lt;/script>");
-  stranka += F("&lt;title>Ethernet thermostat - ESP32 + PHY Ethernet&lt;/title>");
-  stranka += F("&lt;/head>");
-  stranka += F("&lt;body>");
-  stranka += F("&lt;center>&lt;h3>Enter datas for web server:&lt;/h3>");
-  stranka += F("&lt;form action='/action.html' method='post'>");
-  stranka += "&lt;b>Target temperature:&lt;/b>&lt;br>&lt;input type='text' id='fname' name='fname' min='5' max='50' step='0.25' value=" + String(read_String(10)) + ">&lt;br>";
-  stranka += "&lt;b>Hysteresis:&lt;/b>&lt;br>&lt;input type='text' id='fname2' name='fname2' min='0' max='10' step='0.25' value=" + String(read_String(100)) + ">&lt;br>";
-  stranka += F("&lt;input type='submit' class='btn btn-success' value='Send'>");
-  stranka += F("&lt;/form>&lt;hr>");
-  if (stav == "ON") {
-    stranka += F("&lt;b>&lt;font color='green'>Output: ON&lt;/font>&lt;/b>");
+  String page = F("&lt;!DOCTYPE html>");
+  page += F("&lt;html>");
+  page += F("&lt;head>");
+  page += F("&lt;meta charset='utf-8'>");
+  page += F("&lt;meta name='author' content='Martin Chlebovec'>");
+  page += F("&lt;meta http-equiv='Refresh' content='30'; />");
+  page += F("&lt;meta name='viewport' content='width=device-width, initial-scale=1'>");
+  page += F("&lt;link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css'>");
+  page += F("&lt;script type='text/javascript'>");
+  page += F("var timeleft = 30;");
+  page += F("var downloadTimer = setInterval(function(){");
+  page += F("if(timeleft &lt;= 0){");
+  page += F("clearInterval(downloadTimer);");
+  page += F("document.getElementById(\"countdown\").innerHTML = \"Refreshing...\";");
+  page += F("} else {");
+  page += F("document.getElementById(\"countdown\").innerHTML = timeleft + \" seconds to refresh\";");
+  page += F("}");
+  page += F("timeleft -= 1;");
+  page += F("}, 1000);");
+  page += F("&lt;/script>");
+  page += F("&lt;title>Ethernet thermostat - ESP32 + PHY Ethernet&lt;/title>");
+  page += F("&lt;/head>");
+  page += F("&lt;body>");
+  page += F("&lt;center>&lt;h3>Enter datas for web server:&lt;/h3>");
+  page += F("&lt;form action='/action.html' method='post'>");
+  page += "&lt;b>Target temperature:&lt;/b>&lt;br>&lt;input type='text' id='fname' name='fname' min='5' max='50' step='0.25' value=" + String(read_String(10)) + ">&lt;br>";
+  page += "&lt;b>Hysteresis:&lt;/b>&lt;br>&lt;input type='text' id='fname2' name='fname2' min='0' max='10' step='0.25' value=" + String(read_String(100)) + ">&lt;br>";
+  page += F("&lt;input type='submit' class='btn btn-success' value='Send'>");
+  page += F("&lt;/form>&lt;hr>");
+  if (state == "ON") {
+    page += F("&lt;b>&lt;font color='green'>Output: ON&lt;/font>&lt;/b>");
   }
-  if (stav == "OFF") {
-    stranka += F("&lt;b>&lt;font color='red'>Output: OFF&lt;/font>&lt;/b>");
+  if (state == "OFF") {
+    page += F("&lt;b>&lt;font color='red'>Output: OFF&lt;/font>&lt;/b>");
   }
-  stranka += F("&lt;div id=\"countdown\">&lt;/div>");
-  stranka += F("&lt;b>Current sensor DS18B20 temperature:&lt;/b> ");
-  stranka += String(teplota);
-  stranka += F(" °C");
-  stranka += F("&lt;hr>");
-  stranka += F("&lt;b>Uptime: &lt;/b>");
-  stranka += String(days);
-  stranka += F("d");
-  stranka += F(" ");
-  stranka += String(hours);
-  stranka += F("h");
-  stranka += F(" ");
-  stranka += String(minutes);
-  stranka += F("m");
-  stranka += F(" ");
-  stranka += String(seconds);
-  stranka += F("s");
-  stranka += F("&lt;h3>Author: Martin Chlebovec - martinius96@gmail.com - https://martinius96.github.io/termostat-ethernet/en/&lt;/h3>");
-  stranka += F("&lt;h4>Free version - 1.0.4 build: 22. Aug. 2022&lt;/h4>");
-  stranka += F("&lt;/center>");
-  stranka += F("&lt;/body>");
-  stranka += F("&lt;/html>");
-  server.send(200, "text/html", stranka);
+  page += F("&lt;div id=\"countdown\">&lt;/div>");
+  page += F("&lt;b>Current sensor DS18B20 temperature:&lt;/b> ");
+  page += String(temperature);
+  page += F(" °C");
+  page += F("&lt;hr>");
+  page += F("&lt;b>Uptime: &lt;/b>");
+  page += String(days);
+  page += F("d");
+  page += F(" ");
+  page += String(hours);
+  page += F("h");
+  page += F(" ");
+  page += String(minutes);
+  page += F("m");
+  page += F(" ");
+  page += String(seconds);
+  page += F("s");
+  page += F("&lt;h3>Author: Martin Chlebovec - martinius96@gmail.com - https://martinius96.github.io/termostat-ethernet/en/&lt;/h3>");
+  page += F("&lt;h4>Free version - 1.0.4 build: 22. Aug. 2022&lt;/h4>");
+  page += F("&lt;/center>");
+  page += F("&lt;/body>");
+  page += F("&lt;/html>");
+  server.send(200, "text/html", page);
 }
 
 void handleBody() {
   if (server.hasArg("fname")) {
     String target_temp = server.arg("fname");
-    // float cielova_teplota = target_temp.toFloat();
+    // float target_temperature = target_temp.toFloat();
 
     if (isFloat(target_temp)) {
-      float cielova_teplota = target_temp.toFloat();
-      writeString(10, cielova_teplota);
+      float target_temperature = target_temp.toFloat();
+      writeString(10, target_temperature);
     } else {
       Serial.println(F("No number was entered in the target temperature input field!"));
       Serial.println(F("Datas will be not stored in EEPROM!"));
@@ -592,42 +585,42 @@ void handleBody() {
   if (server.hasArg("fname2")) {
     String hysteresis = server.arg("fname2");
     if (isFloat(hysteresis)) {
-      float hystereza = hysteresis.toFloat();
-      writeString(100, hystereza);
+      float hysteresis = hysteresis.toFloat();
+      writeString(100, hysteresis);
     } else {
       Serial.println(F("No number was entered in the hysteresis input field!"));
       Serial.println(F("Datas will be not stored in EEPROM!"));
     }
   }
-  String stranka = F("&lt;!DOCTYPE html>");
-  stranka += F("&lt;html>");
-  stranka += F("&lt;head>");
-  stranka += F("&lt;meta charset='utf-8'>");
-  stranka += F("&lt;meta http-equiv='Refresh' content='5; url=/' />");
-  stranka += F("&lt;title>Ethernet thermostat - ESP32 - data processing&lt;/title>");
-  stranka += F("&lt;/head>");
-  stranka += F("&lt;body>");
-  stranka += F("&lt;center>&lt;h3>Server received datas from HTML form:&lt;/h3>");
-  stranka += "&lt;li>&lt;b>Target temperature: &lt;/b>" + String(read_String(10)) + " °C&lt;/li>";
-  stranka += "&lt;li>&lt;b>Hysteresis: &lt;/b>" + String(read_String(100)) + " °C&lt;/li>";
-  stranka += F("&lt;b>Redirecting... Please wait&lt;/b>&lt;/center>");
-  stranka += F("&lt;/body>");
-  stranka += F("&lt;/html>");
-  server.send(200, "text/html", stranka);
+  String page = F("&lt;!DOCTYPE html>");
+  page += F("&lt;html>");
+  page += F("&lt;head>");
+  page += F("&lt;meta charset='utf-8'>");
+  page += F("&lt;meta http-equiv='Refresh' content='5; url=/' />");
+  page += F("&lt;title>Ethernet thermostat - ESP32 - data processing&lt;/title>");
+  page += F("&lt;/head>");
+  page += F("&lt;body>");
+  page += F("&lt;center>&lt;h3>Server received datas from HTML form:&lt;/h3>");
+  page += "&lt;li>&lt;b>Target temperature: &lt;/b>" + String(read_String(10)) + " °C&lt;/li>";
+  page += "&lt;li>&lt;b>Hysteresis: &lt;/b>" + String(read_String(100)) + " °C&lt;/li>";
+  page += F("&lt;b>Redirecting... Please wait&lt;/b>&lt;/center>");
+  page += F("&lt;/body>");
+  page += F("&lt;/html>");
+  server.send(200, "text/html", page);
 }
 
 void handleGet() {
-  String stranka = "{\n";
-  stranka += F("\"Hysteresis\":");
-  stranka += String(read_String(100));
-  stranka += F(",\n");
-  stranka += F("\"Target_Temperature\":");
-  stranka += String(read_String(10));
-  stranka += F(",\n");
-  stranka += F("\"Actual_Temperature\":");
-  stranka += String(teplota) + "\n";
-  stranka += F("}\n");
-  server.send(200, "application/json", stranka);
+  String page = "{\n";
+  page += F("\"Hysteresis\":");
+  page += String(read_String(100));
+  page += F(",\n");
+  page += F("\"Target_Temperature\":");
+  page += String(read_String(10));
+  page += F(",\n");
+  page += F("\"Actual_Temperature\":");
+  page += String(temperature) + "\n";
+  page += F("}\n");
+  server.send(200, "application/json", page);
 }
 
 void setup() {
@@ -659,9 +652,9 @@ void setup() {
 }
 
 void loop() {
-  if ((millis() - cas) >= 10000 || cas == 0) {
-    cas = millis();
-    teplota = sensorsA.getTempCByIndex(0);
+  if ((millis() - time_running) >= 10000 || time_running == 0) {
+    time_running = millis();
+    temperature = sensorsA.getTempCByIndex(0);
     Serial.println();
     Serial.println(F("----------------------------------------------"));
     Serial.println(F("IP address of Ethernet thermostat: "));
@@ -673,31 +666,30 @@ void loop() {
     Serial.print(ESP.getFreeHeap());
     Serial.println(F(" B"));
     Serial.print(F("Current temperature: "));
-    Serial.print(String(teplota));
+    Serial.print(String(temperature));
     Serial.println(F(" °C"));
     sensorsA.requestTemperatures();
-    float cielova_teplota = read_String(10);
-    float  hystereza = read_String(100);
-    float minus_hystereza_teplota = (-1 * hystereza);
-    float rozdiel = cielova_teplota - teplota; //21 - 20
-    if (rozdiel > hystereza) {
+    float target_temperature = read_String(10);
+    float  hysteresis = read_String(100);
+    float minus_hysteresis_temperature = (-1 * hysteresis);
+    float difference_temps = target_temperature - temperature; //21 - 20
+    if (difference_temps > hysteresis) {
       Serial.println(F("Output on"));
-      stav = "ON";
+      state = "ON";
       digitalWrite(rele, LOW);
-    } else if (rozdiel &lt; minus_hystereza_teplota) {
+    } else if (difference_temps &lt; minus_hysteresis_temperature) {
       Serial.println(F("Output off"));
-      stav = "OFF";
+      state = "OFF";
       digitalWrite(rele, HIGH);
     } else {
       Serial.println(F("Difference between target and actual temp is not above or below the hysteresis. The output state does not change."));
       Serial.print(F("Actual state of output: "));
-      Serial.println(stav);
+      Serial.println(state);
     }
   }
   server.handleClient();
   yield();
 }
-
 </pre>
 <p style="text-align: justify;"> 
 The implementation includes a program for a dynamic IPv4 address assigned to the Ethernet PHY of the thermostat.
