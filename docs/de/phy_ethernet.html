@@ -300,7 +300,7 @@ Beim Schalten eines Gleichstromkreises (Last) können 300 W (10 A bei 30 V DC ma
 Für den Schaltplan ist auch das OMRON G3MB-202P SSR-Relais voll kompatibel, das nur für nicht induktive Lasten und ausschließlich für Wechselspannungslasten geeignet ist (der Gleichstromkreis kann nach dem Schalten nicht öffnen).
 Maximale Schaltleistung 460 W (230 V, 2 A). <b>Der Thermostat kann das ganze Jahr über verwendet werden. Im Falle einer unnötigen Steuerung kann der Ausgang physisch getrennt und der Thermostat als Ethernet-Thermometer verwendet werden, um Daten aus dem Raum zu erhalten, in dem er sich befindet.</b>
 </p>
-
+<img src="https://i.imgur.com/ElFXMN9.jpeg" style="display: block; max-width: 100%; height: auto;" alt="ESP32 + PHY Ethernet thermostat - webserver" title="ESP32 + PHY Ethernet thermostat - webserver">
 <b>Das Webinterface für den Ethernet-Thermostat ermöglicht:</b>
 <li>Zeigen Sie in Echtzeit die Temperatur des DS18B20-Sensors auf dem OneWire-Bus, die Betriebszeit des Geräts, den Ausgangsstatus mit dynamischer Änderung, die aktuell eingestellten Konfigurationsdaten für den Thermostat an, d.h. Zieltemperatur und Hysterese aus EEPROM</li>
 <li>Ändern Sie die Zieltemperatur (Referenztemperatur) <del> im Bereich von 5 bis 50 °C in Schritten von 0,25 °C</del><img src="https://i.imgur.com/zMsp0cr.png" width="20px" height="20px" data-toggle="tooltip2" data-placement="right" title="Der Bereich wurde in Version 1.0.2 entfernt, da der Dezimalpunkt für die Eingabetypnummer unter Android OS nicht unterstützt wird"></li>
