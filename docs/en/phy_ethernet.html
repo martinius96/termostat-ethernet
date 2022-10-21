@@ -294,7 +294,7 @@ In the case of switching a DC circuit (load), it is possible to switch 300W (10A
 For the wiring diagram, the OMRON G3MB-202P SSR relay is also fully compatible, which is only suitable for non-inductive loads and exclusively for AC voltage loads (the DC circuit cannot open after switching).
 Maximum switched power 460W (230V, 2A). <b>The thermostat can be used all year round. In case of unnecessary control, the output can be physically disconnected and the thermostat can be used as an Ethernet thermometer to obtain data from the room where it is located.</b>
 </p>
-
+<img src="https://i.imgur.com/ElFXMN9.jpeg" style="display: block; max-width: 100%; height: auto;" alt="ESP32 + PHY Ethernet thermostat - webserver" title="ESP32 + PHY Ethernet thermostat - webserver">
 <b>Web interface for Ethernet thermostat enables:</b>
 <li>View in real time the temperature from the DS18B20 sensor on the OneWire bus, device uptime, output status with dynamic change, currently set configuration data for the thermostat, i.e. target temperature and hysteresis from EEPROM</li>
 <li>Modify the target (reference) temperature <del> in the range 5 to 50 °C with 0.25 °C steps</del><img src="https://i.imgur.com/zMsp0cr.png" width="20px" height="20px" data-toggle="tooltip2" data-placement="right" title="Range removed in version 1.0.2 due to non-support of decimal point for input type number on Android OS"></li>
