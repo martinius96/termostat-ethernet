@@ -100,14 +100,11 @@
 </div>				
 <hr><center><h1>Room thermostat - Arduino + Ethernet</h1></center><hr>
 <p style="text-align: justify;">
-Arduino is a handy embeeded platform that can be used, for example, to build a room thermostat, which we will show today.
-The implementation uses Arduino in combination with the Ethernet shield Wiznet W5100, which works in web server mode and can receive requests from clients in the network via HTTP protocol and send a response to them - HTML code.
-The thermostat is accessible from the LAN network in which it is located, while it is equipped with a web interface which is used to configure all elements of the thermostat.
-The web server allows the running of several independent HTML pages, which can be informative or even functional. The web server runs on port 80 - HTTP.
-The thermostat can automatically control the signaling relay for switching on the gas boiler via the output. It can thus replace an existing room thermostat.
-As a decision algorithm, the target temperature with hysteresis is used, which is compared with the measured temperature from the digital temperature sensor Dallas DS18B20.
-<b> The resolution of the DS18B20 sensor when measuring is 12-bits, which is indicated by the resolution at 0.0625 ° C. Data via the OneWire bus can arrive in the microcontroller on demand in 500 to 1000 ms. </b>
-The decision logic of the system is executed every 10 seconds independently of the web server, no keep-alive connection is required to execute the logic, the system thus operates autonomously and does not require the user's attention.
+Arduino serves as a versatile embedded platform, ideal for constructing a room thermostat, a project we will explore today. The implementation involves Arduino paired with the Ethernet shield Wiznet W5100, functioning in web server mode. It can handle requests from network clients through the HTTP protocol and respond with HTML code.
+This thermostat is accessible within the LAN network, equipped with a web interface facilitating the configuration of all thermostat elements. The web server supports multiple independent HTML pages, offering both informative and functional content. It operates on the standard HTTP port - 80.
+The thermostat autonomously controls the signaling relay to switch on the gas boiler through the output, providing a potential replacement for an existing room thermostat. The decision algorithm utilizes the target temperature with hysteresis, comparing it with the measured temperature from the digital temperature sensor Dallas DS18B20.
+<b>The DS18B20 sensor boasts a 12-bit resolution during measurements, resulting in a precision of 0.0625 °C. Data transmitted via the OneWire bus can reach the microcontroller within 500 to 1000 ms.</b>
+The system's decision logic executes every 10 seconds independently of the web server. No keep-alive connection is necessary for logic execution, ensuring the system operates autonomously without requiring constant user attention.
 </p>
 <b>In terms of hardware, the project uses:</b>
 <li>Arduino Uno</li>
@@ -120,10 +117,8 @@ The decision logic of the system is executed every 10 seconds independently of t
 <li><b>/action.html</b> - processes values from the form, writes them to the EEPROM memory, redirects the user back to the root page</li>
 <li><b>/get_data.json</b> - distributes data on current temperature, reference temperature and hysteresis to a third party (computer, microcontroller, other client ...) in JSON format</li>
 <hr>				
-The electromagnetic relay SRD-5VDC-SL-C, which is used in the project, allows switching up to 10A at 230V - maximum power 2300W.
-In case of switching a DC circuit (load) it is possible to switch 300W (10A at 30V DC max).
-The OMRON G3MB-202P SSR relay is also fully compatible for the wiring diagram, which is suitable only for non-inductive loads and exclusively for AC loads (DC circuit cannot open after switching on).
-Maximum switching power 460W (230V, 2A). <b> The thermostat can be used all year round. In case of unnecessary control, the output can be physically disconnected and the thermostat can be used as an Ethernet thermometer to obtain data from the room where it is located. </b>
+The SRD-5VDC-SL-C electromagnetic relay, employed in the project, enables the switching of up to 10A at 230V, corresponding to a maximum power of 2300W. When dealing with a DC circuit, it can handle a switching capacity of 300W (10A at 30V DC max). The OMRON G3MB-202P SSR relay is also fully compatible with the wiring diagram, suitable exclusively for non-inductive loads and AC loads (the DC circuit cannot open after switching on). It supports a maximum switching power of 460W (230V, 2A).
+<b>The thermostat is designed for year-round use. If control is unnecessary, the output can be physically disconnected, allowing the thermostat to function as an Ethernet thermometer for obtaining data from the room where it is located.</b>
 </p>
 <img src="https://i.imgur.com/pwZqOfS.jpg" style="display: block; max-width: 100%; height: auto;" alt="Ethernet thermostat - Arduino + Wiznet W5100/W5500 - webserver" title="Ethernet thermostat - Arduino + Wiznet W5100/W5500 - webserver">
 <b> The web interface for the Ethernet thermostat allows you to: </b>
@@ -137,30 +132,25 @@ Maximum switching power 460W (230V, 2A). <b> The thermostat can be used all year
 <li> The visualization of water temperatures shows the so-called heating run and subsequent cooling of the water until the heating activity is repeated, when the measured temperature is below the set target temperature - hysteresis </li>
 <img src="https://i.imgur.com/IDWLuOr.png" style="display: block; max-width: 100%; height: auto;" alt="ZAP/VYP regulácia kotla s hysterézou" title="ZAP/VYP regulácia kotla s hysterézou">        			    
 <p style="text-align: justify;">
-The web interface is designed to adapt to larger and smaller screens. It is responsive, supports widescreen high-definition screens, but also mobile devices.
-The interface uses imported CSS styles of the Bootstrap framework from an external CDN server, which loads the client-side device when opening a page running on Arduino.
-Because the Arduino Uno is memory limited, it can only run pages a few kB in size. By importing CSS styles from an external server, it allows you to reduce the performance and memory load of Arduino.
-The software implementation (for Arduine Uno) uses about 70% of flash memory (32kB - 4kB Bootloader) and 44% of RAM memory (2kB).
-Static parts of a web page (HTML document header and footer, Bootstrap CSS linking, meta tags, HTTP response header, Content Type, form and more) are stored directly in Arduino's flash memory, which can significantly reduce the amount of RAM used for user-generated content.
-The web server is thus more stable and can handle multi-connection of several devices in the network at the same time. Consumption of the whole thermostat is up to 200 mA at 5V supply - below 1W.
+The web interface is crafted to be adaptable to screens of varying sizes, ensuring responsiveness across larger and smaller displays. It seamlessly supports widescreen high-definition monitors as well as mobile devices.
+To achieve this, the interface incorporates CSS styles imported from the Bootstrap framework, sourced from an external CDN server. This approach optimizes client-side loading when accessing a page hosted on Arduino. Given the memory constraints of the Arduino Uno, which can only accommodate pages of a few kB in size, importing CSS styles from an external server helps reduce the performance and memory demands on Arduino.
+In terms of software implementation (for Arduino Uno), approximately 70% of the flash memory (32kB - 4kB Bootloader) and 44% of the RAM memory (2kB) are utilized. Critical components of the web page, such as the HTML document header and footer, Bootstrap CSS linking, meta tags, HTTP response header, Content Type, and forms, are stored directly in Arduino's flash memory. This strategic placement significantly diminishes the RAM usage for user-generated content.
+The resulting web server is more stable, capable of handling multiple connections from various devices within the network simultaneously. The overall power consumption of the thermostat is within the range of 200 mA at a 5V supply - maintaining efficiency below 1W.
 </p>
 <hr>
 <p style="text-align: justify;">
-In order to keep the set values even after a power failure, they are stored in the EEPROM memory of the Arduino.
-The reference temperature is written to offset 10, hysteresis to offset 100. Each of the values occupies a maximum of 5B in the EEPROM memory + terminator.
-The EEPROM transcription limit is at the level of 100,000 transcripts. Data is overwritten only when the HTML form is submitted. The operation of the thermostat is thus extremely gentle on the EEPROM memory in order to maximize its service life.
-If the device has nothing stored on the mentioned EEPROM offsets at the first start-up, automatic writing will be performed with default values - reference: 20.25 ° C, hysteresis 0.25 ° C, so-called fail-safe solution so that the thermostat is immediately functional and ready for operation.
+To retain configured values in the event of a power failure, they are stored in the EEPROM memory of the Arduino. The reference temperature is written to offset 10, while the hysteresis is stored at offset 100. Each of these values takes up a maximum of 5B in the EEPROM memory, including the terminator.
+The EEPROM transcription is limited to 100,000 transcripts. Data is overwritten exclusively when the HTML form is submitted. The thermostat's operation is designed to be extremely gentle on the EEPROM memory, aiming to maximize its service life.
+Upon the device's initial startup, if there is no stored information at the mentioned EEPROM offsets, an automatic writing process will take place with default values - reference: 20.25 °C, hysteresis: 0.25 °C. This fail-safe solution ensures that the thermostat is immediately functional and ready for operation.
 </p>
 <p style="text-align: justify;">
-Using the Refresh meta tag, the web server refreshes the entire page every 30 seconds, and the approximate time to refresh is also written to the HTML page via Javascript.
-By this time it is necessary to write the change for the thermostat, otherwise the input windows for numerical inputs to the form will be reset when the page is refreshed. <b> Based on feedback from Android device users, the time for Refresh has been extended from 10 to 30 seconds. </b>
-As the built-in Ethernet library does not include the use of an asynchronous web server (which can be used, for example, with the Espressif ESP8266 / ESP32 microcontrollers), it is necessary to rewrite the entire page.
-The dynamic data that is mainly changing is the current value of the output - <b> <font color = "#27AE60"> On </font> </b> / <b> <font color = "red"> Off </font> </b>, which informs the operator about the actual state of the output together with the color coding.
-Since the system logic is executed independently of the web server, the output may already be in a different state than currently currently listed in the web application. The change of output is immediately written to the UART monitor (115200 baud/s), for example.
-On the thermostat's website, the user will also find information about the device's uptime (how long it has been running), i. time in days, hours, minutes and seconds.
+The web server employs the Refresh meta tag to refresh the entire page every 30 seconds, and an approximate countdown time is dynamically displayed on the HTML page through Javascript. It is crucial to finalize any thermostat changes within this timeframe; otherwise, the input fields for numerical entries in the form will reset upon page refresh. <b>Responding to feedback from Android device users, the Refresh interval has been extended from 10 to 30 seconds.</b>
+Due to the absence of asynchronous web server support in the built-in Ethernet library (commonly found in microcontrollers like Espressif ESP8266/ESP32), a full page rewrite becomes necessary.
+The dynamically changing data primarily includes the current state of the output - <b><font color="#27AE60">On</font></b> / <b><font color="red">Off</font></b>. This information conveys the operational status to the operator, complete with color-coded indications. Since the system logic operates independently of the web server, the output may have changed before the scheduled refresh in the web application. Changes in the output state are instantly reflected in the UART monitor (115200 baud/s).
+On the thermostat's web page, users will also find details about the device's uptime - indicating how long it has been running in terms of days, hours, minutes, and seconds.
 </p>
 <div class="alert alert-danger">
-	<strong>The author of the Ethernet thermostat is not responsible for the functionality of the thermostat, boiler failure, electric shock due to improper installation of the thermostat in the network.</strong> The thermostat is distributed under the MIT license.
+	<strong>The author of the Ethernet thermostat disclaims responsibility for the functionality of the thermostat, any issues with the boiler, and the risk of electric shock resulting from improper installation of the thermostat in the network.</strong>
 </div>	
 <b>Main page for modification of target temperature and hysteresis - example of switched on output:</b>
 <div class="alert alert-info">
@@ -171,9 +161,7 @@ On the thermostat's website, the user will also find information about the devic
 	<li><b>Output:</b>  <font color="#27AE60">Turned on</font></li>
 	<hr>
 	<p style="text-align: justify;">
-The thermostat heats from a measured temperature of 22.49 ° C and below.
-If the temperature reaches 23.01 °C, the output is switched off, the signaling relay opens and the gas boiler stops heating.
-The heating and cooling of the room in which the measurements are performed takes place. The thermostat is not reactivated until the temperature reaches 22.49 °C or lower.
+The thermostat initiates heating when the measured temperature falls to 22.49 °C or below. Once the temperature surpasses 23.01 °C, the output is deactivated, leading to the opening of the signaling relay and subsequently stopping the gas boiler from heating. This cycle controls the heating and cooling of the room where the measurements are conducted. The thermostat remains inactive until the temperature drops to 22.49 °C or lower, at which point it resumes the heating process.
 	</p>	
 </div>
 <img src="https://i.imgur.com/T7HmUrF.png" style="display: block; max-width: 100%; height: auto;" alt="Ethernet thermostat - Main dashboard - Arduino" title="Ethernet thermostat - Main dashboard - Arduino">        			
@@ -529,9 +517,8 @@ void loop() {
 
 </pre>
 <p style="text-align: justify;">
-The implementation contains programs for the static / dynamic IPv4 address assigned to the Ethernet shield.
-<b> The thermostat is only intended for indoor temperatures! </b> (above 0 ° C), to which the system logic is adapted!
-The thermostat can replace the existing room thermostat, it is possible to temporarily replace the heater in the aquarium / terrarium to maintain a constant temperature.
+The implementation incorporates programs for both static and dynamic assignment of an IPv4 address to the Ethernet shield.
+<b>It is important to note that the thermostat is specifically designed for indoor temperatures!</b> (above 0 °C), and the system logic is tailored accordingly. The thermostat is versatile and can function as a replacement for an existing room thermostat. Additionally, it can be temporarily employed to regulate the heater in an aquarium or terrarium, ensuring a consistent temperature.
 </p>	
  </div>
 		</div>
