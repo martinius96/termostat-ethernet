@@ -3,7 +3,7 @@
 <head>
 	<!-- Primary Meta Tags -->
 	<title>Raumthermostat - ESP32 + PHY LAN8720</title>
-	<meta name="description" content="Ein Raumthermostat, der auf der ESP32-Plattform zum Heizen entwickelt wurde. Kommunikation über Ethernet">
+	<meta name="description" content="Ein Raumthermostat, entwickelt auf der ESP32-Plattform, speziell für Heizzwecke. Kommunikation erfolgt über Ethernet.">
 	<meta name="keywords" content="thermostat, esp32, lan8720, rmii, phy, ethernet, webserver, ds18b20, temperatur, kessel">
 	<link rel="icon" type="image/png" href="favicon.png">
 	<link rel="sitemap" type="application/xml" title="Sitemap" href="../../sitemap.xml" />
@@ -169,15 +169,10 @@ table,thead,tbody,tfoot,tr, td,th{
 </div>				
 <hr><center><h1>Raumthermostat - ESP32 + LAN8720</h1></center><hr>
 <p style="text-align: justify;">
-Der ESP32-Mikrocontroller ist über die RMII-Schnittstelle mit dem LAN8720 PHY-Ethernet-Modul verbunden. 
-Der ESP32 stellt über den WiFi-Controller die MAC-Schicht für das PHY-Ethernet bereit. 
-Der in Arduino Core implementierte Webserver ermöglicht die Steuerung des Thermostats über einen Browser im LAN-Netzwerk, wobei der ESP32 unter einer zugewiesenen IP-Adresse im DHCP-Bereich verfügbar ist. 
-Die Thermostatlogik wird unabhängig davon ausgeführt, ob die Webserver-Webseite für den Client geöffnet ist. 
-Das Ändern der Logik- und Schwellentemperaturen erfolgt über HTTP-Anforderungen von Clients im Netzwerk über ein HTML-Formular, oder die Anforderung kann direkt über eine HTTP-POST-Anforderung mit den Standardargumenten fname und fname2 gesendet werden. 
-Basierend auf der Anforderung einer bestimmten Unterseite kann die Ausgabe gesteuert werden, z. B. manuell / automatisch, oder es ist möglich, die Steuerdaten mit einem auf einen bestimmten Wert gesetzten Argument zu überschreiben. 
-Sie werden im emulierten EEPROM-Speicher im Flash-Speicher gespeichert, während die Lebensdauer dieses Sektors bei 10.000 Neuschreibungen liegt. 
-Es ist möglich, die (angeforderte) Referenztemperatur und Hysterese zu steuern. 
-Der Webserver läuft auf dem Standard-HTTP-Port - 80.
+Der ESP32-Mikrocontroller ist über die RMII-Schnittstelle mit dem LAN8720 PHY-Ethernet-Modul verbunden. Der ESP32 stellt die MAC-Schicht für das PHY-Ethernet über den WiFi-Controller bereit. Mithilfe des in der Arduino Core implementierten Webservers kann das Thermostat im LAN-Netzwerk über einen Browser gesteuert werden. Der ESP32 ist unter einer zugewiesenen IP-Adresse im DHCP-Bereich verfügbar.
+Die Thermostatlogik läuft unabhängig davon, ob die Webseite des Webservers für den Client geöffnet ist. Änderungen an der Logik und den Schwellentemperaturen erfolgen über HTTP-Anfragen von Clients im Netzwerk mithilfe eines HTML-Formulars. Alternativ kann die Anforderung auch direkt über eine HTTP-POST-Anfrage mit den Standardargumenten "fname" und "fname2" gesendet werden.
+Je nach Anforderung einer bestimmten Unterseite kann die Ausgabe gesteuert werden, beispielsweise manuell oder automatisch. Es besteht auch die Möglichkeit, die Steuerdaten mit einem auf einen bestimmten Wert gesetzten Argument zu überschreiben. Diese Daten werden im emulierten EEPROM-Speicher im Flash-Speicher gespeichert, wobei die Lebensdauer dieses Sektors bei 10.000 Neuschreibungen liegt.
+Es ist möglich, die (angeforderte) Referenztemperatur und Hysterese zu steuern. Der Webserver läuft auf dem Standard-HTTP-Port - 80.
 </p>
                     <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
   <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
@@ -186,14 +181,10 @@ Der Webserver läuft auf dem Standard-HTTP-Port - 80.
   </iframe>
 </div>
 <p style="text-align: justify;">
-Über den GPIO-Ausgang kann der Thermostat automatisch das Melderelais zum Ein-/Ausschalten des Boilers ansteuern. 
-Damit kann es das vorhandene Raumthermostat ersetzen und allen Clients im Netzwerk zur Verfügung stellen. 
-Der Thermostat kann jedes Gerät mit einem Browser bedienen - Computer / Smartphone / Tablet / Smart TV und dergleichen. 
-Als Entscheidungsalgorithmus wird eine Zieltemperatur mit Hysterese verwendet, die mit der gemessenen Temperatur des digitalen Temperatursensors Dallas DS18B20 verglichen wird. 
-Solltemperatur und Hysterese werden aus dem EEPROM-Speicher ausgelesen, dort auch bei Stromausfall dauerhaft gespeichert und beim Schreiben neuer Daten überschrieben. 
-Die Auflösung des DS18B20-Sensors während der Messung beträgt 12 Bit, was durch die Temperaturauflösung von 0,0625 °C erklärt wird, was der minimale Auflösungsschritt zwischen verschiedenen Messungen ist. 
-Daten über den OneWire-Bus können auf Anfrage in 500 bis 1000 ms beim Mikrocontroller ankommen, abhängig von der Anzahl der Sensoren am OneWire-Bus, der Länge des Busses usw. 
-Die Entscheidungslogik des Thermostats wird alle ausgeführt 10 Sekunden unabhängig von der Webanwendung, eine Keep-Alive-Verbindung ist nicht erforderlich, um die Logik auszuführen, das System arbeitet somit autonom und erfordert keine Aufmerksamkeit des Benutzers.
+Über den GPIO-Ausgang kann der Thermostat automatisch das Melderelais steuern, um den Boiler ein- oder auszuschalten. Dadurch kann er das vorhandene Raumthermostat ersetzen und allen Clients im Netzwerk zur Verfügung stellen. Der Thermostat kann von jedem Gerät mit einem Browser bedient werden, sei es ein Computer, Smartphone, Tablet, Smart TV oder ähnliches.
+Als Entscheidungsalgorithmus wird eine Zieltemperatur mit Hysterese verwendet, die mit der gemessenen Temperatur des digitalen Temperatursensors Dallas DS18B20 verglichen wird. Solltemperatur und Hysterese werden aus dem EEPROM-Speicher ausgelesen und sind auch bei einem Stromausfall dauerhaft gespeichert. Beim Schreiben neuer Daten werden sie überschrieben.
+Die Auflösung des DS18B20-Sensors beträgt während der Messung 12 Bit, was einer Temperaturauflösung von 0,0625 °C entspricht, was gleichzeitig der minimale Auflösungsschritt zwischen verschiedenen Messungen ist. Daten über den OneWire-Bus können auf Anfrage in 500 bis 1000 ms beim Mikrocontroller eintreffen, abhängig von der Anzahl der Sensoren am OneWire-Bus, der Länge des Busses usw.
+Die Entscheidungslogik des Thermostats wird alle 10 Sekunden unabhängig von der Webanwendung ausgeführt. Eine Keep-Alive-Verbindung ist nicht erforderlich, um die Logik auszuführen. Das System arbeitet autonom und erfordert somit keine laufende Aufmerksamkeit des Benutzers.
 </p>
 <b>In Bezug auf die Hardware verwendet das Projekt:</b>
 <li>ESP32</li>
@@ -300,10 +291,8 @@ Die Entscheidungslogik des Thermostats wird alle ausgeführt 10 Sekunden unabhä
 <li><del><b>/automat.html</b> - Ändern des Thermostatmodus auf Automatik (verwendet Hysterese und Zieltemperatur)</del><img src="https://i.imgur.com/zMsp0cr.png" width="20px" height="20px" data-toggle="tooltip3" data-placement="right" title="Die manuelle Steuerung ist NICHT in der kostenlosen Version des PHY-Ethernet-Thermostats enthalten"></li>
 <li><del><b>/manual.html</b> - Ändern des Thermostatmodus auf manuell (permanente Kontrolle des GPIO-Ausgangs für Kesselstatus EIN / AUS)</del><img src="https://i.imgur.com/zMsp0cr.png" width="20px" height="20px" data-toggle="tooltip3" data-placement="right" title="Die manuelle Steuerung ist NICHT in der kostenlosen Version des PHY-Ethernet-Thermostats enthalten"></li>
 <hr>				
-Das im Projekt verwendete elektromagnetische Relais SRD-5VDC-SL-C ermöglicht das Schalten von bis zu 10 A bei 230 V - maximale Leistung 2300 W.
-Beim Schalten eines Gleichstromkreises (Last) können 300 W (10 A bei 30 V DC max) geschaltet werden.
-Für den Schaltplan ist auch das OMRON G3MB-202P SSR-Relais voll kompatibel, das nur für nicht induktive Lasten und ausschließlich für Wechselspannungslasten geeignet ist (der Gleichstromkreis kann nach dem Schalten nicht öffnen).
-Maximale Schaltleistung 460 W (230 V, 2 A). <b>Der Thermostat kann das ganze Jahr über verwendet werden. Im Falle einer unnötigen Steuerung kann der Ausgang physisch getrennt und der Thermostat als Ethernet-Thermometer verwendet werden, um Daten aus dem Raum zu erhalten, in dem er sich befindet.</b>
+Das im Projekt verwendete elektromagnetische Relais SRD-5VDC-SL-C ermöglicht das Schalten von bis zu 10 A bei 230 V, was einer maximalen Leistung von 2300 W entspricht. Beim Schalten eines Gleichstromkreises (Last) können bis zu 300 W (10 A bei 30 V DC max) geschaltet werden. Alternativ ist das OMRON G3MB-202P SSR-Relais für den Schaltplan ebenfalls voll kompatibel. Beachte, dass es nur für nicht induktive Lasten und ausschließlich für Wechselspannungslasten geeignet ist, da der Gleichstromkreis nach dem Schalten nicht geöffnet werden kann. Die maximale Schaltleistung beträgt 460 W (230 V, 2 A).
+<b>Der Thermostat kann das ganze Jahr über verwendet werden. Im Falle einer unnötigen Steuerung kann der Ausgang physisch getrennt werden, und der Thermostat kann als Ethernet-Thermometer verwendet werden, um Daten aus dem Raum zu erhalten, in dem er sich befindet.</b>
 </p>
 <img src="https://i.imgur.com/ElFXMN9.jpeg" style="display: block; max-width: 100%; height: auto;" alt="ESP32 + PHY Ethernet thermostat - webserver" title="ESP32 + PHY Ethernet thermostat - webserver">
 <b>Das Webinterface für den Ethernet-Thermostat ermöglicht:</b>
@@ -317,23 +306,18 @@ Maximale Schaltleistung 460 W (230 V, 2 A). <b>Der Thermostat kann das ganze Jah
 <li>Die Visualisierung von Wassertemperaturen zeigt die sog Heizungshochlauf und anschließende Abkühlung des Wassers bis zur Wiederaktivierung der Heizung, wenn die gemessene Temperatur unter der eingestellten Solltemperatur liegt - Hysterese</li>
 <img src="https://i.imgur.com/IDWLuOr.png" style="display: block; max-width: 100%; height: auto;" alt="ZAP/VYP regulácia kotla s hysterézou" title="ZAP/VYP regulácia kotla s hysterézou">        			    
 <p style="text-align: justify;">
-Die Weboberfläche ist so konzipiert, dass sie sich an größere und kleinere Bildschirme anpasst. Es ist responsiv, unterstützt hochauflösende Widescreens, aber auch mobile Endgeräte.
-Die Schnittstelle verwendet importierte Bootstrap-Framework-CSS-Stile von einem externen CDN-Server, der das clientseitige Gerät lädt, wenn eine Seite geöffnet wird, die auf ESP32 ausgeführt wird.
-Damit die eingestellten Werte des Thermostats auch nach einem Stromausfall erhalten bleiben, werden diese im EEPROM-Speicher des ESP gespeichert, der im Flash-Speicher emuliert wird, da die Plattform physikalisch keinen EEPROM-Chip (Speicher) besitzt.
-Referenztemperatur bei Offset 10, Hysterese bei Offset 100. Jeder Wert belegt maximal 5B im EEPROM-Speicher + Abschlusszeichen.
-Erst beim Absenden des HTML-Formulars werden die Daten überschrieben, der Betrieb des Thermostaten ist somit maximal schonend für den EEPROM-Speicher für dessen maximale Lebensdauer.
-Der Zustand des Ausgangs existiert nur im RAM-Speicher, wo er bei Änderung überschrieben wird. Der Wert wird nicht im emulierten EEPROM-Speicher im Flash-Speicher gespeichert.
+Die Weboberfläche wurde so gestaltet, dass sie sich an verschiedene Bildschirmgrößen anpasst und somit responsiv ist. Sie unterstützt sowohl hochauflösende Widescreens als auch mobile Endgeräte. Die Schnittstelle verwendet importierte Bootstrap-Framework-CSS-Stile von einem externen CDN-Server, der beim Öffnen einer Seite auf dem ESP32 das entsprechende Stylesheet clientseitig lädt.
+Um sicherzustellen, dass die eingestellten Werte des Thermostats auch nach einem Stromausfall erhalten bleiben, werden diese im EEPROM-Speicher des ESP gespeichert. Da die Plattform keinen physischen EEPROM-Chip besitzt, wird der EEPROM-Speicher im Flash-Speicher emuliert. Die Referenztemperatur liegt bei Offset 10, die Hysterese bei Offset 100. Jeder dieser Werte belegt maximal 5 Byte im EEPROM-Speicher, zusätzlich zum Abschlusszeichen.
+Die Daten werden erst beim Absenden des HTML-Formulars überschrieben. Der Betrieb des Thermostats ist daher maximal schonend für den EEPROM-Speicher, um seine maximale Lebensdauer zu gewährleisten. Der Zustand des Ausgangs existiert ausschließlich im RAM-Speicher, wo er bei Änderungen überschrieben wird. Der Wert wird nicht im emulierten EEPROM-Speicher im Flash-Speicher gespeichert.
 </p>
 <hr>
 <p style="text-align: justify;">
-Mittels Refresh-Meta-Tag aktualisiert der Webserver alle 30 Sekunden die gesamte Seite, zusätzlich wird per Javascript eine ungefähre Refresh-Zeit in die HTML-Seite geschrieben.
-Bis zu diesem Zeitpunkt muss die Änderung für das Thermostat notiert werden, da sonst die Eingabefenster für numerische Eingaben in das Formular beim Aktualisieren der Seite zurückgesetzt werden. <b>Basierend auf dem Feedback von Benutzern von Android-Geräten wurde die Aktualisierungszeit von 10 auf 30 Sekunden verlängert.</b>
-Die dynamischen Daten, die sich hauptsächlich ändern, sind der aktuelle Wert der Ausgabe - <b><font color="#27AE60">Ein</font></b> / <b><font color="red">Aus</font> </b>, die zusammen mit der Farbmarkierung den Bediener über den aktuellen Zustand der Ausgabe informiert.
-Da die Logik des Systems unabhängig vom Webserver ausgeführt wird, kann die Ausgabe bereits vor dem Refresh in einem anderen Zustand sein, als aktuell in der Webanwendung angezeigt wird. Die Ausgangsänderung wird sofort zB auf dem UART-Monitor ausgedruckt (115200 Baud/s).
-Auf der Website des Thermostats kann der Benutzer auch Informationen über die Betriebszeit des Geräts (wie lange es läuft) finden, d.h. Zeit in Tagen, Stunden, Minuten und Sekunden.
+Durch die Verwendung des Refresh-Meta-Tags aktualisiert der Webserver alle 30 Sekunden die gesamte Seite. Zusätzlich wird per JavaScript eine ungefähre Refresh-Zeit in die HTML-Seite eingefügt. Bis zu diesem Zeitpunkt müssen Änderungen für das Thermostat protokolliert werden, da andernfalls die Eingabefenster für numerische Eingaben im Formular beim Aktualisieren der Seite zurückgesetzt werden. <b>Aufgrund des Feedbacks von Benutzern von Android-Geräten wurde die Aktualisierungszeit von 10 auf 30 Sekunden verlängert.</b>
+Die dynamischen Daten, die sich hauptsächlich ändern, beziehen sich auf den aktuellen Wert der Ausgabe - <b><font color="#27AE60">EIN</font></b> / <b><font color="red">AUS</font></b>, der zusammen mit der Farbmarkierung den Benutzer über den aktuellen Zustand der Ausgabe informiert. Da die Logik des Systems unabhängig vom Webserver ausgeführt wird, kann die Ausgabe bereits vor dem Refresh in einem anderen Zustand sein, als er in der Webanwendung angezeigt wird. Eine Änderung der Ausgabe wird sofort, beispielsweise auf dem UART-Monitor mit einer Baudrate von 115200 Baud, ausgegeben.
+Auf der Website des Thermostats findet der Benutzer auch Informationen über die Betriebszeit des Geräts, angegeben in Tagen, Stunden, Minuten und Sekunden, um zu verfolgen, wie lange es bereits in Betrieb ist.
 </p>
 <div class="alert alert-danger">
-	<strong>Der Autor des Ethernet-Thermostats ist nicht verantwortlich für die Funktionalität des Thermostats, Kesselausfall, Stromschlag aufgrund unsachgemäßer Installation des Thermostats im Netzwerk.</strong> Der Thermostat wird unter der MIT-Lizenz vertrieben.
+	<strong>Der Autor des Ethernet-Thermostats übernimmt keine Verantwortung für die Funktionalität des Thermostats, Ausfälle des Kessels oder Stromschläge aufgrund einer unsachgemäßen Installation des Thermostats im Netzwerk.</strong>
 </div>	
 <b>Hauptseite zur Änderung von Zieltemperatur und Hysterese - Vorschau des eingeschalteten Ausgangs:</b>
 <div class="alert alert-info">
@@ -374,8 +358,8 @@ Der Thermostat wird erst wieder aktiviert, wenn die Temperatur 22,49 °C oder we
 <hr>
 <h3><font color="#2ECC71">Maschinensprache - Ethernet-Thermostat - ESP32 + PHY Ethernet</font></h3>	
 <div class="alert alert-danger">
- 	 	<strong>Da die Benutzer die Lizenz des Projekts nicht mehr respektieren, ist das Projekt nicht mehr mit dem Quellcode verfügbar.</strong> 
-Sie können kompilierte .bin-Firmware mit dynamischer IPv4-Adresse im LAN verwenden. Anweisungen zum Hochladen der Firmware auf ESP32 finden Sie unter WLAN-Thermostat.
+<strong>Da die Benutzer die Lizenz des Projekts nicht mehr respektieren, ist der Quellcode des Projekts nicht mehr verfügbar.</strong> 
+Sie können jedoch die kompilierte .bin-Firmware mit dynamischer IPv4-Adresse im LAN verwenden. Anweisungen zum Hochladen der Firmware auf den ESP32 finden Sie im WLAN-Thermostat.
 </div>	
 <pre style="background-color:#2ECC71; display:none;">
 /*|-----------------------------------------------------------|*/
@@ -690,9 +674,9 @@ void loop() {
 <a href="https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/martinius96/termostat-ethernet/tree/master/firmware/en/PHY_thermostat_EN" class="btn btn-danger" role="button">PHY thermostat .bin Herunterladen</a>
 </center>
 <p style="text-align: justify;"> 
-Die Implementierung enthält Programme für eine dynamische IPv4-Adresse, die dem Ethernet-Shield zugewiesen wird.
-<b>Der Thermostat ist nur für Innentemperaturen gedacht!</b> (über 0°C), an die auch die Logik des Systems angepasst ist!
-Das Thermostat kann verwendet werden, um ein vorhandenes Raumthermostat zu ersetzen oder vorübergehend eine Heizung in einem Aquarium / Terrarium zu ersetzen, um eine konstante Temperatur aufrechtzuerhalten.
+Die Implementierung enthält Programme für die Zuweisung einer dynamischen IPv4-Adresse an das Ethernet-Shield.
+<b>Der Thermostat ist ausschließlich für Innentemperaturen ausgelegt!</b> (über 0°C), und die Logik des Systems ist entsprechend darauf abgestimmt.
+Das Thermostat kann genutzt werden, um ein bestehendes Raumthermostat zu ersetzen oder temporär eine Heizung in einem Aquarium/Terrarium zu übernehmen, um eine konstante Temperatur aufrechtzuerhalten.
 </p>	
  </div>
 		</div>
