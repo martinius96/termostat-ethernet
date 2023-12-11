@@ -169,9 +169,9 @@ Der Code ist somit universell und bietet dem Autor die Möglichkeit, das Build-P
 Um Maschinencode auf Arduino hochzuladen, ist es möglich, das AVRDUDE-Tool zu verwenden, das auch die Arduino-IDE-Umgebung verwendet, um das kompilierte Programm hochzuladen.
 Das Tool kann direkt über die Befehlszeile (CLI) ausgeführt werden, es ist jedoch erforderlich, alle konfigurierbaren Daten korrekt einzustellen (Firmware-Upload-Geschwindigkeit, Ziel-COM-Port, Ziel-Mikrocontroller und Link avrdude.conf) und ist daher nicht für weniger erfahrene Benutzer geeignet Programmierer oder Laien.
 Für weniger erfahrene Benutzer ist die XLoader-Alternative geeignet. Diese Windows-Anwendung (Tool) mit einer einfachen grafischen Oberfläche ermöglicht die Auswahl von Firmware - Maschinencode (.hex), der Zielplattform und kann dynamisch den COM-Port anzeigen, auf dem sich das Gerät befindet, wenn sein Treiber im Betriebssystem installiert ist .
-Mit <a href="https://www.hobbytronics.co.uk/arduino-xloader">XLoader</a> können Sie Firmware auf AVR-Plattformen hochladen, d.h. Arduino Uno, Nano, Duemilanove (AtMega328 / AtMega168), Arduino Mega (AtMega1280 / AtMega2560) und unter ...
-Durch einfaches Klicken auf Upload kann der Maschinencode automatisch hochgeladen werden (<a href="https://www.hobbytronics.co.uk/arduino-xloader">XLoader</a> verwendet das AVRDUDE-Tool ähnlich wie die Arduino IDE).
-Das <a href="https://www.hobbytronics.co.uk/arduino-xloader">XLoader</a>-Fenster informiert über den erfolgreichen Upload in Form einer Liste der hochgeladenen Bytes.
+Mit <a href="https://github.com/binaryupdates/xLoader">XLoader</a> können Sie Firmware auf AVR-Plattformen hochladen, d.h. Arduino Uno, Nano, Duemilanove (AtMega328 / AtMega168), Arduino Mega (AtMega1280 / AtMega2560) und unter ...
+Durch einfaches Klicken auf Upload kann der Maschinencode automatisch hochgeladen werden (<a href="https://github.com/binaryupdates/xLoader">XLoader</a> verwendet das AVRDUDE-Tool ähnlich wie die Arduino IDE).
+Das <a href="https://github.com/binaryupdates/xLoader">XLoader</a>-Fenster informiert über den erfolgreichen Upload in Form einer Liste der hochgeladenen Bytes.
 Ab diesem Moment ist der Thermostat voll aktiv. Bei der DHCP-Firmware-Version wird die zugewiesene IP-Adresse in den UART-Monitor (115200 baud/s) geschrieben.
 </p>				
 <center>
@@ -192,7 +192,7 @@ Die XLoader-Schnittstelle selbst warnt vor einer falschen Baudrate mit einer Mel
 <div class="alert alert-info">
 <b>Nach erfolgreichem Hochladen des Maschinencodes auf den Arduino ist der Thermostat vollständig betriebsbereit und unter seiner IP-Adresse verfügbar. Das Programm arbeitet auf Basis des Projektschaltplans und der Logik aus der Beschreibung. </b>
 			</div>
-				<hr><center><h2>Video-Tutorial zum Hochladen von Firmware auf Arduino über <a href="https://www.hobbytronics.co.uk/arduino-xloader">XLoader</a></h2></center><hr>	
+				<hr><center><h2>Video-Tutorial zum Hochladen von Firmware auf Arduino über <a href="https://github.com/binaryupdates/xLoader">XLoader</a></h2></center><hr>	
                     <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
   <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
           width="560" height="315" src="https://www.youtube.com/embed/fAUKYuYNkMo" 
