@@ -100,7 +100,7 @@
 <b>Projekt Ethernet termostat je dostupný zdarma vo forme strojových kódov pre cieľovú platformu Arduino Uno / Nano (s čipom AVR ATmega328P).</b>
 Verzia obsahuje celkom 6 strojových - predkompilovaných programov pre Ethernet shield Wiznet W5100 a W5500, firmvéry sa líšia statickou / dynamickou adresou získanou cez DHCP server.
 Strojový kód (.hex) zaručuje, že daný program je kompatibilný a má totožnú funkčnosť na všetky zariadenia, do ktorých sa nahrá a spustí.
-Nahratie firmvéru je rýchle a jednoduché cez nástroj AVRDUDE / <a href="https://www.hobbytronics.co.uk/arduino-xloader">XLoader</a> s grafickým rozhraním. Hlavná aplikácia sa spustí ihneď po nahratí firmvéru.
+Nahratie firmvéru je rýchle a jednoduché cez nástroj AVRDUDE / <a href="https://github.com/binaryupdates/xLoader">XLoader</a> s grafickým rozhraním. Hlavná aplikácia sa spustí ihneď po nahratí firmvéru.
 Kód je tak univerzálny a poskytuje možnosť na ukážku poskytnúť autorovi záujemcom o vyskúšanie projektu jeho build bez prístupu ku zdrojovému (.ino) kódu.
 <b>Nakoľko má každý Ethernet termostat rovnakú - preddefinovanú MAC adresu, je možné v LAN sieti využívať iba jeden termostat, inak dôjde ku konfliktu MAC adries a nebude komunikovať ani jeden termostat!</b>
 <div class="alert alert-danger">
@@ -168,10 +168,10 @@ Kód je tak univerzálny a poskytuje možnosť na ukážku poskytnúť autorovi 
 <p style="text-align: justify;">
 Pre nahratie strojového kódu do Arduina je možné využiť nástroj AVRDUDE, ktorý pre nahrávanie skompilovaného programu využíva i prostredie Arduino IDE.
 Nástroj je možné spúšťať priamo z príkazového riadku (CLI), ale je nutné správne nastaviť všetky konfigurovateľné údaje (rýchlosť nahrávania firmvéru, cieľový COM port, cieľový mikrokontróler a nalinkovať avrdude.conf) a tak nie je vhodný pre menej skúsených programátorov, či laikov.
-Pre menej skúsených používateľov je vhodná alternatíva <a href="https://www.hobbytronics.co.uk/arduino-xloader">XLoader</a>. Táto Windows aplikácia (nástroj) s jednoduchým grafickým rozhraním umožňuje výber firmvéru - strojového kódu (.hex), cieľovej platformy a vie dynamicky ukázať COM port, na ktorom sa zariadenie nachádza, ak je jeho ovládač nainštalovaný v operačnom systéme.
-<a href="https://www.hobbytronics.co.uk/arduino-xloader">XLoader</a> umožňuje nahrať firmvér do AVR platforiem t.j. Arduino Uno, Nano, Duemilanove (AtMega328 / AtMega168), Arduino Mega (AtMega1280 / AtMega2560) a pod...
-Jednoduchým kliknutím na Upload je možné strojový kód automatizovane nahrať (<a href="https://www.hobbytronics.co.uk/arduino-xloader">XLoader</a> využíva podobne ako Arduino IDE nástroj AVRDUDE). 
-Okno <a href="https://www.hobbytronics.co.uk/arduino-xloader">XLoader</a>a informuje o úspešnom uploade formou výpisu počtu uploadovaných bajtov.
+Pre menej skúsených používateľov je vhodná alternatíva <a href="https://github.com/binaryupdates/xLoader">XLoader</a>. Táto Windows aplikácia (nástroj) s jednoduchým grafickým rozhraním umožňuje výber firmvéru - strojového kódu (.hex), cieľovej platformy a vie dynamicky ukázať COM port, na ktorom sa zariadenie nachádza, ak je jeho ovládač nainštalovaný v operačnom systéme.
+<a href="https://github.com/binaryupdates/xLoader">XLoader</a> umožňuje nahrať firmvér do AVR platforiem t.j. Arduino Uno, Nano, Duemilanove (AtMega328 / AtMega168), Arduino Mega (AtMega1280 / AtMega2560) a pod...
+Jednoduchým kliknutím na Upload je možné strojový kód automatizovane nahrať (<a href="https://github.com/binaryupdates/xLoader">XLoader</a> využíva podobne ako Arduino IDE nástroj AVRDUDE). 
+Okno <a href="https://github.com/binaryupdates/xLoader">XLoader</a>a informuje o úspešnom uploade formou výpisu počtu uploadovaných bajtov.
 Od tohto momentu je termostat plne aktívny. V prípade DHCP verzie firmvéru sa pridelená IP adresa vypíše do UART monitoru (115200 baud/s).
 </p>				
 <center>
@@ -192,7 +192,7 @@ Na nesprávny baudrate upozorní samotné rozhranie XLoader hláškou o neúspe�
 <div class="alert alert-info">
 <b>Po úspešnom nahratí strojového kódu do Arduina je termostat plne pripravený a je dostupný na svojej IP adrese. Program funguje na základe schémy zapojenia projektu a logiky z popisu.</b>
 			</div>				
-<hr><center><h2>Videonávod pre upload firmvéru do Arduina cez <a href="https://www.hobbytronics.co.uk/arduino-xloader">XLoader</a></h2></center><hr>
+<hr><center><h2>Videonávod pre upload firmvéru do Arduina cez <a href="https://github.com/binaryupdates/xLoader">XLoader</a></h2></center><hr>
                     <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
   <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
           width="560" height="315" src="https://www.youtube.com/embed/fAUKYuYNkMo" 
