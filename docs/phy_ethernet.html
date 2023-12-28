@@ -149,6 +149,9 @@ table,thead,tbody,tfoot,tr, td,th{
 <div class="alert alert-success">
  	<strong>Pri záujme o zdrojový kód pre ESP32 + PHY Ethernet termostat: </strong>martinius96@gmail.com
 </div>	
+				<center>
+<a href="https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/martinius96/termostat-ethernet/tree/master/firmware/PHY_thermostat_SK" class="btn btn-danger" role="button">Stianuť PHY termostat .bin</a>
+</center>
 <span class="label label-default">ESP32</span>
 <span class="label label-primary">Ethernet</span>
 <span class="label label-success">LAN8720</span>
@@ -287,8 +290,10 @@ Rozhodovacia logika termostatu sa vykonáva každých 10 sekúnd nezávisle na w
 <td>CRS_DV</td>
 </tr>
 </table>
+
+<img src="https://i.imgur.com/sGTmUOS.png" style="display: block; max-width: 100%; height: auto;" alt="ESP32, PHY Ethernet termostat, schéma zapojenia s relé a teplomerom DS18B20" title="ESP32, PHY Ethernet termostat, schéma zapojenia s relé a teplomerom DS18B20">
 </center> 
-<hr>
+	<hr>
 <p style="text-align: justify;">
 <b>HTML stránky bežiace na ESP32:</b>
 <li><b>/</b> - root stránka obsahujúca formulár, aktuálny výpis logického výstupu pre relé, aktuálnu a cieľovú teplotu teplotu, hysterézu</li>
@@ -761,9 +766,6 @@ void loop() {
   yield();
 }
 </pre>
-<center>
-<a href="https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/martinius96/termostat-ethernet/tree/master/firmware/PHY_thermostat_SK" class="btn btn-danger" role="button">Stianuť PHY termostat .bin</a>
-</center>
 
 <p style="text-align: justify;"> 
 Implementácia obsahuje program pre dynamickú IPv4 adresu priradenú k Ethernet PHY termostatu z DHCP servera v sieti. 
