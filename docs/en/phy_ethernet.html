@@ -144,6 +144,13 @@ table,thead,tbody,tfoot,tr, td,th{
 <div class="alert alert-success">
  	<strong>If you are interested in source code for ESP32 + PHY Ethernet thermostat, email me at: </strong>martinius96@gmail.com
 </div>	
+		<div class="alert alert-danger">
+ 	 	<strong>Since users stopped respecting the project's license, the project is no longer available with the source code.</strong> 
+You can use compiled .bin firmware with dynamic IPv4 address in LAN. Instructions for uploading firmware to ESP32 can be found under WiFi thermostat.	
+						<center>
+<a href="https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/martinius96/termostat-ethernet/tree/master/firmware/en/PHY_thermostat_EN" class="btn btn-danger" role="button">Download PHY thermostat .bin</a>
+</center>
+</div>
 <span class="label label-default">ESP32</span>
 <span class="label label-primary">Ethernet</span>
 <span class="label label-success">LAN8720</span>
@@ -282,6 +289,7 @@ The decision-making logic of the thermostat is performed every 10 seconds indepe
 <td>CRS_DV</td>
 </tr>
 </table>
+	<img src="https://i.imgur.com/sGTmUOS.png" style="display: block; max-width: 100%; height: auto;" alt="ESP32, PHY Ethernet thermostat, wiring diagram with DS18B20 relay and thermometer" title="ESP32, PHY Ethernet thermostat, wiring diagram with DS18B20 relay and thermometer">
 </center> 
 <hr>
 <p style="text-align: justify;">
@@ -367,10 +375,6 @@ The thermostat is activated again only when the temperature reaches 22.49 °C or
 </center>        		
 <hr>
 <h3 style=""><font color="#2ECC71">Machine code - Ethernet thermostat - ESP32 + PHY LAN8720 - DHCP</font></h3>	
-	<div class="alert alert-danger">
- 	 	<strong>Since users stopped respecting the project's license, the project is no longer available with the source code.</strong> 
-You can use compiled .bin firmware with dynamic IPv4 address in LAN. Instructions for uploading firmware to ESP32 can be found under WiFi thermostat.
-</div>	
 <pre style="background-color:#2ECC71; display:none;">
 /*|-----------------------------------------------------------|*/
 /*|HTTP webserver - Ethernet thermostat - ESP32 + PHY LAN8720 |*/
@@ -673,9 +677,6 @@ void loop() {
   yield();
 }
 </pre>
-					<center>
-<a href="https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/martinius96/termostat-ethernet/tree/master/firmware/en/PHY_thermostat_EN" class="btn btn-danger" role="button">Download PHY thermostat .bin</a>
-</center>
 <p style="text-align: justify;"> 
 The implementation includes a program for a dynamic IPv4 address assigned to the Ethernet PHY of the thermostat.
 <b>The thermostat is intended only for indoor temperatures!</b> (above 0°C), to which the logic of the system is also adapted!
