@@ -149,6 +149,13 @@ table,thead,tbody,tfoot,tr, td,th{
 <div class="alert alert-success">
  	<strong>Wenn Sie am Quellcode für das ESP32 + PHY-Ethernet-Thermostat interessiert sind, kontaktieren Sie uns bitte per E-Mail auf ENGLISCH: </strong>martinius96@gmail.com
 </div>	
+				<div class="alert alert-danger">
+<strong>Da die Benutzer die Lizenz des Projekts nicht mehr respektieren, ist der Quellcode des Projekts nicht mehr verfügbar.</strong> 
+Sie können jedoch die kompilierte .bin-Firmware mit dynamischer IPv4-Adresse im LAN verwenden. Anweisungen zum Hochladen der Firmware auf den ESP32 finden Sie im WLAN-Thermostat.	
+								<center>
+<a href="https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/martinius96/termostat-ethernet/tree/master/firmware/en/PHY_thermostat_EN" class="btn btn-danger" role="button">PHY thermostat .bin Herunterladen</a>
+</center>
+</div>
 <span class="label label-default">ESP32</span>
 <span class="label label-primary">Ethernet</span>
 <span class="label label-success">LAN8720</span>
@@ -279,6 +286,7 @@ Die Entscheidungslogik des Thermostats wird alle 10 Sekunden unabhängig von der
 <td>CRS_DV</td>
 </tr>
 </table>
+	<img src="https://i.imgur.com/sGTmUOS.png" style="display: block; max-width: 100%; height: auto;" alt="ESP32, PHY-Ethernet-Thermostat, Schaltplan mit DS18B20-Relais und Thermometer" title="ESP32, PHY-Ethernet-Thermostat, Schaltplan mit DS18B20-Relais und Thermometer">
 </center> 
 <hr>
 <p style="text-align: justify;">
@@ -356,11 +364,7 @@ Der Thermostat wird erst wieder aktiviert, wenn die Temperatur 22,49 °C oder we
 <img src="https://i.imgur.com/q1uvK3d.png" style="display: block; max-width: 100%; height: auto;" alt="PHY Ethernet thermostat ESP32 - zyklische Ausgabe mit IP-Adresse, aktueller Temperatur und GPIO-Ausgabestatus" title="PHY Ethernet thermostat ESP32 - zyklische Ausgabe mit IP-Adresse, aktueller Temperatur und GPIO-Ausgabestatus">
 </center>        		
 <hr>
-<h3><font color="#2ECC71">Maschinensprache - Ethernet-Thermostat - ESP32 + PHY Ethernet</font></h3>	
-<div class="alert alert-danger">
-<strong>Da die Benutzer die Lizenz des Projekts nicht mehr respektieren, ist der Quellcode des Projekts nicht mehr verfügbar.</strong> 
-Sie können jedoch die kompilierte .bin-Firmware mit dynamischer IPv4-Adresse im LAN verwenden. Anweisungen zum Hochladen der Firmware auf den ESP32 finden Sie im WLAN-Thermostat.
-</div>	
+<h3 style="display:none;"><font color="#2ECC71">Maschinensprache - Ethernet-Thermostat - ESP32 + PHY Ethernet</font></h3>	
 <pre style="background-color:#2ECC71; display:none;">
 /*|-----------------------------------------------------------|*/
 /*|HTTP webserver - Ethernet thermostat - ESP32 + PHY LAN8720 |*/
@@ -670,9 +674,6 @@ void loop() {
   yield();
 }
 </pre>
-				<center>
-<a href="https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/martinius96/termostat-ethernet/tree/master/firmware/en/PHY_thermostat_EN" class="btn btn-danger" role="button">PHY thermostat .bin Herunterladen</a>
-</center>
 <p style="text-align: justify;"> 
 Die Implementierung enthält Programme für die Zuweisung einer dynamischen IPv4-Adresse an das Ethernet-Shield.
 <b>Der Thermostat ist ausschließlich für Innentemperaturen ausgelegt!</b> (über 0°C), und die Logik des Systems ist entsprechend darauf abgestimmt.
