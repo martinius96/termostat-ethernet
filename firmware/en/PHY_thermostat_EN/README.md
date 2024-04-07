@@ -1,4 +1,4 @@
-# Instructions - WiFi thermostat firmware
+# Instructions - Ethernet PHY Thermostat firmware
 * You can find a description of the functions of individual firmware at: https://martinius96.github.io/WiFi-termostat/en/spustenie.html 
 * Each firmware folder contains the esptool.exe tool and a .bat file for automated firmware upload to the ESP8266 / ESP32 microcontroller
 * **It is necessary to change the COM port in the .bat file (COM17 for ESP32 firmware is used as example)**
