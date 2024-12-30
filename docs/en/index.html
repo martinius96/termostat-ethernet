@@ -26,14 +26,32 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-	<script type="text/javascript">
-    		window.smartlook||(function(d) {
-    			var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];
-    			var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';
-    			c.charset='utf-8';c.src='https://rec.smartlook.com/recorder.js';h.appendChild(c);
-    		})(document);
-    		smartlook('init', 'db50efe9fff280a17db52b82be221240cbbd3dbe');
-	</script>    
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/arduino-light.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/languages/arduino.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>    
+			 <style>
+  pre {
+  counter-reset: line-numbering;
+  background: #2c3e50;
+  padding: 12px 0px 14px 0;
+  color: #ecf0f1;
+  line-height: 100%;
+}
+
+pre .line::before {
+  content: counter(line-numbering);
+  counter-increment: line-numbering;
+  padding-right: 1em;
+  /* space after numbers */
+  padding-left: 8px;
+  width: 1.5em;
+  text-align: right;
+  opacity: 0.5;
+  color: white;
+}
+  </style>  
 			<style>
 	#right {
   position: absolute;
@@ -199,9 +217,8 @@ It allows communication with the Dallas DS18B20 sensor on the OneWire bus. Possi
 </tbody>
 </table>
 	</div>
-<hr>
-<h3 style="display: none;"><font color="#2ECC71">Source code - Ethernet thermostat - automatic mode</font></h3>	
-<pre style="background-color:#2ECC71; display: none;">
+<hr><h2>Source code - Ethernet thermostat - automatic mode</h2><hr>
+<pre><code>
 /*|----------------------------------------------------------|*/
 /*|HTTP webserver - Ethernet thermostat, Wiznet W5100 / W5500|*/
 /*|Arduino Uno / Nano / Mega compatible (R3)                 |*/
@@ -515,6 +532,7 @@ void loop() {
   }
 }
 
+</code>
 </pre>
 <p style="text-align: justify;">
 The implementation incorporates programs for both static and dynamic assignment of an IPv4 address to the Ethernet shield.
