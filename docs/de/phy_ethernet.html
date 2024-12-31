@@ -14,14 +14,32 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-	<script type="text/javascript">
-    		window.smartlook||(function(d) {
-    			var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];
-    			var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';
-    			c.charset='utf-8';c.src='https://rec.smartlook.com/recorder.js';h.appendChild(c);
-    		})(document);
-    		smartlook('init', 'db50efe9fff280a17db52b82be221240cbbd3dbe');
-	</script>    
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/arduino-light.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/languages/arduino.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>    
+			 <style>
+  pre {
+  counter-reset: line-numbering;
+  background: #2c3e50;
+  padding: 12px 0px 14px 0;
+  color: #ecf0f1;
+  line-height: 100%;
+}
+
+pre .line::before {
+  content: counter(line-numbering);
+  counter-increment: line-numbering;
+  padding-right: 1em;
+  /* space after numbers */
+  padding-left: 8px;
+  width: 1.5em;
+  text-align: right;
+  opacity: 0.5;
+  color: white;
+}
+  </style>  
 			<style>
 	#right {
   position: absolute;
@@ -363,9 +381,9 @@ Der Thermostat wird erst wieder aktiviert, wenn die Temperatur 22,49 °C oder we
 <center>
 <img src="https://i.imgur.com/q1uvK3d.png" style="display: block; max-width: 100%; height: auto;" alt="PHY Ethernet thermostat ESP32 - zyklische Ausgabe mit IP-Adresse, aktueller Temperatur und GPIO-Ausgabestatus" title="PHY Ethernet thermostat ESP32 - zyklische Ausgabe mit IP-Adresse, aktueller Temperatur und GPIO-Ausgabestatus">
 </center>        		
-<hr>
-<h3 style="display:none;"><font color="#2ECC71">Maschinensprache - Ethernet-Thermostat - ESP32 + PHY Ethernet</font></h3>	
-<pre style="background-color:#2ECC71; display:none;">
+<hr>	
+<hr><h2>Quellcode – Ethernet-Thermostat – ESP32 + PHY Ethernet (DHCP)</h2><hr>
+<pre><code>
 /*|-----------------------------------------------------------|*/
 /*|HTTP webserver - Ethernet thermostat - ESP32 + PHY LAN8720 |*/
 /*|Project webpage:                                           |*/
@@ -373,6 +391,7 @@ Der Thermostat wird erst wieder aktiviert, wenn die Temperatur 22,49 °C oder we
 /*|AUTHOR: Martin Chlebovec                                   |*/
 /*|EMAIL: martinius96@gmail.com                               |*/
 /*|DONATE: paypal.me/chlebovec                                |*/
+/*|Arduino Core 2.0.7 (August 2022)                           |*/
 /*|-----------------------------------------------------------|*/
 
 #include &lt;ETH.h>
@@ -673,6 +692,7 @@ void loop() {
   server.handleClient();
   yield();
 }
+</code>
 </pre>
 <p style="text-align: justify;"> 
 Die Implementierung enthält Programme für die Zuweisung einer dynamischen IPv4-Adresse an das Ethernet-Shield.
