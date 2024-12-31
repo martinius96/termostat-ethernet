@@ -209,11 +209,11 @@ Der Thermostat wird erst wieder aktiviert, wenn die Temperatur 22.49 °C oder ni
 <center><img src="https://i.imgur.com/XuJWC2a.png" style="display: block; max-width: 100%; height: auto;" alt="Ethernet thermostat - JSON output" title="Ethernet thermostat - JSON output"></center>        		
 <b>Ausgabe an UART-Monitor - Zustände der Ausgänge, Einstellung des Ethernet-Adapters:</b>
 <center><img src="https://i.imgur.com/6CYuMZZ.png" style="display: block; max-width: 100%; height: auto;" alt="Ethernet thermostat - UART" title="Ethernet thermostat - UART"></center>        		
-<hr><center><h4 style="display: none;">Verfügbare Bibliotheken für Mikrocontroller (Arduino)</h4></center><hr>
-<div class="alert alert-danger" style="display: none;">
+<hr><center><h4>Verfügbare Bibliotheken für Mikrocontroller (Arduino)</h4></center><hr>
+<div class="alert alert-danger">
 	Bibliotheksarchiv (.zip) expandieren zu <strong>C:/Users/[User]/Documents/Arduino/libraries</strong>
 </div>
-<div class="table-responsive" style="display: none;">   
+<div class="table-responsive">   
 <table class="table" style="border: 1px solid black;">
 <thead>
 <tr>
@@ -246,7 +246,8 @@ Es ermöglicht die Kommunikation mit dem Dallas DS18B20-Sensor auf dem OneWire-B
 /*|----------------------------------------------------------|*/
 #include &lt;avr\wdt.h>
 #include &lt;SPI.h>
-#include &lt;Ethernet.h>
+#include &lt;Ethernet.h> //Wiznet W5100
+//#include &lt;Ethernet2.h> //Wiznet W5500
 #include &lt;EEPROM.h>
 #include &lt;OneWire.h>
 #include &lt;DallasTemperature.h>
