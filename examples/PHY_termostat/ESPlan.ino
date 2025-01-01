@@ -4,7 +4,7 @@
 /*|Autor: Martin Chlebovec                                    |*/
 /*|EMAIL: martinius96@gmail.com                               |*/
 /*|DONATE: paypal.me/chlebovec                                |*/
-/*|Arduino Core 3.0.10 (December 2024                         |*/
+/*|Arduino Core 3.1.0 based on ESP-IDF v5.3.2 (December 2024) |*/
 /*|-----------------------------------------------------------|*/
 
 #define ETH_PHY_TYPE ETH_PHY_LAN8720
